@@ -98,7 +98,7 @@ h2 {
 
 h3 {
     font-weight: 500;
-    font-size: clamp(8px, 3vw, 13px);
+    font-size: clamp(8px, 0.9vw, 13px);
     line-height: clamp(12px, 4vw, 20px);
     letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
