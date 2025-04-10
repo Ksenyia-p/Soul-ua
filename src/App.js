@@ -5,7 +5,7 @@ import Menu from './pages/menu/menu';
 import Wishlist from './pages/wishlist/wishlist';
 import ShoppingBag from './pages/shopping bag/shopping bag';
 import PersonalData from "./pages/personal data/personal data";
-import Search from "./pages/search/search";
+
 
 const App = () => {
     return (
@@ -17,7 +17,7 @@ const App = () => {
                 <Route path="/main" element={<Main/>}/>
                 <Route path="/shoppingback" element={<ShoppingBag/>}/>
                 <Route path="/account" element={<PersonalData/>}/>
-                <Route path='/search' element={<Search/>}/>
+
             </Routes>
         </BrowserRouter>
     );

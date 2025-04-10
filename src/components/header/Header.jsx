@@ -8,9 +8,10 @@ import SearchIcon from '../../icons/search.svg';
 import UserIcon from '../../icons/user.svg';
 import FavoriteIcon from '../../icons/favorite.svg';
 import BagIcon from '../../icons/bag.svg';
+import Search from "../search/search";
 
 const Header = () => {
-    const navigate = useNavigate();
+    const [searchActive, setSearchActive] = React.useState();
 
     return (
         <header className={styles.header}>
@@ -27,16 +28,16 @@ const Header = () => {
             <nav className={styles.menu}>
                 <ul>
                     <li>
-                        <Link to='/search' className={styles.link}>
+                        <button className='open-search' onClick={() => setSearchActive(true)}>
                             <img src={SearchIcon} alt="Пошук"/>
                             <h4>ПОШУК</h4>
-                        </Link>
+                        </button>
                     </li>
 
 
                     <li>
                         <Link to='/account' className={styles.link}>
-                            <img src={UserIcon} alt="Особистий кабінет"/>
+                        <img src={UserIcon} alt="Особистий кабінет"/>
                             <h4>ОСОБИСТИЙ<br/>КАБІНЕТ</h4>
                         </Link>
                     </li>
@@ -60,6 +61,7 @@ const Header = () => {
 
                 </ul>
             </nav>
+            <Search active={searchActive} setActive={setSearchActive} />
         </header>
     );
 };
