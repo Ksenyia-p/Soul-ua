@@ -28,7 +28,7 @@ const Header = () => {
             <nav className={styles.menu}>
                 <ul>
                     <li>
-                        <button className='open-search' onClick={() => setSearchActive(true)}>
+                        <button className={styles.searchIcon} onClick={() => setSearchActive(true)}>
                             <img src={SearchIcon} alt="Пошук"/>
                             <h4>ПОШУК</h4>
                         </button>

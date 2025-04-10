@@ -154,3 +154,8 @@
         display: none;
     }
 }
+
+.searchIcon {
+    border: none;
+    cursor: pointer;
+}
