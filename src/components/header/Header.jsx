@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import styles from './Header.module.css';
-
+import {Link} from 'react-router-dom';
 import MenuIcon from '../../icons/menu.svg';
 import LogoIcon from '../../icons/Logo soul.svg';
 import SearchIcon from '../../icons/search.svg';
@@ -14,32 +14,50 @@ const Header = () => {
 
     return (
         <header className={styles.header}>
-            <div className={styles.leftImage}>
-                <img src={MenuIcon} alt="Меню" />
-            </div>
-
-            <div className={styles.logo}>
-                <img src={LogoIcon} alt="Логотип Soul" />
-            </div>
-
+            <Link to='/menu'>
+                <div className={styles.leftImage}>
+                    <img src={MenuIcon} alt="Меню"/>
+                </div>
+            </Link>
+            <Link to='/'>
+                <div className={styles.logo}>
+                    <img src={LogoIcon} alt="Логотип Soul"/>
+                </div>
+            </Link>
             <nav className={styles.menu}>
                 <ul>
                     <li>
-                        <img src={SearchIcon} alt="Пошук" />
-                        <h4>ПОШУК</h4>
+                        <Link to='/search' className={styles.link}>
+                            <img src={SearchIcon} alt="Пошук"/>
+                            <h4>ПОШУК</h4>
+                        </Link>
                     </li>
+
+
                     <li>
-                        <img src={UserIcon} alt="Особистий кабінет" />
-                        <h4>ОСОБИСТИЙ<br />КАБІНЕТ</h4>
+                        <Link to='/account' className={styles.link}>
+                            <img src={UserIcon} alt="Особистий кабінет"/>
+                            <h4>ОСОБИСТИЙ<br/>КАБІНЕТ</h4>
+                        </Link>
                     </li>
-                    <li>
-                        <img src={FavoriteIcon} alt="Вішліст" />
-                        <h4>ВІШЛІСТ</h4>
-                    </li>
-                    <li>
-                        <img src={BagIcon} alt="Кошик" />
-                        <h4>КОШИК</h4>
-                    </li>
+
+
+                        <li>
+                            <Link to='/wishlist' className={styles.link}>
+                            <img src={FavoriteIcon} alt="Вішліст"/>
+                            <h4>ВІШЛІСТ</h4>
+                            </Link>
+                        </li>
+
+
+
+                        <li>
+                            <Link to='/shoppingback' className={styles.link}>
+                            <img src={BagIcon} alt="Кошик"/>
+                            <h4>КОШИК</h4>
+                            </Link>
+                        </li>
+
                 </ul>
             </nav>
         </header>

@@ -38,6 +38,10 @@
     justify-content: flex-end;
     flex: 1;
 }
+.link {
+    text-decoration: none;
+    color: inherit;
+}
 
 .menu ul {
     display: flex;
@@ -102,6 +106,7 @@
     .menu li h4 {
         display: none;
     }
+
 }
 
 @media (max-width: 425px) {
@@ -145,6 +150,7 @@
     }
 
     .menu li h4 {
+        text-decoration: none;
         display: none;
     }
 }

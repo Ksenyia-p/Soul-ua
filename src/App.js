@@ -1,15 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Main from './pages/main/Main';
-const Home = () => <div>Home Page</div>;
-const About = () => <div>About Page</div>;
-const Contact = () => <div>Contact Page</div>;
+import Menu from './pages/menu/menu';
+import Wishlist from './pages/wishlist/wishlist';
+import ShoppingBag from './pages/shopping bag/shopping bag';
+import PersonalData from "./pages/personal data/personal data";
+import Search from "./pages/search/search";
 
 const App = () => {
     return (
-        <Router>
-            <Main />
-        </Router>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Main/>}/>
+                <Route path="/menu" element={<Menu/>}/>
+                <Route path="/wishlist" element={<Wishlist/>}/>
+                <Route path="/main" element={<Main/>}/>
+                <Route path="/shoppingback" element={<ShoppingBag/>}/>
+                <Route path="/account" element={<PersonalData/>}/>
+                <Route path='/search' element={<Search/>}/>
+            </Routes>
+        </BrowserRouter>
     );
 };
 
