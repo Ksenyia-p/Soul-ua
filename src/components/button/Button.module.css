@@ -1,17 +1,25 @@
 .button {
-    padding: 12px 24px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: #1d1d1d;
+    padding: clamp(8px, 1.4vw, 20px) clamp(18px, 2.9vw, 42px);
+    background-color: #EFF1F0;
+    border: none;
+    border-radius: clamp(11px, 1.7vw, 25px);
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+
+    box-shadow:
+            -3px -3px 6px rgba(255, 255, 255, 0.7),
+            3px 3px 6px rgba(165, 168, 166, 1),
+            inset -5px -5px 5px rgba(251, 255, 253, 0),
+            inset 4px 4px 4px rgba(196, 199, 197, 0);
+
+    transition: box-shadow 500ms ease-in-out, transform 200ms ease-in-out;
 }
 
 .button:hover {
-    background-color: #f0f0f0;
+    box-shadow:
+            -3px -3px 6px rgba(255, 255, 255, 0),
+            3px 3px 6px rgba(165, 168, 166, 0),
+            inset -5px -5px 5px rgba(251, 255, 253, 1),
+            inset 4px 4px 4px rgba(196, 199, 197, 1);
+
+    transform: translateY(1px);
 }
