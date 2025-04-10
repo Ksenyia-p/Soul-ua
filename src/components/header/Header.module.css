@@ -22,7 +22,6 @@
     position: absolute;
     top: 20px;
     left: clamp(240px, 25.1vw, 362px);
-    cursor: pointer;
 }
 
 .logo img {
