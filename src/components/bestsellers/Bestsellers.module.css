@@ -1,0 +1,93 @@
+/*.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 950px;
+    gap: 9px;
+}
+
+.sideTextLeft {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin-left: 9px;
+    height: 448px;
+}
+
+.sideTextRight {
+    writing-mode: vertical-rl;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin-right: 9px;
+    height: 448px;
+}
+
+.section {
+    background: #eff1f0;
+    box-shadow:
+            -4px -4px 8px rgba(255, 255, 255, 0.7),
+            3px 3px 6px #A5A8A6;
+    width: 1296px;
+    height: 504px;
+    border-radius: 25px;
+    padding: 33px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 72px;
+}
+
+.card {
+    position: relative;
+    min-width: 220px;
+}
+
+.maskWrapper {
+    width: 260px;
+    height: 390px;
+    mask-image: url('../../public/masks/corner-mask.svg');
+    mask-repeat: no-repeat;
+    mask-size: cover;
+
+    -webkit-mask-image: url('../../public/masks/corner-mask.svg');
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+
+    overflow: hidden;
+    border-radius: 25px;
+    background-color: #ccc;
+}
+
+
+.imageWithMask {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #d0d0d0;
+}
+
+.info {
+    margin-top: 4px;
+}*/

@@ -1,0 +1,149 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    padding-top: 20px;
+    padding-left: 36px;
+    padding-right: 36px;
+}
+
+.leftImage {
+    padding-top: 10px;
+}
+
+.leftImage img {
+    width: clamp(33.5px, 5vw, 67px);
+    height: auto;
+    cursor: pointer;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: clamp(240px, 25.1vw, 362px);
+}
+
+.logo img {
+    width: clamp(57px, 8vw, 114px);
+    height: auto;
+}
+
+.menu {
+    position: absolute;
+    top: 20px;
+    right: clamp(16px, 2vw, 36px);
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.menu ul {
+    display: flex;
+    gap: clamp(10px, 1.3vw, 20px);
+    list-style: none;
+}
+
+.menu li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    gap: clamp(4px, 0.3vw, 8px);
+}
+
+.menu li img {
+    height: clamp(19px, 2vw, 30px);
+    width: auto;
+    text-align: center;
+}
+
+@media (min-width: 426px) and (max-width: 767px) {
+    .header {
+        padding-top: 16px;
+        padding-left: 26px;
+    }
+
+    .leftImage {
+        padding-top: 6px;
+    }
+
+    .logo {
+        top: 16px;
+        left: 170px;
+    }
+
+    .menu ul {
+        gap: 0;
+    }
+
+    .menu li:nth-child(1) {
+        margin-right: 10px;
+    }
+
+    .menu li:nth-child(2) {
+        margin-right: 12px;
+    }
+
+    .menu li:nth-child(3) {
+        margin-right: 8px;
+    }
+
+    .menu li:nth-child(4) {
+        margin-right: 0;
+    }
+
+    .menu li img {
+        height: 18px;
+    }
+
+    .menu li h4 {
+        display: none;
+    }
+}
+
+@media (max-width: 425px) {
+    .header {
+        padding-top: 10px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .leftImage {
+        padding-top: 12px;
+    }
+
+    .logo {
+        top: 14px;
+        left: 122px;
+    }
+
+    .menu ul {
+        gap: 0;
+    }
+
+    .menu li:nth-child(1) {
+        margin-right: 6px;
+    }
+
+    .menu li:nth-child(2) {
+        margin-right: 8px;
+    }
+
+    .menu li:nth-child(3) {
+        margin-right: 4px;
+    }
+
+    .menu li:nth-child(4) {
+        margin-right: 0;
+    }
+
+    .menu li img {
+        height: 18px;
+    }
+
+    .menu li h4 {
+        display: none;
+    }
+}

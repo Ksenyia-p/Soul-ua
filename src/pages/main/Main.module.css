@@ -1,0 +1,7 @@
+.main {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #eff1f0;
+    display: flex;
+    flex-direction: column;
+}
