@@ -10,3 +10,4 @@ const Button = ({ children, onClick, type = 'button'}, ...props) => {
 };
 
 export default Button;
+{/*я геній*/}
