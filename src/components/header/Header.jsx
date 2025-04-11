@@ -8,7 +8,7 @@ import SearchIcon from '../../icons/search.svg';
 import UserIcon from '../../icons/user.svg';
 import FavoriteIcon from '../../icons/favorite.svg';
 import BagIcon from '../../icons/bag.svg';
-import Search from "../search/search";
+import Search from "../search/Search";
 
 const Header = () => {
     const [searchActive, setSearchActive] = React.useState();
