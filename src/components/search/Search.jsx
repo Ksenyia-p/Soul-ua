@@ -1,9 +1,13 @@
 import React from 'react';
 import styles from './Search.module.css';
 import Cross from '../../icons/cross.svg';
-
+import SearchIcon from "../../icons/search.svg";
 
 const Search = ({ active, setActive }) => {
+    const handleSearch = () => {
+        console.log("Пошук виконано!");
+    };
+
     return (
         <>
             <div
@@ -17,8 +21,11 @@ const Search = ({ active, setActive }) => {
                         placeholder="Пошук"
                         className={styles.searchInput}
                     />
+                    <button className={styles.searchButton} onClick={handleSearch}>
+                        <img src={SearchIcon} alt="Шукати"/>
+                    </button>
                     <button className={styles.closeButton} onClick={() => setActive(false)}>
-                        <img src={Cross} alt="Закрити" />
+                        <img src={Cross} alt="Закрити"/>
                     </button>
                 </div>
             </div>
