@@ -98,36 +98,36 @@ h2 {
 h3 {
     font-family: Unbounded-Medium, sans-serif;
     font-size: clamp(8px, 0.9vw, 13px);
-    line-height: clamp(12px, 4vw, 20px);
+    line-height: clamp(12px, 1.39vw, 20px);
     letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
 
 .h3-light {
     font-family: Unbounded-Light, sans-serif;
-    font-size: clamp(8px, 3vw, 13px);
-    line-height: clamp(12px, 4vw, 20px);
+    font-size: clamp(8px, 0.9vw, 13px);
+    line-height: clamp(12px, 1.39vw, 20px);
     letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
 
 .h3-bold {
     font-family: Unbounded-Bold, sans-serif;
-    font-size: clamp(8px, 3vw, 13px);
-    line-height: clamp(12px, 4vw, 20px);
+    font-size: clamp(8px, 0.9vw, 13px);
+    line-height: clamp(12px, 1.39vw, 20px);
     letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
 
 .h3-underlined {
     font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(8px, 3vw, 13px);
-    line-height: clamp(12px, 4vw, 20px);
+    font-size: clamp(8px, 0.9vw, 13px);
+    line-height: clamp(12px, 1.39vw, 20px);
     letter-spacing: clamp(0.1em, 1vw, 0.16em);
     text-decoration: underline;
 }
 
 .h3-crossed {
     font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(8px, 3vw, 13px);
-    line-height: clamp(12px, 4vw, 20px);
+    font-size: clamp(8px, 0.9vw, 13px);
+    line-height: clamp(12px, 1.39vw, 20px);
     letter-spacing: clamp(0.1em, 1vw, 0.16em);
     text-decoration: line-through;
 }
