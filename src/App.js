@@ -1,10 +1,10 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Main from './pages/main/Main';
-import Menu from './pages/menu/menu';
+import Menu from './pages/menu/Menu';
 import Wishlist from './pages/wishlist/wishlist';
-import ShoppingBag from './pages/shopping bag/shopping bag';
-import PersonalData from "./pages/personal data/personal data";
+import ShoppingBag from './pages/shopping bag/ShoppingBag';
+import PersonalData from "./pages/personal data/PersonalData";
 
 
 const App = () => {

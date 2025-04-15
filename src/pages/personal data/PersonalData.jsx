@@ -1,13 +1,15 @@
 import React from 'react';
 import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 
-const Menu = () => {
+const PersonalData = () => {
     return (
         <div>
             <Header />
-            Menu
+            PersonalData
+            <Footer/>
         </div>
     );
 };
 
-export default Menu;
+export default PersonalData;
