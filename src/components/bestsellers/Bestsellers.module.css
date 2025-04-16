@@ -1,8 +1,8 @@
-/*.wrapper {
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 950px;
+    margin-top: 949px;
     gap: 9px;
 }
 
@@ -60,21 +60,14 @@
 }
 
 .maskWrapper {
+    position: relative;
     width: 260px;
     height: 390px;
-    mask-image: url('../../public/masks/corner-mask.svg');
-    mask-repeat: no-repeat;
-    mask-size: cover;
-
-    -webkit-mask-image: url('../../public/masks/corner-mask.svg');
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: cover;
-
     overflow: hidden;
     border-radius: 25px;
-    background-color: #ccc;
+    /*background-color: #ccc;*/
+    z-index: 1;
 }
-
 
 .imageWithMask {
     width: 100%;
@@ -85,9 +78,34 @@
 .placeholder {
     width: 100%;
     height: 100%;
-    background-color: #d0d0d0;
 }
 
 .info {
-    margin-top: 4px;
-}*/
+    margin-top: 8px;
+}
+
+.favoriteButton {
+    position: absolute;
+    bottom: 12px;
+    right: 10px;
+    height: 20px;
+    width: auto;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2; /* Це забезпечить, що кнопка завжди буде поверх */
+}
+
+.favoriteButton img {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.favoriteIcon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

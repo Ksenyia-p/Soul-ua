@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Main from './pages/main/Main';
 import Menu from './pages/menu/Menu';
 import Wishlist from './pages/wishlist/wishlist';
-import ShoppingBag from './pages/shopping bag/ShoppingBag';
+import ShoppingBag from './components/shopping bag/ShoppingBag';
 import PersonalData from "./pages/personal data/PersonalData";
 
 
