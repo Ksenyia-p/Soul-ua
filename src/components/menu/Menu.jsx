@@ -67,11 +67,13 @@ const Section = ({ title, items }) => (
     <div>
         <h3 className="text-lg font-bold mb-2">{title}</h3>
         <ul className="space-y-1">
-            {items.map((item) => (
-                <li key={item.id} className="bg-gray-100 px-3 py-2 rounded shadow-sm">
-                    {item.name}
-                </li>
-            ))}
+            <div className="h3-light">
+                {items.map((item) => (
+                    <li key={item.id} className="bg-gray-100 px-3 py-2 rounded shadow-sm">
+                        {item.name}
+                    </li>
+                ))}
+            </div>
         </ul>
     </div>
 );
