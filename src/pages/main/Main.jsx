@@ -9,7 +9,7 @@ const Main = () => {
     return (
         <div className={styles.main}>
             <Header />
-            {/*<Bestsellers/>*/}
+            <Bestsellers/>
             <Footer/>
 
         </div>
