@@ -8,7 +8,7 @@ import {
     getDoc,
     doc,
 } from "firebase/firestore";
-import { db } from "../../FirebaseConfigs/FirebaseConfigs";
+import { db } from "../../../FirebaseConfigs/FirebaseConfigs";
 
 
 const Menu = () => {
