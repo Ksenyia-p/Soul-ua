@@ -1,0 +1,9 @@
+<svg width="104" height="156" viewBox="0 0 104 156" xmlns="http://www.w3.org/2000/svg">
+    <mask id="roundedCornerMask5" maskUnits="userSpaceOnUse">
+        <rect width="104" height="156" fill="black"/>
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M104 9C104 4.02944 99.9706 0 95 0H9C4.02944 0 0 4.02943 0 9V147C0 151.971 4.02944 156 9 156H78.5C83.1944 156 87 152.194 87 147.5V147.5C87 142.806 90.8056 139 95.5 139V139C100.194 139 104 135.194 104 130.5V9Z"
+              fill="white"/>
+    </mask>
+    <rect width="104" height="156" fill="black" mask="url(#roundedCornerMask5)"/>
+</svg>
