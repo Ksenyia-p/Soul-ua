@@ -1,0 +1,41 @@
+.filtrContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.filtrButtons {
+  display: flex;
+  gap: 40px;
+}
+
+.filtrItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filterButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.filterButton img {
+  width: 30px;
+  height: 30px;
+}
+
+.sortButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.sortButton img {
+  width: 30px;
+  height: 30px;
+}
