@@ -5,6 +5,8 @@ import Menu from './components/menu/Menu';
 import Wishlist from './pages/wishlist/Wishlist';
 import ShoppingBag from './components/shopping bag/ShoppingBag';
 import PersonalData from "./pages/personal data/PersonalData";
+import Assortment from "./pages/assortment/Assortment";
+import AboutUs from "./pages/about us/AboutUs";
 
 
 const App = () => {
@@ -17,6 +19,8 @@ const App = () => {
                 <Route path="/main" element={<Main/>}/>
                 <Route path="/shoppingback" element={<ShoppingBag/>}/>
                 <Route path="/account" element={<PersonalData/>}/>
+                <Route path="/assortment" element={<Assortment/>}/>
+                <Route path="/about_us" element={<AboutUs />}/>
 
             </Routes>
         </BrowserRouter>
