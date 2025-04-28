@@ -1,41 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: clamp(18px, 2.5vw, 36px) clamp(28px, 6.39vw, 92px) 0;
+}
+
 .filtrContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.filtrButtons {
-  display: flex;
-  gap: 40px;
-}
-
-.filtrItem {
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: clamp(9px, 1.25vw, 18px);
   align-items: center;
 }
-
-.filterButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
+.filtrIcon img {
+  width: auto;
+  height: clamp(10px, 1.39vw, 20px);
 }
 
-.filterButton img {
-  width: 30px;
-  height: 30px;
+.sortContainer {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(9px, 2.5vw, 36px);
+  align-items: center;
 }
-
-.sortButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.sortButton img {
-  width: 30px;
-  height: 30px;
+.sortIcon img {
+  width: auto;
+  height: clamp(5px, 0.63vw, 9px);
 }

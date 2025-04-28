@@ -1,61 +1,62 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #eff1f0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #eff1f0;
 }
 
 @font-face {
-    font-family: 'Unbounded-Light';
-    src: url('./fonts/Unbounded-Light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
+  font-family: "Unbounded-Light";
+  src: url("./fonts/Unbounded-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unbounded-Regular';
-    src: url('./fonts/Unbounded-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Unbounded-Regular";
+  src: url("./fonts/Unbounded-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unbounded-Medium';
-    src: url('./fonts/Unbounded-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
+  font-family: "Unbounded-Medium";
+  src: url("./fonts/Unbounded-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unbounded-SemiBold';
-    src: url('./fonts/Unbounded-SemiBold.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
+  font-family: "Unbounded-SemiBold";
+  src: url("./fonts/Unbounded-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unbounded-Bold';
-    src: url('./fonts/Unbounded-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
+  font-family: "Unbounded-Bold";
+  src: url("./fonts/Unbounded-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unbounded-Black';
-    src: url('./fonts/Unbounded-Black.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
+  font-family: "Unbounded-Black";
+  src: url("./fonts/Unbounded-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
 }
 
 body,
@@ -69,82 +70,80 @@ button,
 .h3-bold,
 .h3-underlined,
 .h3-crossed {
-    color: #515151;
-    margin: 0;
-    padding: 0;
+  color: #515151;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
-    font-family: Unbounded-Black, sans-serif;
-    font-size: clamp(18px, 2.22vw, 32px);
-    line-height: clamp(27px, 3.75vw, 54px);
-    letter-spacing: clamp(0.24em, 1vw, 0.49em);
+  font-family: Unbounded-Black, sans-serif;
+  font-size: clamp(18px, 2.22vw, 32px);
+  line-height: clamp(27px, 3.75vw, 54px);
+  letter-spacing: clamp(0.24em, 1vw, 0.49em);
 }
 
 h2 {
-    font-family: Unbounded-Regular, sans-serif;
-    font-size: clamp(14px, 1.94vw, 28px);
-    line-height: clamp(21px, 2.92vw, 42px);
-    letter-spacing: clamp(0.06em, 1vw, 0.12em);
+  font-family: Unbounded-Regular, sans-serif;
+  font-size: clamp(14px, 1.94vw, 28px);
+  line-height: clamp(21px, 2.92vw, 42px);
+  letter-spacing: clamp(0.06em, 1vw, 0.12em);
 }
 
 .h2-light {
-    font-family: Unbounded-Light, sans-serif;
-    font-size: clamp(14px, 1.94vw, 28px);
-    line-height: clamp(21px, 2.92vw, 42px);
-    letter-spacing: clamp(0.06em, 1vw, 0.12em);
+  font-family: Unbounded-Light, sans-serif;
+  font-size: clamp(14px, 1.94vw, 28px);
+  line-height: clamp(21px, 2.92vw, 42px);
+  letter-spacing: clamp(0.06em, 1vw, 0.12em);
 }
 
 h3 {
-    font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(8px, 0.9vw, 13px);
-    line-height: clamp(12px, 1.39vw, 20px);
-    letter-spacing: clamp(0.1em, 1vw, 0.16em);
+  font-family: Unbounded-Medium, sans-serif;
+  font-size: clamp(8px, 0.9vw, 13px);
+  line-height: clamp(12px, 1.39vw, 20px);
+  letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
 
 .h3-light {
-    font-family: Unbounded-Light, sans-serif;
-    font-size: clamp(8px, 0.9vw, 13px);
-    line-height: clamp(12px, 1.39vw, 20px);
-    letter-spacing: clamp(0.1em, 1vw, 0.16em);
+  font-family: Unbounded-Light, sans-serif;
+  font-size: clamp(8px, 0.9vw, 13px);
+  line-height: clamp(12px, 1.39vw, 20px);
+  letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
 
 .h3-bold {
-    font-family: Unbounded-Bold, sans-serif;
-    font-size: clamp(8px, 0.9vw, 13px);
-    line-height: clamp(12px, 1.39vw, 20px);
-    letter-spacing: clamp(0.1em, 1vw, 0.16em);
+  font-family: Unbounded-Bold, sans-serif;
+  font-size: clamp(8px, 0.9vw, 13px);
+  line-height: clamp(12px, 1.39vw, 20px);
+  letter-spacing: clamp(0.1em, 1vw, 0.16em);
 }
 
 .h3-underlined {
-    font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(8px, 0.9vw, 13px);
-    line-height: clamp(12px, 1.39vw, 20px);
-    letter-spacing: clamp(0.1em, 1vw, 0.16em);
-    text-decoration: underline;
+  font-family: Unbounded-Medium, sans-serif;
+  font-size: clamp(8px, 0.9vw, 13px);
+  line-height: clamp(12px, 1.39vw, 20px);
+  letter-spacing: clamp(0.1em, 1vw, 0.16em);
+  text-decoration: underline;
 }
 
 .h3-crossed {
-    font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(8px, 0.9vw, 13px);
-    line-height: clamp(12px, 1.39vw, 20px);
-    letter-spacing: clamp(0.1em, 1vw, 0.16em);
-    text-decoration: line-through;
+  font-family: Unbounded-Medium, sans-serif;
+  font-size: clamp(8px, 0.9vw, 13px);
+  line-height: clamp(12px, 1.39vw, 20px);
+  letter-spacing: clamp(0.1em, 1vw, 0.16em);
+  text-decoration: line-through;
 }
 
 h4 {
-    font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(6px, 0.83vw, 12px);
-    line-height: clamp(9px, 1.25vw, 18px);
-    letter-spacing: clamp(0.05em, 0.9vw, 0.14em);
+  font-family: Unbounded-Medium, sans-serif;
+  font-size: clamp(6px, 0.83vw, 12px);
+  line-height: clamp(9px, 1.25vw, 18px);
+  letter-spacing: clamp(0.05em, 0.9vw, 0.14em);
 }
 
 button {
-    font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(7px, 0.83vw, 12px);
-    line-height: clamp(10px, 1.25vw, 18px);
-    letter-spacing: clamp(0.07em, 1vw, 0.15em);
-    text-transform: uppercase;
+  font-family: Unbounded-Medium, sans-serif;
+  font-size: clamp(7px, 0.83vw, 12px);
+  line-height: clamp(10px, 1.25vw, 18px);
+  letter-spacing: clamp(0.07em, 1vw, 0.15em);
+  text-transform: uppercase;
 }
-
-

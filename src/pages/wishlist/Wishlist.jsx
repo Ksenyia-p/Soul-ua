@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Filtr from "../../components/filtr/Filtr";
+import backIcon from "../../icons/arrowlink.svg";
+import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {
   const navigate = useNavigate();
@@ -11,16 +13,17 @@ const Wishlist = () => {
     <div>
       <Header />
 
-      {/* Кнопка Назад */}
-      <div className="wishlist-container">
-        <button onClick={() => navigate(-1)} className="back-button">
+      <div className={styles.wishlistContainer}>
+        <h3 onClick={() => navigate(-1)} className={styles.backButton}>
           Назад
-        </button>
+        </h3>
+
+        <div className={styles.backIcon}>
+          <img src={backIcon} alt="/" />
+        </div>
+        <h3>Вішліст</h3>
       </div>
-
-      {/*  компонента Filtr */}
       <Filtr />
-
       <Footer />
     </div>
   );
