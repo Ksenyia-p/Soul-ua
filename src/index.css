@@ -83,15 +83,15 @@ h1 {
 
 h2 {
     font-family: Unbounded-Regular, sans-serif;
-    font-size: clamp(14px, 4vw, 28px);
-    line-height: clamp(21px, 6vw, 42px);
+    font-size: clamp(14px, 1.94vw, 28px);
+    line-height: clamp(21px, 2.92vw, 42px);
     letter-spacing: clamp(0.06em, 1vw, 0.12em);
 }
 
 .h2-light {
     font-family: Unbounded-Light, sans-serif;
-    font-size: clamp(14px, 4vw, 24px);
-    line-height: clamp(21px, 6vw, 42px);
+    font-size: clamp(14px, 1.94vw, 28px);
+    line-height: clamp(21px, 2.92vw, 42px);
     letter-spacing: clamp(0.06em, 1vw, 0.12em);
 }
 
@@ -141,9 +141,10 @@ h4 {
 
 button {
     font-family: Unbounded-Medium, sans-serif;
-    font-size: clamp(7px, 3vw, 12px);
-    line-height: clamp(10px, 4vw, 18px);
+    font-size: clamp(7px, 0.83vw, 12px);
+    line-height: clamp(10px, 1.25vw, 18px);
     letter-spacing: clamp(0.07em, 1vw, 0.15em);
+    text-transform: uppercase;
 }
 
 
