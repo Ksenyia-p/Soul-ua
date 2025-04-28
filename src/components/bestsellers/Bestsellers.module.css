@@ -6,22 +6,25 @@
     gap: clamp(0px, 0.625vw, 9px);
 }
 
-.sideTextLeft, .sideTextRight {
+.sideTextLeft {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     flex: 0 0 auto;
     display: flex;
     align-items: center;
+    margin-left: clamp(0px, 0.625vw, 9px);
     height: clamp(209px, 31.1vw, 448px);
 }
 
-.sideTextLeft {
-    margin-left: clamp(0px, 0.625vw, 9px);
+.sideTextRight {
+    writing-mode: vertical-rl;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin-right: clamp(0px, 0.625vw, 9px);
+    height: clamp(209px, 31.1vw, 448px);
 }
 
-.sideTextRight {
-    margin-right: clamp(0px, 0.625vw, 9px);
-}
 
 .section {
     background: #eff1f0;

@@ -49,7 +49,7 @@ const Bestsellers = () => {
             }
             else if (width >= 375) {
                 setMaskUrl('/masks/corner-mask-375px.svg');
-                setVisibleCount(1);
+                setVisibleCount(2);
             }
             else if (width >= 320) {
                 setMaskUrl('/masks/corner-mask-320px.svg');
