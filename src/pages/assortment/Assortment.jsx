@@ -6,8 +6,8 @@ const Assortment = () => {
     return (
         <div>
             <Header />
-            Assortment
-            <Footer/>
+            assortment
+            <Footer />
         </div>
     );
 };

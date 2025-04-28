@@ -4,9 +4,9 @@ import styles from './Bestsellers.module.css';
 import Photo1 from '../../images/photo-1.JPG';
 import Photo2 from '../../images/photo-2.JPG';
 import Photo3 from '../../images/photo-3.JPG';
-import Favorite from '../../icons/favorite.svg';
-import FavoriteFilled from '../../icons/full-favorite.svg';
 import Arrow from '../../icons/arrow.svg';
+
+import ProductCard from '../productCard/ProductCard';
 
 const Bestsellers = () => {
     const products = [
@@ -23,7 +23,6 @@ const Bestsellers = () => {
     const [maskUrl, setMaskUrl] = useState('/masks/corner-mask-2560px-1440px.svg');
     const [visibleCount, setVisibleCount] = useState(6);
 
-    // Для свайпу
     const touchStartX = useRef(null);
     const touchEndX = useRef(null);
 
@@ -130,39 +129,13 @@ const Bestsellers = () => {
                         onTouchEnd={handleTouchEnd}
                     >
                         {visibleProducts.map((product, i) => (
-                            <div key={(currentIndex + i) % products.length} className={styles.card}>
-                                <div className={styles.maskWrapper}>
-                                    {product.imgSrc ? (
-                                        <img
-                                            src={product.imgSrc}
-                                            alt={product.name}
-                                            className={styles.imageWithMask}
-                                            style={{
-                                                WebkitMaskImage: `url(${maskUrl})`,
-                                                WebkitMaskRepeat: 'no-repeat',
-                                                WebkitMaskSize: 'cover',
-                                                maskImage: `url(${maskUrl})`,
-                                                maskRepeat: 'no-repeat',
-                                                maskSize: 'cover',
-                                            }}
-                                        />
-                                    ) : (
-                                        <div className={styles.placeholder}>No Image</div>
-                                    )}
-                                    <button
-                                        className={styles.favoriteButton}
-                                        onClick={() => toggleFavorite((currentIndex + i) % products.length)}>
-                                        <img src={favorites[(currentIndex + i) % products.length] ? FavoriteFilled : Favorite}
-                                            alt="Favorite"
-                                            className={styles.favoriteIcon}/>
-                                    </button>
-                                </div>
-
-                                <div className={styles.info}>
-                                    <h3>{product.name}</h3>
-                                    <h3>{product.price}</h3>
-                                </div>
-                            </div>
+                            <ProductCard
+                                key={(currentIndex + i) % products.length}
+                                product={product}
+                                isFavorite={favorites[(currentIndex + i) % products.length]}
+                                onToggleFavorite={() => toggleFavorite((currentIndex + i) % products.length)}
+                                maskUrl={maskUrl}
+                            />
                         ))}
                     </div>
 
