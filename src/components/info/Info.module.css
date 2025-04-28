@@ -1,0 +1,6 @@
+.info {
+    align-self: center;
+    margin: clamp(100px, 13.89vw, 200px) clamp(18px, 2.08vw, 53px);
+    word-wrap: break-word;
+    white-space: normal;
+}
