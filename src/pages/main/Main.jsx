@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import styles from './Main.module.css';
 import Header from '../../components/header/Header';
 import Bestsellers from "../../components/bestsellers/Bestsellers";
@@ -7,11 +9,15 @@ import Info from "../../components/info/Info";
 import Footer from "../../components/footer/Footer";
 
 const Main = () => {
+
     return (
         <div className={styles.main}>
             <Header />
             <Bestsellers/>
-            <Info/>
+            <Link to='/assortment' className={styles.buttonBestsellers}>
+                <Button type="button">переглянути все</Button>
+            </Link>
+            <Info/>з
             <Footer/>
         </div>
     );

@@ -9,10 +9,11 @@
 }
 
 
-.buttonWrapper {
+.buttonBestsellers {
     display: flex;
     margin-top: clamp(15px, 2.08vw, 30px);
     margin-right: clamp(42px, 7.08vw, 102px);
     justify-content: end;
+    text-decoration: none;
 }
 

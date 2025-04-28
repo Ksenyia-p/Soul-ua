@@ -1,6 +1,18 @@
 .info {
     align-self: center;
-    margin: clamp(100px, 13.89vw, 200px) clamp(18px, 2.08vw, 53px);
+    margin: clamp(100px, 13.89vw, 200px) clamp(18px, 7.5vw, 192px) 0;
     word-wrap: break-word;
     white-space: normal;
 }
+
+.paragraph {
+    text-align: justify;
+}
+
+.buttonReadMore {
+    display: flex;
+    margin-top: clamp(15px, 2.08vw, 30px);
+    justify-content: start;
+    text-decoration: none;
+}
+
