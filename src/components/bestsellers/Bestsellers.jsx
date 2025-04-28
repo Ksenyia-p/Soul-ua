@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Bestsellers.module.css';
 
 import Photo1 from '../../images/photo-1.JPG';
@@ -21,7 +21,11 @@ const Bestsellers = () => {
     const [favorites, setFavorites] = useState(Array(products.length).fill(false));
     const [currentIndex, setCurrentIndex] = useState(0);
     const [maskUrl, setMaskUrl] = useState('/masks/corner-mask-2560px-1440px.svg');
-    const [visibleCount, setVisibleCount] = useState(8);
+    const [visibleCount, setVisibleCount] = useState(6);
+
+    // Для свайпу
+    const touchStartX = useRef(null);
+    const touchEndX = useRef(null);
 
     useEffect(() => {
         const updateResponsiveSettings = () => {
@@ -30,28 +34,22 @@ const Bestsellers = () => {
             if (width >= 2560) {
                 setMaskUrl('/masks/corner-mask-2560px-1440px.svg');
                 setVisibleCount(6);
-            }
-            else if (width >= 1440) {
+            } else if (width >= 1440) {
                 setMaskUrl('/masks/corner-mask-2560px-1440px.svg');
                 setVisibleCount(4);
-            }
-            else if (width >= 1024) {
+            } else if (width >= 1024) {
                 setMaskUrl('/masks/corner-mask-1024px.svg');
                 setVisibleCount(3);
-            }
-            else if (width >= 768) {
+            } else if (width >= 768) {
                 setMaskUrl('/masks/corner-mask-768px.svg');
                 setVisibleCount(3);
-            }
-            else if (width >= 425) {
-                setMaskUrl('/masks/corner-mask-375px.svg');
+            } else if (width >= 425) {
+                setMaskUrl('/masks/corner-mask-425-375px.svg');
                 setVisibleCount(2);
-            }
-            else if (width >= 375) {
-                setMaskUrl('/masks/corner-mask-375px.svg');
+            } else if (width >= 375) {
+                setMaskUrl('/masks/corner-mask-425-375px.svg');
                 setVisibleCount(2);
-            }
-            else if (width >= 320) {
+            } else if (width >= 320) {
                 setMaskUrl('/masks/corner-mask-320px.svg');
                 setVisibleCount(1);
             }
@@ -75,6 +73,30 @@ const Bestsellers = () => {
 
     const handlePrev = () => {
         setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
+    };
+
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStartX.current || !touchEndX.current) return;
+
+        const distance = touchStartX.current - touchEndX.current;
+        const minSwipeDistance = 50;
+
+        if (distance > minSwipeDistance) {
+            handleNext();
+        } else if (distance < -minSwipeDistance) {
+            handlePrev();
+        }
+
+        touchStartX.current = null;
+        touchEndX.current = null;
     };
 
     const visibleProducts = products
@@ -101,7 +123,12 @@ const Bestsellers = () => {
                         <img src={Arrow} alt="Previous" />
                     </div>
 
-                    <div className={styles.cards}>
+                    <div
+                        className={styles.cards}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
                         {visibleProducts.map((product, i) => (
                             <div key={(currentIndex + i) % products.length} className={styles.card}>
                                 <div className={styles.maskWrapper}>
@@ -124,17 +151,10 @@ const Bestsellers = () => {
                                     )}
                                     <button
                                         className={styles.favoriteButton}
-                                        onClick={() => toggleFavorite((currentIndex + i) % products.length)}
-                                    >
-                                        <img
-                                            src={
-                                                favorites[(currentIndex + i) % products.length]
-                                                    ? FavoriteFilled
-                                                    : Favorite
-                                            }
+                                        onClick={() => toggleFavorite((currentIndex + i) % products.length)}>
+                                        <img src={favorites[(currentIndex + i) % products.length] ? FavoriteFilled : Favorite}
                                             alt="Favorite"
-                                            className={styles.favoriteIcon}
-                                        />
+                                            className={styles.favoriteIcon}/>
                                     </button>
                                 </div>
 

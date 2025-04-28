@@ -74,7 +74,9 @@
     gap: clamp(21px, 4vw, 107px);
     max-width: 2462px;
     margin: 0 auto;
+    touch-action: pan-y; /* Додаємо, щоб браузер не блокував свайп */
 }
+
 
 .card {
     position: relative;
@@ -108,7 +110,6 @@
 
 .favoriteButton {
     position: absolute;
-    width: auto;
     border: none;
     background: none;
     padding: 0;
@@ -164,9 +165,9 @@
     }
 
     .favoriteButton {
-        bottom: 13px;
-        right: 9px;
-        height: 15px;
+        bottom: 10px;
+        right: 8px;
+        height: 17.5px;
     }
 }
 
@@ -181,9 +182,9 @@
     }
 
     .favoriteButton {
-        bottom: 11px;
+        bottom: 9px;
         right: 8px;
-        height: 13px;
+        height: 15px;
     }
 }
 
@@ -197,7 +198,7 @@
         height: 260px;
     }
     .favoriteButton {
-        bottom: 10px;
+        bottom: 6px;
         right: 5px;
         height: 10px;
     }
@@ -214,7 +215,7 @@
     }
 
     .favoriteButton {
-        bottom: 8px;
+        bottom: 6px;
         right: 5px;
         height: 10px;
     }
@@ -232,7 +233,7 @@
 
 
     .favoriteButton {
-        bottom: 6px;
+        bottom: 4px;
         right: 4px;
         height: 8px;
     }
