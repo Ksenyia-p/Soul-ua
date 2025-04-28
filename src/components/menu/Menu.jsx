@@ -7,12 +7,14 @@ import { db } from "../../FirebaseConfigs/FirebaseConfigs";
 const Menu = () => {
     const [groups, setGroups] = useState([]);
     const [items, setItems] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
             const groupsSnapshot = await getDocs(query(collection(db, "menu1/menu/groups"), orderBy("order")));
             const groupsData = groupsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             const itemsSnapshot = await getDocs(collection(db, "menu1/menu/items"));
             const itemsData = itemsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
             setGroups(groupsData);
             setItems(itemsData);
         }
@@ -20,21 +22,49 @@ const Menu = () => {
         fetchData();
     }, []);
 
+
+    const blocks = [...groups]
+        .sort((a, b) => a.order - b.order)
+        .map(group => ({
+            id: group.id,
+            order: group.order,
+            name: group.name,
+            items: items
+                .filter(item => item.group === group.id)
+                .sort((a, b) => a.order - b.order)
+        }));
+
+
+    const firstColumn = blocks.filter(block => block.order === 1 || block.order === 2);
+    const secondColumn = blocks.filter(block => block.order !== 1 && block.order !== 2);
+
     return (
-        <div>
-            {groups.map(group => (
-                <div key={group.id}>
-                    <h2>{group.name}</h2>
-                    <ul>
-                        {items
-                            .filter(item => item.group === group.id)
-                            .sort((a, b) => a.order - b.order) // Сортуємо айтеми по полю order
-                            .map(item => (
+        <div style={{ display: 'flex', gap: '40px' }}>
+            <div style={{ flex: '1' }}>
+                {firstColumn.map(block => (
+                    <div key={block.id} style={{ marginBottom: '30px' }}>
+                        <h2 style={{ fontWeight: 'bold' }}>{block.name}</h2>
+                        <ul style={{ listStyle: 'none', padding: 0 }}>
+                            {block.items.map(item => (
                                 <li key={item.id}>{item.name}</li>
                             ))}
-                    </ul>
-                </div>
-            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+
+            <div style={{ flex: '1' }}>
+                {secondColumn.map(block => (
+                    <div key={block.id} style={{ marginBottom: '30px' }}>
+                        <h2 style={{ fontWeight: 'bold' }}>{block.name}</h2>
+                        <ul style={{ listStyle: 'none', padding: 0 }}>
+                            {block.items.map(item => (
+                                <li key={item.id}>{item.name}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
