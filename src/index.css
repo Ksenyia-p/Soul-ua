@@ -91,7 +91,7 @@ h2 {
 
 .h2-light {
   font-family: Unbounded-Light, sans-serif;
-  font-size: clamp(14px, 1.94vw, 28px);
+  font-size: clamp(14px, 1.67vw, 24px);
   line-height: clamp(21px, 2.92vw, 42px);
   letter-spacing: clamp(0.06em, 1vw, 0.12em);
 }

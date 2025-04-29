@@ -1,9 +1,9 @@
 .wishlistContainer {
-  align-items: center;
   display: flex;
   flex-direction: row;
   margin-top: clamp(18px, 2.5vw, 36px);
   margin-left: clamp(18px, 5vw, 72px);
+  align-items: center;
 }
 .backButton {
   margin-right: clamp(2px, 0.42vw, 6px);

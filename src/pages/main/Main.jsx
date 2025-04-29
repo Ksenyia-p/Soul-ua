@@ -17,7 +17,7 @@ const Main = () => {
             <Link to='/assortment' className={styles.buttonBestsellers}>
                 <Button type="button">переглянути все</Button>
             </Link>
-            <Info/>з
+            <Info/>
             <Footer/>
         </div>
     );

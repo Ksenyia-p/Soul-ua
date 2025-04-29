@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Filtr from "../../components/filtr/Filtr";
-import backIcon from "../../icons/arrowlink.svg";
+import backIcon from "../../icons/arrow for way.svg";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {
@@ -24,6 +24,7 @@ const Wishlist = () => {
         <h3>Вішліст</h3>
       </div>
       <Filtr />
+
       <Footer />
     </div>
   );

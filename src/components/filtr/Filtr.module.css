@@ -12,9 +12,15 @@
   gap: clamp(9px, 1.25vw, 18px);
   align-items: center;
 }
+
 .filtrIcon img {
-  width: auto;
+  width: clamp(9.05px, 1.26vw, 18.1px);
   height: clamp(10px, 1.39vw, 20px);
+}
+.filtrIcon {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .sortContainer {
@@ -23,7 +29,14 @@
   gap: clamp(9px, 2.5vw, 36px);
   align-items: center;
 }
+
 .sortIcon img {
-  width: auto;
-  height: clamp(5px, 0.63vw, 9px);
+  transform: rotate(270deg);
+  height: clamp(9px, 1.18vw, 17px);
+  width: clamp(5px, 0.63vw, 9px);
+}
+.sortIcon {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
