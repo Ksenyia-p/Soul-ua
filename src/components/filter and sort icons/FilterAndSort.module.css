@@ -6,18 +6,23 @@
   margin: clamp(18px, 2.5vw, 36px) clamp(28px, 6.39vw, 92px) 0;
 }
 
-.filtrContainer {
+.filterContainer {
   display: flex;
   flex-direction: row;
   gap: clamp(9px, 1.25vw, 18px);
   align-items: center;
 }
 
-.filtrIcon img {
+.filterIcon img {
   width: clamp(9.05px, 1.26vw, 18.1px);
   height: clamp(10px, 1.39vw, 20px);
+  display: block;
 }
-.filtrIcon {
+
+.filterIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: none;
   cursor: pointer;
@@ -34,8 +39,13 @@
   transform: rotate(270deg);
   height: clamp(9px, 1.18vw, 17px);
   width: clamp(5px, 0.63vw, 9px);
+  display: block;
 }
+
 .sortIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: none;
   cursor: pointer;

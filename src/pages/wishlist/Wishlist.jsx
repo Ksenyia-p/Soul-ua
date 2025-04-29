@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import Filtr from "../../components/filtr/Filtr";
+import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
 import backIcon from "../../icons/arrow for way.svg";
 import styles from "./Wishlist.module.css";
 
@@ -16,15 +16,17 @@ const Wishlist = () => {
             <div className={styles.wishlist}>
                 <div className={styles.wishlistContainer}>
                     <h3 onClick={() => navigate(-1)} className={styles.backButton}>
-                        Назад
+                        Головна
                     </h3>
                     <div className={styles.backIcon}>
                         <img src={backIcon} alt="/"/>
                     </div>
-                    <h3>Вішліст</h3>
+                    <div className={styles.text}>
+                        <h3>Вішліст</h3>
+                    </div>
                 </div>
             </div>
-            <Filtr/>
+            <FilterAndSort/>
             <Footer/>
         </div>
     );

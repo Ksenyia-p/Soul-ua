@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import sortIcon from "../../icons/arrow.svg";
 import filterIcon from "../../icons/filter.svg";
-import styles from "./Filtr.module.css";
+import styles from "./FilterAndSort.module.css";
 
-const Filtr = () => {
+const FilterAndSort = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.filtrContainer}>
-        <button className={styles.filtrIcon}>
+      <div className={styles.filterContainer}>
+        <button className={styles.filterIcon}>
           <img src={filterIcon} alt="filter" />
         </button>
         <div className="h2-light">Фільтр</div>
@@ -22,4 +22,4 @@ const Filtr = () => {
   );
 };
 
-export default Filtr;
+export default FilterAndSort;
