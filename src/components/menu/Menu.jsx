@@ -24,7 +24,7 @@ const Menu = () => {
                 setGroups(groupsData);
                 setItems(itemsData);
             } catch (error) {
-                console.error("Ошибка при загрузке меню:", error);
+                console.error("Error", error);
             }
         }
 
@@ -34,7 +34,7 @@ const Menu = () => {
     const blocks = useMemo(() => {
         return groups.map(group => ({
             id: group.id,
-            slug: group.slug, // <--- добавляем slug группы!
+            slug: group.slug,
             order: group.order,
             name: group.name,
             items: items
@@ -81,7 +81,6 @@ const Menu = () => {
                             </h2>
 
                             <ul style={{ listStyle: 'none', padding: 0 }}>
-                                {/* Ссылки на айтемы внутри группы */}
                                 {block.items.map(item => (
                                     <li key={item.id}>
                                         <Link
