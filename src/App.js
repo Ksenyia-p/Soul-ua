@@ -11,11 +11,13 @@ import { db } from "./FirebaseConfigs/FirebaseConfigs";
 import { collection, getDocs } from 'firebase/firestore';
 import AssortmentPage from "./pages/assortmentPage/AssortmentPage";
 import { useEffect } from 'react';
+import Product from "./pages/product/Product";
 
 
 const App = () => {
     const [items, setItems] = useState([]);
     const [groups, setGroups] = useState([]);
+    const [product, setProduct] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +34,12 @@ const App = () => {
                     groupsArray.push({ id: doc.id, ...doc.data() });
                 });
                 setGroups(groupsArray);
+                const productSnapshot = await getDocs(collection(db, "catalog"));
+                const productArray = [];
+                productSnapshot.forEach((doc) => {
+                    productArray.push({ id: doc.id, ...doc.data() });
+                });
+                setProduct(productArray);
 
             } catch (error) {
                 console.error("Ошибка загрузки данных:", error);
@@ -64,6 +72,13 @@ const App = () => {
                         key={group.id}
                         path={`/${group.slug}`}
                         element={<Assortment group={group.slug} />}
+                    />
+                ))}
+                {product.map((product) => (
+                    <Route
+                        key={product.id}
+                        path={`/${product.group}/${product.items}/${product.slug}`}
+                        element={<Product group={product.group} item={product.items} slug={product.slug} />}
                     />
                 ))}
             </Routes>
