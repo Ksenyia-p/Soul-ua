@@ -7,16 +7,16 @@ const Filtr = () => {
   return (
     <div className={styles.container}>
       <div className={styles.filtrContainer}>
-        <div className={styles.filtrIcon}>
+        <button className={styles.filtrIcon}>
           <img src={filterIcon} alt="filter" />
-        </div>
+        </button>
         <div className="h2-light">Фільтр</div>
       </div>
       <div className={styles.sortContainer}>
         <div className="h2-light">Сортувати</div>
-        <div className={styles.sortIcon}>
+        <button className={styles.sortIcon}>
           <img src={sortIcon} alt="sort" />
-        </div>
+        </button>
       </div>
     </div>
   );

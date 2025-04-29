@@ -24,6 +24,7 @@ const Wishlist = () => {
         <h3>Вішліст</h3>
       </div>
       <Filtr />
+
       <Footer />
     </div>
   );
