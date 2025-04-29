@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import sortIcon from "../../icons/Vector.svg";
-import filterIcon from "../../icons/Artboard 36 1.svg";
-import backIcon from "../../icons/arrowlink.svg";
+import sortIcon from "../../icons/arrow.svg";
+import filterIcon from "../../icons/filter.svg";
 import styles from "./Filtr.module.css";
 
 const Filtr = () => {
