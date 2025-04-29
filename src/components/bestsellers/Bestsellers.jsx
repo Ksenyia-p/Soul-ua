@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Bestsellers.module.css';
-import { getFirestore, collection, getDocs } from 'firebase/firestore'
+import {collection, getDocs } from 'firebase/firestore'
 import { db } from "../../FirebaseConfigs/FirebaseConfigs";
-import Photo1 from '../../images/photo-1.JPG';
-import Photo2 from '../../images/photo-2.JPG';
-import Photo3 from '../../images/photo-3.JPG';
 import Arrow from '../../icons/arrow.svg';
 
 import ProductCard from '../productCard/ProductCard';
