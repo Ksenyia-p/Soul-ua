@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Bestsellers.module.css';
-
+import { getFirestore, collection, getDocs } from 'firebase/firestore'
+import { db } from "../../FirebaseConfigs/FirebaseConfigs";
 import Photo1 from '../../images/photo-1.JPG';
 import Photo2 from '../../images/photo-2.JPG';
 import Photo3 from '../../images/photo-3.JPG';
@@ -9,14 +10,7 @@ import Arrow from '../../icons/arrow.svg';
 import ProductCard from '../productCard/ProductCard';
 
 const Bestsellers = () => {
-    const products = [
-        { name: 'Футболка OVERSIZED', price: '750 UAH', imgSrc: Photo1 },
-        { name: 'Рашгард', price: '750 UAH', imgSrc: Photo2 },
-        { name: 'Худі STANDART', price: '1350 UAH', imgSrc: Photo3 },
-        { name: 'Товар без фото', price: '700 UAH', imgSrc: null },
-        { name: 'Товар без фото', price: '900 UAH', imgSrc: null },
-        { name: 'Товар без фото', price: '600 UAH', imgSrc: null },
-    ];
+    const [products, setProducts] = useState([]);
 
     const [favorites, setFavorites] = useState(Array(products.length).fill(false));
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,6 +21,17 @@ const Bestsellers = () => {
     const touchEndX = useRef(null);
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'bestsellers'));
+                const fetchedProducts = querySnapshot.docs.map(doc => doc.data());
+                setProducts(fetchedProducts);
+                setFavorites(Array(fetchedProducts.length).fill(false));
+            } catch (error) {
+                console.error('Error fetching bestsellers:', error);
+            }
+        };
+
         const updateResponsiveSettings = () => {
             const width = window.innerWidth;
 
@@ -53,10 +58,9 @@ const Bestsellers = () => {
                 setVisibleCount(1);
             }
         };
-
+        fetchData();
         updateResponsiveSettings();
         window.addEventListener('resize', updateResponsiveSettings);
-
         return () => window.removeEventListener('resize', updateResponsiveSettings);
     }, []);
 
@@ -104,7 +108,11 @@ const Bestsellers = () => {
             currentIndex + visibleCount > products.length
                 ? products.slice(0, (currentIndex + visibleCount) % products.length)
                 : []
-        );
+        ).map(product => ({
+            ...product,
+            imgSrc: product.image || null
+        }));
+
 
     return (
         <div className={styles.wrapper}>
