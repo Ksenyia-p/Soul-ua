@@ -1,0 +1,70 @@
+.menuWrapper {
+    position: fixed;
+    top: 0;
+    left: 30px;
+    background-color: #EFF1F0;
+    transform: translateY(-100%);
+    transition: transform 600ms ease;
+    z-index: 1001;
+    padding: clamp(18px, 2.5vw, 36px) clamp(18px, 2.5vw, 36px) 0;
+    display: flex;
+    overflow-x: auto;
+    gap: clamp(51px, 10.9vw, 197px);
+}
+
+.closeButton {
+    position: absolute;
+    top: clamp(18px, 2.5vw, 36px);
+    right: clamp(18px, 2.5vw, 36px);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1002;
+}
+
+.closeButton img {
+    width: clamp(11px, 1.5vw, 22px);
+    height: clamp(10px, 1.4vw, 20px);
+}
+
+
+.active {
+    transform: translateY(0);
+}
+
+.groupLink {
+    text-decoration: none;
+}
+
+.menuItemList {
+    list-style: none;
+    padding: 0;
+    margin: clamp(18px, 2.5vw, 36px) 0 clamp(18px, 2.5vw, 36px);
+}
+
+.menuItemLink {
+    display: block;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(81, 81, 81, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 800ms ease;
+    z-index: 1000;
+}
+
+.activeOverlay {
+    opacity: 1;
+    pointer-events: all;
+}
+
+

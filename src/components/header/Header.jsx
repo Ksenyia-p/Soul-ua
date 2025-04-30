@@ -9,17 +9,19 @@ import UserIcon from '../../icons/user.svg';
 import FavoriteIcon from '../../icons/favorite.svg';
 import BagIcon from '../../icons/bag.svg';
 import Search from "../search/Search";
+import Menu from "../menu/Menu";
 
 const Header = () => {
-    const [searchActive, setSearchActive] = React.useState();
+    const [searchActive, setSearchActive] = React.useState(false);
+    const [menuActive, setMenuActive] = React.useState(false);
+
 
     return (
         <header className={styles.header}>
-            <Link to='/menu'>
-                <div className={styles.leftImage}>
-                    <img src={MenuIcon} alt="Меню"/>
-                </div>
-            </Link>
+            <div className={styles.leftImage} onClick={() => setMenuActive(true)}>
+                <img src={MenuIcon} alt="Меню"/>
+            </div>
+
             <Link to='/'>
                 <div className={styles.logo}>
                     <img src={LogoIcon} alt="Логотип Soul"/>
@@ -37,31 +39,31 @@ const Header = () => {
 
                     <li>
                         <Link to='/account' className={styles.link}>
-                        <img src={UserIcon} alt="Особистий кабінет"/>
+                            <img src={UserIcon} alt="Особистий кабінет"/>
                             <h4>ОСОБИСТИЙ<br/>КАБІНЕТ</h4>
                         </Link>
                     </li>
 
 
-                        <li>
-                            <Link to='/wishlist' className={styles.link}>
+                    <li>
+                        <Link to='/wishlist' className={styles.link}>
                             <img src={FavoriteIcon} alt="Вішліст"/>
                             <h4>ВІШЛІСТ</h4>
-                            </Link>
-                        </li>
+                        </Link>
+                    </li>
 
 
-
-                        <li>
-                            <Link to='/shoppingback' className={styles.link}>
+                    <li>
+                        <Link to='/shoppingback' className={styles.link}>
                             <img src={BagIcon} alt="Кошик"/>
                             <h4>КОШИК</h4>
-                            </Link>
-                        </li>
+                        </Link>
+                    </li>
 
                 </ul>
             </nav>
-            <Search active={searchActive} setActive={setSearchActive} />
+            <Search active={searchActive} setActive={setSearchActive}/>
+            <Menu active={menuActive} setActive={setMenuActive} />
         </header>
     );
 };

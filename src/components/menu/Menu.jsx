@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-    collection, getDocs, query, orderBy
-} from "firebase/firestore";
+import styles from "./Menu.module.css";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfigs";
 import { Link } from "react-router-dom";
 
-const Menu = () => {
+import Cross from "../../icons/cross.svg";
+
+const Menu = ({ active, setActive }) => {
     const [groups, setGroups] = useState([]);
     const [items, setItems] = useState([]);
     const numberOfColumns = 2;
@@ -45,7 +46,7 @@ const Menu = () => {
 
     const columns = useMemo(() => {
         const cols = Array.from({ length: numberOfColumns }, () => []);
-        const rowsPerBlock = blocks.map(block => 1 + block.items.length); // 1 группа + айтемы
+        const rowsPerBlock = blocks.map(block => 1 + block.items.length);
         const totalRows = rowsPerBlock.reduce((sum, rows) => sum + rows, 0);
         const targetRowsPerColumn = Math.ceil(totalRows / numberOfColumns);
 
@@ -68,35 +69,39 @@ const Menu = () => {
     }, [blocks, numberOfColumns]);
 
     return (
-        <div style={{ display: 'flex', gap: '40px' }}>
-            {columns.map((columnBlocks, colIndex) => (
-                <div key={colIndex} style={{ flex: 1 }}>
-                    {columnBlocks.map(block => (
-                        <div key={block.id} style={{ marginBottom: '30px' }}>
-                            {/* Ссылка на саму группу */}
-                            <h2 style={{ fontWeight: 'bold' }}>
-                                <Link to={`/${block.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    {block.name}
-                                </Link>
-                            </h2>
+        <>
+            <div className={`${styles.overlay} ${active ? styles.activeOverlay : ''}`}
+                 onClick={() => setActive(false)}/>
 
-                            <ul style={{ listStyle: 'none', padding: 0 }}>
-                                {block.items.map(item => (
-                                    <li key={item.id}>
-                                        <Link
-                                            to={`/${block.slug}/${item.slug}`}
-                                            style={{ textDecoration: 'none', color: 'gray' }}
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            ))}
-        </div>
+            <div className={`${styles.menuWrapper} ${active ? styles.active : ''}`}>
+                <button className={styles.closeButton} onClick={() => setActive(false)}>
+                    <img src={Cross} alt="Закрити"/>
+                </button>
+                {columns.map((columnBlocks, colIndex) => (
+                    <div key={colIndex}>
+                        {columnBlocks.map(block => (
+                            <div key={block.id}>
+                                <Link to={`/${block.slug}`} className={styles.groupLink}>
+                                       <h3>{block.name}</h3>
+                                </Link>
+
+                                <ul className={styles.menuItemList}>
+                                    {block.items.map(item => (
+                                        <li key={item.id}>
+                                            <Link to={`/${block.slug}/${item.slug}`} className={styles.menuItemLink}>
+                                                <div className="h3-light">
+                                                    {item.name}
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </>
     );
 };
 
