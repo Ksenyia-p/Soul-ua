@@ -53,7 +53,6 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Main/>}/>
-                <Route path="/menu" element={<Menu/>}/>
                 <Route path="/wishlist" element={<Wishlist/>}/>
                 <Route path="/main" element={<Main/>}/>
                 <Route path="/shoppingback" element={<ShoppingBag/>}/>
