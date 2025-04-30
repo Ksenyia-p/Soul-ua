@@ -78,7 +78,7 @@ const Menu = ({ active, setActive }) => {
                     <img src={Cross} alt="Закрити"/>
                 </button>
                 {columns.map((columnBlocks, colIndex) => (
-                    <div key={colIndex}>
+                    <div key={colIndex} onClick={() => setActive(false)}>
                         {columnBlocks.map(block => (
                             <div key={block.id}>
                                 <Link to={`/${block.slug}`} className={styles.groupLink}>
