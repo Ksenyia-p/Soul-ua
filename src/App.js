@@ -60,27 +60,10 @@ const App = () => {
                 <Route path="/account" element={<PersonalData/>}/>
                 <Route path="/assortment" element={<Assortment/>}/>
                 <Route path="/about_us" element={<AboutUs />}/>
-                {items.map((item) => (
-                    <Route
-                        key={item.id}
-                        path={`/${item.group}/${item.slug}`}
-                        element={<AssortmentPage group={item.group} slug={item.slug} />}
-                    />
-                ))}
-                {groups.map((group) => (
-                    <Route
-                        key={group.id}
-                        path={`/${group.slug}`}
-                        element={<Assortment group={group.slug} />}
-                    />
-                ))}
-                {product.map((product) => (
-                    <Route
-                        key={product.id}
-                        path={`/${product.group}/${product.items}/${product.slug}`}
-                        element={<Product group={product.group} item={product.items} slug={product.slug} />}
-                    />
-                ))}
+                <Route path="/:group" element={<AssortmentPage />} />
+                <Route path="/:group/:item" element={<AssortmentPage />} />
+                <Route path="/:group/:item/:slug" element={<Product />} />
+
             </Routes>
         </BrowserRouter>
     );
