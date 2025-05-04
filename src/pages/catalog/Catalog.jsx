@@ -3,14 +3,14 @@ import {Link, useNavigate} from "react-router-dom";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
-import styles from "./Assortment.module.css";
+import styles from "./Catalog.module.css";
 import {collection, getDocs} from "firebase/firestore";
 import {db} from "../../FirebaseConfigs/FirebaseConfigs";
 import ProductCard from "../../components/productCard/ProductCard";
 import Way from "../../components/way/Way";
 
 
-const Assortment = () => {
+const Catalog = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
 
@@ -142,4 +142,4 @@ const Assortment = () => {
     );
 };
 
-export default Assortment;
+export default Catalog;

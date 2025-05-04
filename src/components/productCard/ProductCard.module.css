@@ -6,7 +6,6 @@
     position: relative;
     overflow: hidden;
     border-radius: clamp(12px, 1.74vw, 25px);
-    background-color: #ccc;
     z-index: 1;
 }
 

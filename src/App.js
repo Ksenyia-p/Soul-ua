@@ -5,7 +5,7 @@ import Menu from './components/menu/Menu';
 import Wishlist from './pages/wishlist/Wishlist';
 import ShoppingBag from './components/shopping bag/ShoppingBag';
 import PersonalData from "./pages/personal data/PersonalData";
-import Assortment from "./pages/assortment/Assortment";
+import Catalog from "./pages/catalog/Catalog";
 import AboutUs from "./pages/about us/AboutUs";
 import { db } from "./FirebaseConfigs/FirebaseConfigs";
 import { collection, getDocs } from 'firebase/firestore';
@@ -57,7 +57,7 @@ const App = () => {
                 <Route path="/main" element={<Main/>}/>
                 <Route path="/shoppingback" element={<ShoppingBag/>}/>
                 <Route path="/account" element={<PersonalData/>}/>
-                <Route path="/assortment" element={<Assortment/>}/>
+                <Route path="/assortment" element={<Catalog/>}/>
                 <Route path="/about_us" element={<AboutUs />}/>
                 <Route path="/:group" element={<AssortmentPage />} />
                 <Route path="/:group/:item" element={<AssortmentPage />} />
