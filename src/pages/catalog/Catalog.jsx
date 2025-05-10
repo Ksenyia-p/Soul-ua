@@ -1,26 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
-import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
-import styles from "./Catalog.module.css";
-import {collection, getDocs} from "firebase/firestore";
-import {db} from "../../FirebaseConfigs/FirebaseConfigs";
-import ProductCard from "../../components/productCard/ProductCard";
-import Way from "../../components/way/Way";
-
+import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../FirebaseConfigs/FirebaseConfigs';
+import { useNavigate } from 'react-router-dom';
+import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
+import FilterAndSort from '../../components/filter and sort icons/FilterAndSort';
+import ProductCard from '../../components/productCard/ProductCard';
+import Way from '../../components/way/Way';
+import styles from './Catalog.module.css';
 
 const Catalog = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
-
-    const [favorites, setFavorites] = useState(Array(products.length).fill(false));
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [favorites, setFavorites] = useState([]);
     const [maskUrl, setMaskUrl] = useState('/masks/corner-mask-2560px-1440px.svg');
-    const [visibleCount, setVisibleCount] = useState(6);
-
-    const touchStartX = useRef(null);
-    const touchEndX = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,40 +23,33 @@ const Catalog = () => {
                 setProducts(fetchedProducts);
                 setFavorites(Array(fetchedProducts.length).fill(false));
             } catch (error) {
-                console.error('Error fetching bestsellers:', error);
+                console.error('Error fetching catalog:', error);
             }
         };
 
-        const updateResponsiveSettings = () => {
+        const updateMaskUrl = () => {
             const width = window.innerWidth;
-
             if (width >= 2560) {
                 setMaskUrl('/masks/corner-mask-2560px-1440px.svg');
-                setVisibleCount(6);
             } else if (width >= 1440) {
                 setMaskUrl('/masks/corner-mask-2560px-1440px.svg');
-                setVisibleCount(4);
             } else if (width >= 1024) {
                 setMaskUrl('/masks/corner-mask-1024px.svg');
-                setVisibleCount(3);
             } else if (width >= 768) {
                 setMaskUrl('/masks/corner-mask-768px.svg');
-                setVisibleCount(3);
             } else if (width >= 425) {
                 setMaskUrl('/masks/corner-mask-425-375px.svg');
-                setVisibleCount(2);
             } else if (width >= 375) {
                 setMaskUrl('/masks/corner-mask-425-375px.svg');
-                setVisibleCount(2);
-            } else if (width >= 320) {
+            } else {
                 setMaskUrl('/masks/corner-mask-320px.svg');
-                setVisibleCount(1);
             }
         };
+
         fetchData();
-        updateResponsiveSettings();
-        window.addEventListener('resize', updateResponsiveSettings);
-        return () => window.removeEventListener('resize', updateResponsiveSettings);
+        updateMaskUrl();
+        window.addEventListener('resize', updateMaskUrl);
+        return () => window.removeEventListener('resize', updateMaskUrl);
     }, []);
 
     const toggleFavorite = (index) => {
@@ -72,72 +58,27 @@ const Catalog = () => {
         setFavorites(updatedFavorites);
     };
 
-    const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % products.length);
-    };
-
-    const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
-    };
-
-    const handleTouchStart = (e) => {
-        touchStartX.current = e.touches[0].clientX;
-    };
-
-    const handleTouchMove = (e) => {
-        touchEndX.current = e.touches[0].clientX;
-    };
-
-    const handleTouchEnd = () => {
-        if (!touchStartX.current || !touchEndX.current) return;
-
-        const distance = touchStartX.current - touchEndX.current;
-        const minSwipeDistance = 50;
-
-        if (distance > minSwipeDistance) {
-            handleNext();
-        } else if (distance < -minSwipeDistance) {
-            handlePrev();
-        }
-
-        touchStartX.current = null;
-        touchEndX.current = null;
-    };
-    const visibleProducts = products
-        .slice(currentIndex, currentIndex + visibleCount)
-        .concat(
-            currentIndex + visibleCount > products.length
-                ? products.slice(0, (currentIndex + visibleCount) % products.length)
-                : []
-        ).map(product => ({
-            ...product,
-            imgSrc: product.mainImage || null,
-            link: `/${product.group}/${product.items}/${product.slug}`
-        }));
     return (
         <div>
-            <div>
-                <Header/>
-                <Way>Весь каталог</Way>
-                <FilterAndSort/>
-                <div
-                    className={styles.cards}
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                >
-                    {visibleProducts.map((product, i) => (
-                        <ProductCard
-                            key={(currentIndex + i) % products.length}
-                            product={product}
-                            isFavorite={favorites[(currentIndex + i) % products.length]}
-                            onToggleFavorite={() => toggleFavorite((currentIndex + i) % products.length)}
-                            maskUrl={maskUrl}
-                        />
-                    ))}
-                </div>
-                <Footer/>
+            <Header />
+            <Way>Весь каталог</Way>
+            <FilterAndSort />
+            <div className={styles.cards}>
+                {products.map((product, index) => (
+                    <ProductCard
+                        key={index}
+                        product={{
+                            ...product,
+                            imgSrc: product.mainImage || null,
+                            link: `/${product.group}/${product.items}/${product.slug}`
+                        }}
+                        isFavorite={favorites[index]}
+                        onToggleFavorite={() => toggleFavorite(index)}
+                        maskUrl={maskUrl}
+                    />
+                ))}
             </div>
+            <Footer />
         </div>
     );
 };
