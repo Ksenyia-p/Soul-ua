@@ -67,4 +67,10 @@
     pointer-events: all;
 }
 
-
+@media screen and (max-width: 425px) {
+    .menuWrapper {
+        width: 100vw;
+        height: 100vh;
+        left: 0;
+    }
+}
