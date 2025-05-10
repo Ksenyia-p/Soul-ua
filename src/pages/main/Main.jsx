@@ -14,7 +14,7 @@ const Main = () => {
         <div className={styles.main}>
             <Header />
             <Bestsellers/>
-            <Link to='/assortment' className={styles.buttonBestsellers}>
+            <Link to='/catalog' className={styles.buttonBestsellers}>
                 <Button type="button">переглянути все</Button>
             </Link>
             <Info/>
