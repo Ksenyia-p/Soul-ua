@@ -13,6 +13,7 @@ import AssortmentPage from "./pages/assortmentPage/AssortmentPage";
 import { useEffect } from 'react';
 import Product from "./pages/product/Product";
 import LogIn from "./pages/logIn/LogIn";
+import RegistrationPage from "./pages/registration/RegistrationPage";
 
 
 const App = () => {
@@ -59,6 +60,7 @@ const App = () => {
                 <Route path="/shoppingback" element={<ShoppingBag/>}/>
                 <Route path="/account" element={<PersonalData/>}/>
                 <Route path="/login" element={<LogIn/>}/>
+                <Route path="/login/registration" element={<RegistrationPage/>}/>
                 <Route path="/catalog" element={<Catalog/>}/>
                 <Route path="/about_us" element={<AboutUs />}/>
                 <Route path="/:group" element={<AssortmentPage />} />
