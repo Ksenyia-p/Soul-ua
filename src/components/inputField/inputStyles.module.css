@@ -6,6 +6,17 @@
 
     & label {
         align-self: flex-start;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 1px;
+            right: -5px;
+            width: 7px;
+            height: 6px;
+            background-image: url("../../icons/SymbolMandatory.svg");
+        }
     }
 
     & input {
