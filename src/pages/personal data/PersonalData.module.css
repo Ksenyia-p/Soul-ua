@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: clamp(18px, 2.5vw, 36px) clamp(28px, 6.39vw, 92px) 0;
+}
