@@ -12,6 +12,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import AssortmentPage from "./pages/assortmentPage/AssortmentPage";
 import { useEffect } from 'react';
 import Product from "./pages/product/Product";
+import LogIn from "./pages/logIn/LogIn";
 
 
 const App = () => {
@@ -57,6 +58,7 @@ const App = () => {
                 <Route path="/main" element={<Main/>}/>
                 <Route path="/shoppingback" element={<ShoppingBag/>}/>
                 <Route path="/account" element={<PersonalData/>}/>
+                <Route path="/login" element={<LogIn/>}/>
                 <Route path="/catalog" element={<Catalog/>}/>
                 <Route path="/about_us" element={<AboutUs />}/>
                 <Route path="/:group" element={<AssortmentPage />} />
