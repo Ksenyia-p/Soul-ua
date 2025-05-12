@@ -1,0 +1,27 @@
+.wrapper {
+    width: clamp(250px, 50vw, 500px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    & label {
+        align-self: flex-start;
+    }
+
+    & input {
+        width: 100%;
+        height: clamp(20px, 5vw, 40px);
+        padding: 10px 15px;
+        font-family: Unbounded-Regular, sans-serif;
+        color: #515151FF;
+        border: none;
+        border-radius: 14px;
+        background: #EFF1F0;
+        box-shadow: 4px 4px 4px 0 #C4C7C5 inset, -5px -5px 5px 0 #FBFFFD inset;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
