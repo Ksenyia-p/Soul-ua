@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styles from './Header.module.css';
 import {Link} from 'react-router-dom';
@@ -10,10 +10,23 @@ import FavoriteIcon from '../../icons/favorite.svg';
 import BagIcon from '../../icons/bag.svg';
 import Search from "../search/Search";
 import Menu from "../menu/Menu";
+import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
-    const [searchActive, setSearchActive] = React.useState(false);
-    const [menuActive, setMenuActive] = React.useState(false);
+    const [searchActive, setSearchActive] = useState(false);
+    const [menuActive, setMenuActive] = useState(false);
+
+
+    const { isAuthenticated } = useAuth(); // <-- контекст
+    const navigate = useNavigate();
+
+    const handleAccountClick = () => {
+        if (isAuthenticated) {
+            navigate("/account");
+        } else {
+            navigate("/login");
+        }
+    };
 
 
     return (
@@ -38,10 +51,10 @@ const Header = () => {
 
 
                     <li>
-                        <Link to='/account' className={styles.link}>
-                            <img src={UserIcon} alt="Особистий кабінет"/>
-                            <h4>ОСОБИСТИЙ<br/>КАБІНЕТ</h4>
-                        </Link>
+                        <button onClick={handleAccountClick} className={styles.personalDataIcon}>
+                            <img src={UserIcon} alt="Особистий кабінет" />
+                            <h4>ОСОБИСТИЙ<br />КАБІНЕТ</h4>
+                        </button>
                     </li>
 
 
