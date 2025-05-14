@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../FirebaseConfigs/FirebaseConfigs';
 import styles from './Product.module.css';
@@ -12,7 +12,8 @@ import ColourIcon from '../../components/colourIcon/ColourIcon';
 import Button from "../../components/button/Button";
 
 const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
-    const { slug } = useParams();
+    const { slug,color } = useParams();
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedColorKey, setSelectedColorKey] = useState(null);
@@ -27,7 +28,9 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
                     const data = { id: productDoc.id, ...productDoc.data() };
                     setProduct(data);
                     const firstColorKey = Object.keys(data.colors)[0];
-                    setSelectedColorKey(firstColorKey);
+                    const defaultColorKey = color && data.colors[color] ? color : firstColorKey;
+                    setSelectedColorKey(defaultColorKey);
+
                 } else {
                     setProduct(null);
                 }
@@ -43,7 +46,9 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
     const handleColorChange = (colorKey) => {
         setSelectedColorKey(colorKey);
         setSelectedSize('');
+        navigate(`/${product.group}/${product.items}/${slug}/${colorKey}`);
     };
+
 
     const selectedColor = selectedColorKey && product?.colors?.[selectedColorKey];
     const icon = isFavorite ? FavoriteFilled : Favorite;
