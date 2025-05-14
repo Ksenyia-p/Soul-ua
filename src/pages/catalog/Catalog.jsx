@@ -12,9 +12,9 @@ import styles from "./Catalog.module.css";
 const Catalog = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState({});
   const [maskUrl, setMaskUrl] = useState(
-    "/masks/corner-mask-2560px-1440px.svg"
+      "/masks/corner-mask-2560px-1440px.svg"
   );
 
   useEffect(() => {
@@ -33,15 +33,11 @@ const Catalog = () => {
       const width = window.innerWidth;
       if (width >= 2560) {
         setMaskUrl("/masks/corner-mask-2560px-1440px.svg");
-      } else if (width >= 1440) {
-        setMaskUrl("/masks/corner-mask-2560px-1440px.svg");
       } else if (width >= 1024) {
         setMaskUrl("/masks/corner-mask-1024px.svg");
       } else if (width >= 768) {
         setMaskUrl("/masks/corner-mask-768px.svg");
       } else if (width >= 425) {
-        setMaskUrl("/masks/corner-mask-425-375px.svg");
-      } else if (width >= 375) {
         setMaskUrl("/masks/corner-mask-425-375px.svg");
       } else {
         setMaskUrl("/masks/corner-mask-320px.svg");
@@ -54,34 +50,44 @@ const Catalog = () => {
     return () => window.removeEventListener("resize", updateMaskUrl);
   }, []);
 
-  const toggleFavorite = (index) => {
-    const updatedFavorites = [...favorites];
-    updatedFavorites[index] = !updatedFavorites[index];
-    setFavorites(updatedFavorites);
+  const toggleFavorite = (productSlug, colorKey) => {
+    const key = `${productSlug}-${colorKey}`;
+    setFavorites((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
   };
 
+
   return (
-    <div>
-      <Header />
-      <Way>Весь каталог</Way>
-      <FilterAndSort />
-      <div className={styles.cards}>
-        {products.map((product, index) => (
-          <ProductCard
-            key={index}
-            product={{
-              ...product,
-              imgSrc: product.mainImage || null,
-              link: `/${product.group}/${product.items}/${product.slug}`,
-            }}
-            isFavorite={favorites[index]}
-            onToggleFavorite={() => toggleFavorite(index)}
-            maskUrl={maskUrl}
-          />
-        ))}
+      <div>
+        <Header/>
+        <Way>Весь каталог</Way>
+        <FilterAndSort/>
+        <div className={styles.cards}>
+          {products.map((product, productIndex) => {
+            const colorEntries = Object.entries(product.colors || {});
+
+            return colorEntries.map(([colorKey, color], colorIndex) => (
+                <ProductCard
+                    key={`${productIndex}-${colorKey}`}
+                    product={{
+                      ...product,
+                      imgSrc: color.mainImage,
+                      link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
+                      color: colorKey,
+                    }}
+                    isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
+                    onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
+                    maskUrl={maskUrl}
+                />
+
+            ));
+          })}
+        </div>
+
+        <Footer/>
       </div>
-      <Footer />
-    </div>
   );
 };
 

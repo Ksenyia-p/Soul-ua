@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './pages/main/Main';
 import Menu from './components/menu/Menu';
 import Wishlist from './pages/wishlist/Wishlist';
@@ -10,11 +10,9 @@ import AboutUs from "./pages/about us/AboutUs";
 import { db } from "./FirebaseConfigs/FirebaseConfigs";
 import { collection, getDocs } from 'firebase/firestore';
 import AssortmentPage from "./pages/assortmentPage/AssortmentPage";
-import { useEffect } from 'react';
 import Product from "./pages/product/Product";
 import LogIn from "./pages/logIn/LogIn";
 import RegistrationPage from "./pages/registration/RegistrationPage";
-
 
 const App = () => {
     const [items, setItems] = useState([]);
@@ -25,24 +23,16 @@ const App = () => {
         const fetchData = async () => {
             try {
                 const itemsSnapshot = await getDocs(collection(db, "menu1/menu/items"));
-                const itemsArray = [];
-                itemsSnapshot.forEach((doc) => {
-                    itemsArray.push({ id: doc.id, ...doc.data() });
-                });
+                const itemsArray = itemsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setItems(itemsArray);
-                const groupsSnapshot = await getDocs(collection(db, "menu1/menu/groups"));
-                const groupsArray = [];
-                groupsSnapshot.forEach((doc) => {
-                    groupsArray.push({ id: doc.id, ...doc.data() });
-                });
-                setGroups(groupsArray);
-                const productSnapshot = await getDocs(collection(db, "catalog"));
-                const productArray = [];
-                productSnapshot.forEach((doc) => {
-                    productArray.push({ id: doc.id, ...doc.data() });
-                });
-                setProduct(productArray);
 
+                const groupsSnapshot = await getDocs(collection(db, "menu1/menu/groups"));
+                const groupsArray = groupsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setGroups(groupsArray);
+
+                const productSnapshot = await getDocs(collection(db, "catalog"));
+                const productArray = productSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setProduct(productArray);
             } catch (error) {
                 console.error("Ошибка загрузки данных:", error);
             }
@@ -54,24 +44,21 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Main/>}/>
-                <Route path="/wishlist" element={<Wishlist/>}/>
-                <Route path="/main" element={<Main/>}/>
-                <Route path="/shoppingback" element={<ShoppingBag/>}/>
-                <Route path="/account" element={<PersonalData/>}/>
-                <Route path="/login" element={<LogIn/>}/>
-                <Route path="/login/registration" element={<RegistrationPage/>}/>
-                <Route path="/catalog" element={<Catalog/>}/>
-                <Route path="/about_us" element={<AboutUs />}/>
+                <Route path="/" element={<Main />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/main" element={<Main />} />
+                <Route path="/shoppingback" element={<ShoppingBag />} />
+                <Route path="/account" element={<PersonalData />} />
+                <Route path="/login" element={<LogIn />} />
+                <Route path="/login/registration" element={<RegistrationPage />} />
+                <Route path="/catalog" element={<Catalog />} />
+                <Route path="/about_us" element={<AboutUs />} />
                 <Route path="/:group" element={<AssortmentPage />} />
                 <Route path="/:group/:item" element={<AssortmentPage />} />
-                <Route path="/:group/:item/:slug" element={<Product />} />
-
+                <Route path="/:group/:item/:slug/:color" element={<Product />} />
             </Routes>
         </BrowserRouter>
     );
 };
 
 export default App;
-
-

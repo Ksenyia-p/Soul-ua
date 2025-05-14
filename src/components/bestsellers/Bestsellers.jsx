@@ -108,7 +108,7 @@ const Bestsellers = () => {
         ).map(product => ({
             ...product,
             imgSrc: product.image || null,
-            link: `/${product.group}/${product.items}/${product.slug}`
+            link: `/${product.group}/${product.items}/${product.slug}/${product.color}`
         }));
 
 
