@@ -1,0 +1,65 @@
+.wishlist {
+    margin-top: clamp(18px, 2.5vw, 36px);
+    margin-left: clamp(18px, 5vw, 72px);
+}
+
+.wishlistContainer {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    margin-right: clamp(2px, 0.42vw, 6px);
+    border: none;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.backIcon {
+    display: flex;
+    align-items: center;
+    margin-right: clamp(4px, 0.56vw, 8px);
+}
+
+.backIcon img {
+    width: clamp(7.04px, 1.74vw, 25px);
+    height: auto;
+}
+
+.cards {
+    display: grid;
+    gap: clamp(36px, 5vw, 72px);
+    padding: 36px;
+    justify-items: center;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1440px) {
+    .cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 2560px) {
+    .cards {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
