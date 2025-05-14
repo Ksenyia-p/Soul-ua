@@ -26,7 +26,7 @@
         font-family: Unbounded-Regular, sans-serif;
         color: #515151FF;
         border: none;
-        border-radius: 14px;
+        border-radius: clamp(7px, 2.18vw, 14px);
         background: #EFF1F0;
         box-shadow: 4px 4px 4px 0 #C4C7C5 inset, -5px -5px 5px 0 #FBFFFD inset;
 
