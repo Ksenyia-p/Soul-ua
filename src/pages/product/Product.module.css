@@ -1,12 +1,14 @@
 .product {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .content {
     display: flex;
     gap: 72px;
-    margin-left: clamp(36px, 5vw, 72px);
+    margin-left: clamp(16px, 5vw, 72px);
+    margin-right: clamp(16px, 5vw, 72px);
     align-items: flex-start;
 }
 
@@ -14,7 +16,6 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: clamp(18px, 2.5vw, 36px);
-    max-width: 836px;
 }
 
 .photos img {
@@ -31,21 +32,27 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: clamp(18px, 2.5vw, 36px);
+    align-items: flex-start;
+}
+.namePrice {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.priceFavorite {
+.nameFavorite {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 18px;
+    gap: 14px;
 }
 
 .favoriteButton {
     border: none;
     background: none;
     cursor: pointer;
-    height: clamp(10px, 1.39vw, 20px);
+    height: clamp(18px, 2vw, 29px);
 }
 
 .favoriteButton img {
@@ -74,7 +81,7 @@
 
 .sizeList {
     display: flex;
-    gap: clamp(4.5px, 0.625vw, 9px);
+    gap: 12px;
 }
 
 .sizeButton {
@@ -88,8 +95,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: clamp(14px, 1.8vw, 26px);
-    width: clamp(16px, 2.08vw, 30px);
+    height: clamp(18px, 1.8vw, 26px);
+    width: clamp(20px, 2.08vw, 30px);
     border-radius: clamp(4px, 0.55vw, 8px);
     box-shadow:
             -1px -1px 2px rgba(255, 255, 255, 0.7),
@@ -100,7 +107,6 @@
 }
 
 .sizeUnavailable {
-    text-decoration: line-through;
     color: #aaa;
     cursor: pointer;
 }
@@ -117,4 +123,34 @@
 
 .textButton {
     cursor: pointer;
+}
+
+
+@media (max-width: 953px) {
+    .content {
+        flex-direction: column;
+        gap: clamp(16px, 3.77vw, 36px);
+    }
+
+    .photos {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: clamp(18px, 4.8vw, 36px);
+        width: 100%;
+    }
+
+
+    .photos img {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+    }
+
+    .text {
+        position: static;
+        top: auto;
+        max-width: 100%;
+        width: 100%;
+    }
 }
