@@ -9,8 +9,8 @@ const Way = ({children, onClick}) => {
     const navigate = useNavigate();
 
     return (
-        <div className={styles.wishlist}>
-            <div className={styles.wishlistContainer}>
+        <div className={styles.way}>
+            <div className={styles.wayContainer}>
                 <h3 onClick={() => navigate(-1)} className={styles.backButton}>
                     Назад
                 </h3>
