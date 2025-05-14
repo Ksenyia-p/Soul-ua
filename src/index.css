@@ -142,8 +142,8 @@ h4 {
 
 button {
   font-family: Unbounded-Medium, sans-serif;
-  font-size: clamp(7px, 0.83vw, 12px);
-  line-height: clamp(10px, 1.25vw, 18px);
-  letter-spacing: clamp(0.07em, 1vw, 0.15em);
+  font-size: clamp(9px, 0.83vw, 12px);
+  line-height: clamp(13px, 1.25vw, 18px);
+  letter-spacing: clamp(0.1em, 1vw, 0.15em);
   text-transform: uppercase;
 }
