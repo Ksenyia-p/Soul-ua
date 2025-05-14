@@ -11,7 +11,7 @@ import Way from "../../components/way/Way";
 import styles from "./AssortmentPage.module.css";
 const AssortmentPage = () => {
     const navigate = useNavigate();
-    const { group, items } = useParams(); // ← сюда попадут "women" и "pants", если путь /women/pants
+    const { group, items } = useParams();
     const [products, setProducts] = useState([]);
     const [favorites, setFavorites] = useState({});
     const [maskUrl, setMaskUrl] = useState("/masks/corner-mask-2560px-1440px.svg");
