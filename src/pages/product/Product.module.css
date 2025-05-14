@@ -1,12 +1,11 @@
 .product {
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
 }
 
 .content {
     display: flex;
-    gap: 72px;
+    gap: 80px;
     margin-left: clamp(16px, 5vw, 72px);
     margin-right: clamp(16px, 5vw, 72px);
     align-items: flex-start;
