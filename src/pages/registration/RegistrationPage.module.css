@@ -10,16 +10,20 @@
 
     & .h2 {
         text-align: center;
-        margin-bottom: 72px;
+        margin-bottom: clamp(36px, 5vw, 72px);
     }
 }
-
+.nameAndSurname {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(10px, 1.39vw, 20px);
+}
 
 .firstInput {
-    margin-bottom: 36px;
+    margin-bottom: clamp(18px, 2.5vw, 36px);
 }
 .secondInput {
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 2.22vw, 32px);
 }
 
 .forgotPassword {
@@ -33,15 +37,13 @@
 
 .textButtonWrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
 }
 
 
 .registerInvite {
 
-    & p {
+    & h3 {
         margin-bottom: clamp(8px, 0.97vw, 14px);
     }
     & a {

@@ -6,6 +6,7 @@ import loginStyles from "./RegistrationPage.module.css";
 import Button from "../../components/button/Button";
 import clsx from "clsx";
 import InputField from "../../components/inputField/InputField";
+import SmallInputField from "../../components/small inputField/SmallInputField";
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "../../context/AuthContext";
@@ -79,24 +80,26 @@ const RegistrationPage = () => {
             <div className={loginStyles.container}>
                 <div className={loginStyles.contentWrapper}>
                     <h2 className={clsx(loginStyles.h2, "h2-light")}>Реєстрація</h2>
-                    {error && <p className={loginStyles.errorMessage}>{error}</p>}
+                    {error && <h3 className={loginStyles.errorMessage}>{error}</h3>}
                     <form>
-                        <InputField
-                            label="Імʼя"
-                            type="text"
-                            name="firstName"
-                            id="firstName"
-                            onChange={(e) => setFirstName(e.target.value)}
-                            wrapperClass={loginStyles.firstInput}
-                        />
-                        <InputField
-                            label="Прізвище"
-                            type="text"
-                            name="lastName"
-                            id="lastName"
-                            onChange={(e) => setLastName(e.target.value)}
-                            wrapperClass={loginStyles.firstInput}
-                        />
+                        <div className={loginStyles.nameAndSurname}>
+                            <SmallInputField
+                                label="Імʼя"
+                                type="text"
+                                name="firstName"
+                                id="firstName"
+                                onChange={(e) => setFirstName(e.target.value)}
+                                wrapperClass={loginStyles.firstInput}
+                            />
+                            <SmallInputField
+                                label="Прізвище"
+                                type="text"
+                                name="lastName"
+                                id="lastName"
+                                onChange={(e) => setLastName(e.target.value)}
+                                wrapperClass={loginStyles.firstInput}
+                            />
+                        </div>
                         <InputField
                             label="Телефон"
                             type="text"
