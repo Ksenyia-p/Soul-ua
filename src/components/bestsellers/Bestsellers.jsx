@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Bestsellers.module.css';
-import {collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from "../../FirebaseConfigs/FirebaseConfigs";
 import Arrow from '../../icons/arrow.svg';
 
@@ -8,8 +8,7 @@ import ProductCard from '../productCard/ProductCard';
 
 const Bestsellers = () => {
     const [products, setProducts] = useState([]);
-
-    const [favorites, setFavorites] = useState(Array(products.length).fill(false));
+    const [favorites, setFavorites] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [maskUrl, setMaskUrl] = useState('/masks/corner-mask-2560px-1440px.svg');
     const [visibleCount, setVisibleCount] = useState(6);
@@ -20,10 +19,47 @@ const Bestsellers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, 'bestsellers'));
-                const fetchedProducts = querySnapshot.docs.map(doc => doc.data());
-                setProducts(fetchedProducts);
-                setFavorites(Array(fetchedProducts.length).fill(false));
+                const bestsellersSnapshot = await getDocs(collection(db, 'bestsellers'));
+                const bestsellers = bestsellersSnapshot.docs.map(doc => doc.data());
+
+                const productsWithDetails = [];
+
+                for (const bestseller of bestsellers) {
+                    const catalogDocRef = doc(db, 'catalog', bestseller.slug);
+                    const catalogSnap = await getDoc(catalogDocRef);
+
+                    if (catalogSnap.exists()) {
+                        const productData = catalogSnap.data();
+
+                        const colorKey = bestseller.color;
+                        const colorData = productData.colors?.[colorKey];
+
+                        if (colorData) {
+                            productsWithDetails.push({
+                                ...productData,
+                                color: colorKey,
+                                colorName: colorData.colorName,
+                                hex: colorData.hex,
+                                images: colorData.images || [],
+                                mainImage: colorData.mainImage || null,
+                                imgSrc: colorData.mainImage || (colorData.images && colorData.images[0]) || null,
+                                link: `/${productData.group}/${productData.items}/${productData.slug}/${colorKey}`
+                            });
+                        } else {
+                            productsWithDetails.push({
+                                ...productData,
+                                color: colorKey,
+                                imgSrc: null,
+                                link: `/${productData.group}/${productData.items}/${productData.slug}/${colorKey}`
+                            });
+                        }
+                    } else {
+                        console.warn('Catalog product not found:', bestseller.slug);
+                    }
+                }
+
+                setProducts(productsWithDetails);
+                setFavorites(Array(productsWithDetails.length).fill(false));
             } catch (error) {
                 console.error('Error fetching bestsellers:', error);
             }
@@ -55,6 +91,7 @@ const Bestsellers = () => {
                 setVisibleCount(1);
             }
         };
+
         fetchData();
         updateResponsiveSettings();
         window.addEventListener('resize', updateResponsiveSettings);
@@ -105,12 +142,7 @@ const Bestsellers = () => {
             currentIndex + visibleCount > products.length
                 ? products.slice(0, (currentIndex + visibleCount) % products.length)
                 : []
-        ).map(product => ({
-            ...product,
-            imgSrc: product.image || null,
-            link: `/${product.group}/${product.items}/${product.slug}/${product.color}`
-        }));
-
+        );
 
     return (
         <div className={styles.wrapper}>
@@ -138,8 +170,6 @@ const Bestsellers = () => {
                             <ProductCard
                                 key={(currentIndex + i) % products.length}
                                 product={product}
-                                isFavorite={favorites[(currentIndex + i) % products.length]}
-                                onToggleFavorite={() => toggleFavorite((currentIndex + i) % products.length)}
                                 maskUrl={maskUrl}
                             />
                         ))}
