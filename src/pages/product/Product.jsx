@@ -158,6 +158,14 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
                         <Button type="button">
                             {buttonText}
                         </Button>
+                        <div className={styles.description}>
+                            <div className="h3-bold">Опис</div>
+                            <h4>Lorem ipsum dolor sit amet consectetur. Fringilla sed augue nunc in id a convallis. Sit cras eu adipiscing ut parturient. In dignissim magna massa </h4>
+                        </div>
+                        <div className={styles.care}>
+                            <div className="h3-bold">Склад та догляд</div>
+                            <h4>Lorem ipsum dolor sit amet consectetur. Fringilla sed augue nunc in id a convallis. Sit cras eu adipiscing </h4>
+                        </div>
                     </div>
                 </div>
             ) : (

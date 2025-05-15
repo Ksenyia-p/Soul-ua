@@ -124,6 +124,13 @@
     cursor: pointer;
 }
 
+.description,
+.care {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1.25vw, 18px);
+}
+
 
 @media (max-width: 953px) {
     .content {
@@ -151,5 +158,9 @@
         top: auto;
         max-width: 100%;
         width: 100%;
+    }
+    .description,
+    .care {
+        max-width: 160px;
     }
 }
