@@ -8,8 +8,14 @@
     z-index: 1001;
     padding: clamp(18px, 2.5vw, 36px) clamp(18px, 2.5vw, 36px) 0;
     display: flex;
+    align-items: flex-start;
     overflow-x: auto;
     gap: clamp(51px, 10.9vw, 197px);
+}
+
+.menuWrapper > div {
+    flex-shrink: 0;
+    width: max-content;
 }
 
 .closeButton {
@@ -35,6 +41,9 @@
 
 .groupLink {
     text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    width: max-content;
 }
 
 .menuItemList {
@@ -44,9 +53,10 @@
 }
 
 .menuItemLink {
-    display: block;
+    display: inline-block;
     text-decoration: none;
     transition: color 0.3s ease;
+    width: max-content;
 }
 
 .overlay {
