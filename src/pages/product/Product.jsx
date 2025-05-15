@@ -1,23 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import {useParams, useNavigate} from 'react-router-dom';
-import {getDocs, collection} from 'firebase/firestore';
-import {db} from '../../FirebaseConfigs/FirebaseConfigs';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '../../FirebaseConfigs/FirebaseConfigs';
 import styles from './Product.module.css';
 import Way from '../../components/way/Way';
 import FavoriteFilled from "../../icons/full-favorite.svg";
 import Favorite from "../../icons/favorite.svg";
 import ColourIcon from '../../components/colourIcon/ColourIcon';
 import Button from "../../components/button/Button";
+import FullScreenPhoto from "../../components/full screen photo/FullScreenPhoto";
 
-const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
-    const {slug, color} = useParams();
+
+const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
+    const { slug, color } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedColorKey, setSelectedColorKey] = useState(null);
     const [selectedSize, setSelectedSize] = useState('');
+    const [fullscreenIndex, setFullscreenIndex] = useState(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -25,7 +28,7 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
                 const querySnapshot = await getDocs(collection(db, 'catalog'));
                 const productDoc = querySnapshot.docs.find(doc => doc.data().slug === slug);
                 if (productDoc) {
-                    const data = {id: productDoc.id, ...productDoc.data()};
+                    const data = { id: productDoc.id, ...productDoc.data() };
                     setProduct(data);
 
                     const firstColorKey = Object.keys(data.colors)[0];
@@ -53,13 +56,11 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
         }
     }, [color, product]);
 
-
     const handleColorChange = (colorKey) => {
         setSelectedColorKey(colorKey);
         setSelectedSize('');
         navigate(`/${product.group}/${product.items}/${slug}/${colorKey}`);
     };
-
 
     const selectedColor = selectedColorKey && product?.colors?.[selectedColorKey];
     const icon = isFavorite ? FavoriteFilled : Favorite;
@@ -76,7 +77,7 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
 
     return (
         <div className={styles.product}>
-            <Header/>
+            <Header />
             <Way>{loading ? 'Завантаження...' : (product ? product.name : 'Товар не знайдено')}</Way>
 
             {loading ? (
@@ -85,9 +86,16 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
                 <div className={styles.content}>
                     <div className={styles.photos}>
                         {selectedColor?.images?.map((url, index) => (
-                            <img key={index} src={url.trim()} alt={`${product.name} ${index + 1}`}/>
+                            <img
+                                key={index}
+                                src={url.trim()}
+                                alt={`${product.name} ${index + 1}`}
+                                onClick={() => setFullscreenIndex(index)}
+                                style={{ cursor: 'zoom-in' }}
+                            />
                         ))}
                     </div>
+
                     <div className={styles.text}>
                         <div className={styles.namePrice}>
                             <div className={styles.nameFavorite}>
@@ -106,12 +114,12 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
                                     />
                                 </button>
                             </div>
-                                <div className="h3-light">{product.price}</div>
+                            <div className="h3-light">{product.price}</div>
                         </div>
 
                         <div className={styles.color}>
                             <h3><strong>Колір:</strong> {selectedColor?.colorName}</h3>
-                            <div style={{display: 'flex', gap: '12px'}}>
+                            <div style={{ display: 'flex', gap: '12px' }}>
                                 {product.colors && Object.entries(product.colors).map(([key, colorData]) => (
                                     <ColourIcon
                                         key={key}
@@ -130,16 +138,14 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
                                     ['S', 'M', 'L'].map(size => {
                                         const available = selectedColor.sizes[size];
                                         if (available === undefined) return null;
-                                        const isSelected = selectedSize === size;
                                         return (
                                             <button
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
                                                 className={`${styles.sizeButton}
-        ${available === 0 ? styles.sizeUnavailable : ''}
-        ${selectedSize === size ? styles.sizeSelected : ''}`}
+                                                ${available === 0 ? styles.sizeUnavailable : ''}
+                                                ${selectedSize === size ? styles.sizeSelected : ''}`}
                                             >
-
                                                 {size}
                                             </button>
                                         );
@@ -157,7 +163,14 @@ const Product = ({isFavorite, onToggleFavorite, wishlistMode = false}) => {
             ) : (
                 <h3>Товар не знайдено.</h3>
             )}
-            <Footer/>
+            <Footer />
+            {fullscreenIndex !== null && (
+                <FullScreenPhoto
+                    images={selectedColor?.images || []}
+                    startIndex={fullscreenIndex}
+                    onClose={() => setFullscreenIndex(null)}
+                />
+            )}
         </div>
     );
 };
