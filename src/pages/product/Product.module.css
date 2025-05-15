@@ -47,23 +47,12 @@
     gap: 14px;
 }
 
-.favoriteButton {
-    border: none;
-    background: none;
-    cursor: pointer;
-    height: clamp(18px, 2vw, 29px);
-}
-
-.favoriteButton img {
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.favoriteIcon {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.favoriteWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: clamp(15px, 1.39vw, 20px);
+    width: clamp(18px, 1.74vw, 25px);
 }
 
 .color {

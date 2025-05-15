@@ -27,26 +27,13 @@
     white-space: normal;
 }
 
-.favoriteButton {
+.favoriteWrapper {
     position: absolute;
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
+    right: 10px;
+    bottom: 12px;
+    height: 20px;
+    width: 25px;
     z-index: 2;
-}
-
-.favoriteButton img {
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.favoriteIcon {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
 }
 
 
@@ -56,11 +43,11 @@
         height: 390px;
     }
 
-
-    .favoriteButton {
+    .favoriteWrapper {
         bottom: 12px;
         right: 10px;
         height: 20px;
+        width: 25px;
     }
 }
 
@@ -70,11 +57,11 @@
         height: 341px;
     }
 
-
-    .favoriteButton {
+    .favoriteWrapper {
         bottom: 10px;
         right: 8px;
         height: 17.5px;
+        width: 21.55px;
     }
 }
 
@@ -84,11 +71,11 @@
         height: 293px;
     }
 
-
-    .favoriteButton {
+    .favoriteWrapper {
         bottom: 9px;
         right: 8px;
         height: 15px;
+        width: 18px;
     }
 }
 
@@ -98,11 +85,11 @@
         height: 195px;
     }
 
-
-    .favoriteButton {
+    .favoriteWrapper {
         bottom: 6px;
         right: 5px;
         height: 10px;
+        width: 12px;
     }
 }
 
@@ -112,12 +99,11 @@
         height: 195px;
     }
 
-
-
-    .favoriteButton {
+    .favoriteWrapper {
         bottom: 6px;
         right: 5px;
         height: 10px;
+        width: 12px;
     }
 }
 
@@ -127,10 +113,10 @@
         height: 156px;
     }
 
-
-    .favoriteButton {
+    .favoriteWrapper {
         bottom: 4px;
         right: 4px;
         height: 8px;
+        width: 10px;
     }
 }

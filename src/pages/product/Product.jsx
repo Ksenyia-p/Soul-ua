@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../FirebaseConfigs/FirebaseConfigs';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import styles from './Product.module.css';
 import Way from '../../components/way/Way';
-import FavoriteFilled from "../../icons/full-favorite.svg";
-import Favorite from "../../icons/favorite.svg";
+import Favorite from "../../components/favorite/Favorite";
 import ColourIcon from '../../components/colourIcon/ColourIcon';
 import Button from "../../components/button/Button";
 import FullScreenPhoto from "../../components/full screen photo/FullScreenPhoto";
 
 
-const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
+const Product = ({ wishlistMode = false }) => {
     const { slug, color } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
@@ -21,6 +21,20 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
     const [selectedColorKey, setSelectedColorKey] = useState(null);
     const [selectedSize, setSelectedSize] = useState('');
     const [fullscreenIndex, setFullscreenIndex] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                setUserId(null);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -37,17 +51,23 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
                         : Object.keys(data.colors).find(key => slug.includes(key)) || firstColorKey;
 
                     setSelectedColorKey(matchedColorKey);
+
+                    if (userId) {
+                        const favDoc = await getDoc(doc(db, 'users', userId, 'wishlist', data.id));
+                        setIsFavorite(favDoc.exists());
+                    }
                 } else {
                     setProduct(null);
                 }
                 setLoading(false);
             } catch (error) {
                 console.error("Помилка при завантаженні товару:", error);
+                setLoading(false);
             }
         };
 
         fetchProduct();
-    }, [slug]);
+    }, [slug, userId]);
 
     useEffect(() => {
         if (product && color && product.colors[color]) {
@@ -63,7 +83,6 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
     };
 
     const selectedColor = selectedColorKey && product?.colors?.[selectedColorKey];
-    const icon = isFavorite ? FavoriteFilled : Favorite;
 
     const isColorOutOfStock = selectedColor &&
         Object.values(selectedColor.sizes || {}).every(qty => qty === 0);
@@ -74,6 +93,32 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
     const buttonText = isColorOutOfStock || isSelectedSizeUnavailable
         ? 'Повідомити про наявність'
         : 'Додати в кошик';
+
+    const toggleFavorite = async () => {
+        if (!userId || !product) {
+            alert('Щоб додати у вішліст, увійдіть у свій акаунт');
+            return;
+        }
+
+        const favoriteRef = doc(db, 'users', userId, 'wishlist', product.id);
+
+        try {
+            if (isFavorite) {
+                await deleteDoc(favoriteRef);
+                setIsFavorite(false);
+            } else {
+                await setDoc(favoriteRef, {
+                    productId: product.id,
+                    slug: product.slug,
+                    color: selectedColorKey,
+                    timestamp: new Date()
+                });
+                setIsFavorite(true);
+            }
+        } catch (error) {
+            console.error('Помилка при оновленні вішлісту:', error);
+        }
+    };
 
     return (
         <div className={styles.product}>
@@ -100,21 +145,11 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
                         <div className={styles.namePrice}>
                             <div className={styles.nameFavorite}>
                                 <h2>{product.name}</h2>
-                                <button
-                                    className={styles.favoriteButton}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onToggleFavorite();
-                                    }}
-                                >
-                                    <img
-                                        src={icon}
-                                        alt="Favorite"
-                                        className={styles.favoriteIcon}
-                                    />
-                                </button>
+                                <div className={styles.favoriteWrapper}>
+                                    <Favorite isFavorite={isFavorite} onClick={toggleFavorite} />
+                                </div>
                             </div>
-                            <div className="h3-light">{product.price}</div>
+                            <div className="h3-light">{product.price} UAH</div>
                         </div>
 
                         <div className={styles.color}>
@@ -143,8 +178,8 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
                                                 className={`${styles.sizeButton}
-                                                ${available === 0 ? styles.sizeUnavailable : ''}
-                                                ${selectedSize === size ? styles.sizeSelected : ''}`}
+                                                    ${available === 0 ? styles.sizeUnavailable : ''}
+                                                    ${selectedSize === size ? styles.sizeSelected : ''}`}
                                             >
                                                 {size}
                                             </button>
@@ -155,13 +190,16 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
                                 <div className="h3-underlined">Розмірна сітка</div>
                             </div>
                         </div>
+
                         <Button type="button">
                             {buttonText}
                         </Button>
+
                         <div className={styles.description}>
                             <div className="h3-bold">Опис</div>
                             <h4>Lorem ipsum dolor sit amet consectetur. Fringilla sed augue nunc in id a convallis. Sit cras eu adipiscing ut parturient. In dignissim magna massa </h4>
                         </div>
+
                         <div className={styles.care}>
                             <div className="h3-bold">Склад та догляд</div>
                             <h4>Lorem ipsum dolor sit amet consectetur. Fringilla sed augue nunc in id a convallis. Sit cras eu adipiscing </h4>
@@ -171,7 +209,9 @@ const Product = ({ isFavorite, onToggleFavorite, wishlistMode = false }) => {
             ) : (
                 <h3>Товар не знайдено.</h3>
             )}
+
             <Footer />
+
             {fullscreenIndex !== null && (
                 <FullScreenPhoto
                     images={selectedColor?.images || []}
