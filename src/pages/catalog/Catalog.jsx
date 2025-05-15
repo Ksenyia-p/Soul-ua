@@ -21,13 +21,19 @@ const Catalog = () => {
     const fetchData = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "catalog"));
-        const fetchedProducts = querySnapshot.docs.map((doc) => doc.data());
+        const fetchedProducts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log("Fetched products:", fetchedProducts);
         setProducts(fetchedProducts);
         setFavorites(Array(fetchedProducts.length).fill(false));
       } catch (error) {
         console.error("Error fetching catalog:", error);
       }
     };
+
+
 
     const updateMaskUrl = () => {
       const width = window.innerWidth;
@@ -65,25 +71,41 @@ const Catalog = () => {
         <Way>Весь каталог</Way>
         <FilterAndSort/>
         <div className={styles.cards}>
+          {console.log("Rendering products:", products)}
           {products.map((product, productIndex) => {
             const colorEntries = Object.entries(product.colors || {});
-
-            return colorEntries.map(([colorKey, color], colorIndex) => (
+            if (colorEntries.length > 0) {
+              return colorEntries.map(([colorKey, color], colorIndex) => (
+                  <ProductCard
+                      key={`${productIndex}-${colorKey}`}
+                      product={{
+                        ...product,
+                        imgSrc: color.mainImage,
+                        link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
+                        color: colorKey,
+                      }}
+                      isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
+                      onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
+                      maskUrl={maskUrl}
+                  />
+              ));
+            }
+            return (
                 <ProductCard
-                    key={`${productIndex}-${colorKey}`}
+                    key={`${productIndex}`}
                     product={{
                       ...product,
-                      imgSrc: color.mainImage,
-                      link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
-                      color: colorKey,
+                      imgSrc: product.mainImage,
+                      link: `/${product.group}/${product.items || "category"}/${product.slug || product.id}`,
+                      color: product.color || null,
                     }}
-                    isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
-                    onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
+                    isFavorite={favorites[`${product.slug || product.id}`] || false}
+                    onToggleFavorite={() => toggleFavorite(product.slug || product.id, product.color || "")}
                     maskUrl={maskUrl}
                 />
-
-            ));
+            );
           })}
+
         </div>
 
         <Footer/>
