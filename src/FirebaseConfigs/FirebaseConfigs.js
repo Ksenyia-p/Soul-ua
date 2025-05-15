@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
-import{ getAuth } from "firebase/auth";
+import{ getAuth ,GoogleAuthProvider} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
+import {AuthProvider} from "../context/AuthContext";
 const firebaseConfig = {
     apiKey: "AIzaSyCJ_AG4UUgT1W1mf0L_vYs_mIWOdTdiypM",
     authDomain: "soul-shop-f3fbb.firebaseapp.com",
@@ -14,3 +15,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const googleAuthProvider = new GoogleAuthProvider();

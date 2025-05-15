@@ -7,6 +7,10 @@ import Button from "../../components/button/Button";
 import clsx from "clsx";
 import InputField from "../../components/inputField/InputField";
 import {useNavigate} from 'react-router-dom';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from "../../context/AuthContext";
+import { auth } from "../../FirebaseConfigs/FirebaseConfigs";
+
 
 
 
@@ -18,34 +22,21 @@ const LogIn = () => {
     const [password, setPassword] = useState('');
     const [shakeEmail, setShakeEmail] = useState(false);
     const [shakePassword, setShakePassword] = useState(false);
+    const { login } = useAuth();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        // Дані для заглушки
-        const testEmail = "debil@gmail.com";
-        const testPassword = "123456";
-
-        const isEmailValid = email === testEmail;
-        const isPasswordValid = password === testPassword;
-
-        if (isEmailValid && isPasswordValid) {
+        try {
+            const credentials = await signInWithEmailAndPassword(auth, email, password);
+            login(credentials.user);
             navigate("/account");
-        } else {
-
-            if (!isEmailValid && !isPasswordValid) {
-                setShakeEmail(true);
-                setShakePassword(true);
-                setTimeout(() => setShakeEmail(false), 300);
-                setTimeout(() => setShakePassword(false), 300);
-            } else if (!isEmailValid) {
-                setShakeEmail(true);
-                setTimeout(() => setShakeEmail(false), 300);
-            } else if (!isPasswordValid) {
-                setShakePassword(true);
-                setTimeout(() => setShakePassword(false), 300);
-            }
-
+        } catch (error) {
+            console.error(error.message);
+            setShakeEmail(true);
+            setShakePassword(true);
+            setTimeout(() => setShakeEmail(false), 300);
+            setTimeout(() => setShakePassword(false), 300);
         }
     };
 
@@ -78,7 +69,7 @@ const LogIn = () => {
                                 <p className={"h3-light"}>Це ваш перший візит ?</p>
                                 <a href="#" onClick={RegisterClick}><h3>Зареєструватися</h3></a>
                             </div>
-                           <Button onClick={handleLogin}>Увійти</Button>
+                            <Button onClick={handleLogin}>Увійти</Button>
                         </div>
                     </form>
                 </div>
