@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDocs, collection, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
+import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../FirebaseConfigs/FirebaseConfigs';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import styles from './Product.module.css';
@@ -11,7 +11,6 @@ import Favorite from "../../components/favorite/Favorite";
 import ColourIcon from '../../components/colourIcon/ColourIcon';
 import Button from "../../components/button/Button";
 import FullScreenPhoto from "../../components/full screen photo/FullScreenPhoto";
-
 
 const Product = ({ wishlistMode = false }) => {
     const { slug, color } = useParams();
@@ -22,11 +21,10 @@ const Product = ({ wishlistMode = false }) => {
     const [selectedSize, setSelectedSize] = useState('');
     const [fullscreenIndex, setFullscreenIndex] = useState(null);
     const [userId, setUserId] = useState(null);
-    const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
         const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserId(user.uid);
             } else {
@@ -51,11 +49,7 @@ const Product = ({ wishlistMode = false }) => {
                         : Object.keys(data.colors).find(key => slug.includes(key)) || firstColorKey;
 
                     setSelectedColorKey(matchedColorKey);
-
-                    if (userId) {
-                        const favDoc = await getDoc(doc(db, 'users', userId, 'wishlist', data.id));
-                        setIsFavorite(favDoc.exists());
-                    }
+                    setSelectedSize('');
                 } else {
                     setProduct(null);
                 }
@@ -67,7 +61,7 @@ const Product = ({ wishlistMode = false }) => {
         };
 
         fetchProduct();
-    }, [slug, userId]);
+    }, [slug, color]);
 
     useEffect(() => {
         if (product && color && product.colors[color]) {
@@ -93,32 +87,6 @@ const Product = ({ wishlistMode = false }) => {
     const buttonText = isColorOutOfStock || isSelectedSizeUnavailable
         ? 'Повідомити про наявність'
         : 'Додати в кошик';
-
-    const toggleFavorite = async () => {
-        if (!userId || !product) {
-            alert('Щоб додати у вішліст, увійдіть у свій акаунт');
-            return;
-        }
-
-        const favoriteRef = doc(db, 'users', userId, 'wishlist', product.id);
-
-        try {
-            if (isFavorite) {
-                await deleteDoc(favoriteRef);
-                setIsFavorite(false);
-            } else {
-                await setDoc(favoriteRef, {
-                    productId: product.id,
-                    slug: product.slug,
-                    color: selectedColorKey,
-                    timestamp: new Date()
-                });
-                setIsFavorite(true);
-            }
-        } catch (error) {
-            console.error('Помилка при оновленні вішлісту:', error);
-        }
-    };
 
     return (
         <div className={styles.product}>
@@ -146,7 +114,18 @@ const Product = ({ wishlistMode = false }) => {
                             <div className={styles.nameFavorite}>
                                 <h2>{product.name}</h2>
                                 <div className={styles.favoriteWrapper}>
-                                    <Favorite isFavorite={isFavorite} onClick={toggleFavorite} />
+                                    <Favorite
+                                        product={{
+                                            id: product.id,
+                                            slug: product.slug,
+                                            name: product.name,
+                                            price: product.price,
+                                            mainImage: selectedColor?.images?.[0] || '',
+                                            group: product.group,
+                                            items: product.items,
+                                            color: selectedColorKey
+                                        }}
+                                    />
                                 </div>
                             </div>
                             <div className="h3-light">{product.price} UAH</div>

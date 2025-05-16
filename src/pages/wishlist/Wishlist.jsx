@@ -9,7 +9,6 @@ import ProductCard from "../../components/productCard/ProductCard";
 import Way from "../../components/way/Way";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../FirebaseConfigs/FirebaseConfigs";
-import Favorite from "../../components/favorite/Favorite";
 
 const Wishlist = () => {
     const [user] = useAuthState(auth);
@@ -56,12 +55,15 @@ const Wishlist = () => {
         return () => window.removeEventListener("resize", updateMaskUrl);
     }, [user]);
 
-    const handleFavoriteToggle = (favoriteId, isFav) => {
-        if (!isFav) {
-            setWishlistProducts(prev => prev.filter(p => {
-                const uniqueId = p.colorSlug ? `${p.id}_${p.colorSlug}` : p.id;
-                return uniqueId !== favoriteId;
-            }));
+    const handleFavoriteToggle = (productId, colorKey, isFavoriteNow) => {
+        if (!isFavoriteNow) {
+            setWishlistProducts(prev =>
+                prev.filter(p => {
+                    const uniqueId = p.color ? `${p.id}_${p.color}` : p.id;
+                    const targetId = colorKey ? `${productId}_${colorKey}` : productId;
+                    return uniqueId !== targetId;
+                })
+            );
         }
     };
 
@@ -87,17 +89,16 @@ const Wishlist = () => {
                 {wishlistProducts.length > 0 ? (
                     wishlistProducts.map((product, index) => (
                         <ProductCard
-                            key={product.id || index}
+                            key={product.color ? `${product.id}_${product.color}` : product.id || index}
                             product={{
                                 ...product,
                                 imgSrc: product.image || product.mainImage || null,
-                                link: `/${product.group}/${product.items}/${product.slug}`,
+                                link: `/${product.group}/${product.items}/${product.slug}${product.color ? `/${product.color}` : ''}`,
                             }}
                             maskUrl={maskUrl}
                             wishlistMode={true}
-                        >
-                            <Favorite product={product} onToggle={handleFavoriteToggle} />
-                        </ProductCard>
+                            onFavoriteToggle={handleFavoriteToggle}
+                        />
                     ))
                 ) : (
                     <h3>Ваш вішліст порожній.</h3>

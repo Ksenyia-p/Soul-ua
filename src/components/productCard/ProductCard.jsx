@@ -1,14 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
-
 import Favorite from "../favorite/Favorite";
 
 const ProductCard = ({
                          product,
                          maskUrl,
                          wishlistMode = false,
+                         onFavoriteToggle,
                      }) => {
+
+    const handleFavoriteToggle = (productId, colorKey, isFavoriteNow) => {
+        if (onFavoriteToggle) {
+            onFavoriteToggle(productId, colorKey, isFavoriteNow);
+        }
+    };
+
     return (
         <div className={styles.card}>
             <div className={styles.maskWrapper}>
@@ -33,7 +40,21 @@ const ProductCard = ({
                 </Link>
 
                 <div className={styles.favoriteWrapper}>
-                    <Favorite product={product} />
+                    <Favorite
+                        product={{
+                            id: product.id || product.slug,
+                            slug: product.slug,
+                            name: product.name,
+                            price: product.price,
+                            mainImage: product.imgSrc || '', // використовуємо imgSrc
+                            group: product.group,
+                            items: product.items,
+                            color: product.color
+                        }}
+                        wishlistMode={wishlistMode}
+                        onToggle={handleFavoriteToggle}
+                    />
+
                 </div>
             </div>
 
