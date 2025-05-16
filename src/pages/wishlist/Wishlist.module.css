@@ -30,3 +30,35 @@
     grid-template-columns: repeat(6, 1fr);
   }
 }
+.emptyWishlist {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 4vw, 20px);
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: clamp(20px, 5vw, 40px);
+}
+
+.emptyWishlistImg {
+  margin-top: 22px;
+  width: clamp(22px, 4vw, 43px);
+  height: clamp(15px, 3vw, 30px);
+  margin-bottom: clamp(5px, 1.5625vw, 10px);
+}
+
+@media (min-width: 1024px) {
+  .emptyWishlistImg {
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .emptyWishlistTitle {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .breakWord {
+    display: block;
+  }
+}
