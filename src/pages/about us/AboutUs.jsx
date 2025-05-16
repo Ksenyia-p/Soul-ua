@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import Layout from "../../components/layout/Layout";
 import styles from "./AboutUs.module.css";
 
 const AboutUs = () => {
@@ -163,7 +163,7 @@ const AboutUs = () => {
           malesuada nulla elementum lacus dapibus proin eleifend mollis..
         </h4>
       </main>
-      <Footer />
+      <Layout />
     </div>
   );
 };

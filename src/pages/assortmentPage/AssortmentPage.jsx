@@ -4,7 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfigs";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import Layout from "../../components/layout/Layout";
 import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
 import ProductCard from "../../components/productCard/ProductCard";
 import Way from "../../components/way/Way";
@@ -124,7 +124,7 @@ const AssortmentPage = () => {
 
             </div>
 
-            <Footer/>
+            <Layout/>
         </div>
     );
 };

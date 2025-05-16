@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Header from "../../components/header/Header";
 import Way from "../../components/way/Way";
-import Footer from "../../components/footer/Footer";
+import Layout from "../../components/layout/Layout";
 import loginStyles from "./LogIn.module.css";
 import Button from "../../components/button/Button";
 import clsx from "clsx";
@@ -74,7 +74,7 @@ const LogIn = () => {
                     </form>
                 </div>
             </div>
-            <Footer />
+            <Layout />
         </div>
     );
 };

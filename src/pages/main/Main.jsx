@@ -6,7 +6,7 @@ import Header from '../../components/header/Header';
 import Bestsellers from "../../components/bestsellers/Bestsellers";
 import Button from "../../components/button/Button";
 import Info from "../../components/info/Info";
-import Footer from "../../components/footer/Footer";
+import Layout from "../../components/layout/Layout";
 
 const Main = () => {
 
@@ -18,7 +18,7 @@ const Main = () => {
                 <Button type="button">переглянути все</Button>
             </Link>
             <Info/>
-            <Footer/>
+            <Layout/>
         </div>
     );
 };

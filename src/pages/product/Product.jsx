@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import Layout from "../../components/layout/Layout";
 import { useParams, useNavigate } from 'react-router-dom';
 import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../FirebaseConfigs/FirebaseConfigs';
@@ -189,7 +189,7 @@ const Product = ({ wishlistMode = false }) => {
                 <h3>Товар не знайдено.</h3>
             )}
 
-            <Footer />
+            <Layout />
 
             {fullscreenIndex !== null && (
                 <FullScreenPhoto

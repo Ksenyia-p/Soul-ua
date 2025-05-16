@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import Layout from "../../components/layout/Layout";
 import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
 import styles from "./Wishlist.module.css";
 import { collection, getDocs } from "firebase/firestore";
@@ -75,7 +75,7 @@ const Wishlist = () => {
                 <div style={{ padding: "20px", textAlign: "center" }}>
                     <h3>Щоб бачити вішліст, будь ласка, увійдіть у свій акаунт.</h3>
                 </div>
-                <Footer />
+                <Layout />
             </div>
         );
     }
@@ -104,7 +104,7 @@ const Wishlist = () => {
                     <h3>Ваш вішліст порожній.</h3>
                 )}
             </div>
-            <Footer />
+            <Layout />
         </div>
     );
 };
