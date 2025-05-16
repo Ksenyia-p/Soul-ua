@@ -8,7 +8,6 @@ import ProductCard from '../productCard/ProductCard';
 
 const Bestsellers = () => {
     const [products, setProducts] = useState([]);
-    const [favorites, setFavorites] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [maskUrl, setMaskUrl] = useState('/masks/corner-mask-2560px-1440px.svg');
     const [visibleCount, setVisibleCount] = useState(6);
@@ -59,7 +58,6 @@ const Bestsellers = () => {
                 }
 
                 setProducts(productsWithDetails);
-                setFavorites(Array(productsWithDetails.length).fill(false));
             } catch (error) {
                 console.error('Error fetching bestsellers:', error);
             }
@@ -97,12 +95,6 @@ const Bestsellers = () => {
         window.addEventListener('resize', updateResponsiveSettings);
         return () => window.removeEventListener('resize', updateResponsiveSettings);
     }, []);
-
-    const toggleFavorite = (index) => {
-        const updatedFavorites = [...favorites];
-        updatedFavorites[index] = !updatedFavorites[index];
-        setFavorites(updatedFavorites);
-    };
 
     const handleNext = () => {
         setCurrentIndex((prev) => (prev + 1) % products.length);
@@ -167,11 +159,12 @@ const Bestsellers = () => {
                         onTouchEnd={handleTouchEnd}
                     >
                         {visibleProducts.map((product, i) => (
-                            <ProductCard
-                                key={(currentIndex + i) % products.length}
-                                product={product}
-                                maskUrl={maskUrl}
-                            />
+                            <div className={styles.cardWrapper} key={(currentIndex + i) % products.length}>
+                                <ProductCard
+                                    product={product}
+                                    maskUrl={maskUrl}
+                                />
+                            </div>
                         ))}
                     </div>
 
