@@ -1,6 +1,5 @@
 .way {
-    margin-top: clamp(18px, 2.5vw, 36px);
-    margin-left: clamp(18px, 5vw, 72px);
+    margin: clamp(18px, 2.5vw, 36px) clamp(18px, 5vw, 72px) 0;
 }
 
 .wayContainer {
