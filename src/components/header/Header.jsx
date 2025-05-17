@@ -10,14 +10,16 @@ import FavoriteIcon from '../../icons/favorite.svg';
 import BagIcon from '../../icons/bag.svg';
 import Search from "../search/Search";
 import Menu from "../menu/Menu";
-import { useAuth } from "../../context/AuthContext";
+import ShoppingBag from '../shopping bag/ShoppingBag'
+import {useAuth} from "../../context/AuthContext";
 
 const Header = () => {
     const [searchActive, setSearchActive] = useState(false);
     const [menuActive, setMenuActive] = useState(false);
+    const [shoppingBagActive, setShoppingBagActive] = useState(false);
 
 
-    const { isAuthenticated } = useAuth(); // <-- контекст
+    const {isAuthenticated} = useAuth(); // <-- контекст
     const navigate = useNavigate();
 
     const handleAccountClick = () => {
@@ -31,9 +33,9 @@ const Header = () => {
 
     return (
         <header className={styles.header}>
-            <div className={styles.leftImage} onClick={() => setMenuActive(true)}>
+            <button className={styles.leftImage} onClick={() => setMenuActive(true)}>
                 <img src={MenuIcon} alt="Меню"/>
-            </div>
+            </button>
 
             <Link to='/'>
                 <div className={styles.logo}>
@@ -52,8 +54,8 @@ const Header = () => {
 
                     <li>
                         <button onClick={handleAccountClick} className={styles.personalDataIcon}>
-                            <img src={UserIcon} alt="Особистий кабінет" />
-                            <h4>ОСОБИСТИЙ<br />КАБІНЕТ</h4>
+                            <img src={UserIcon} alt="Особистий кабінет"/>
+                            <h4>ОСОБИСТИЙ<br/>КАБІНЕТ</h4>
                         </button>
                     </li>
 
@@ -67,16 +69,17 @@ const Header = () => {
 
 
                     <li>
-                        <Link to='/shoppingback' className={styles.link}>
+                        <button className={styles.shoppingBagIcon} onClick={() => setShoppingBagActive(true)}>
                             <img src={BagIcon} alt="Кошик"/>
                             <h4>КОШИК</h4>
-                        </Link>
+                        </button>
                     </li>
 
                 </ul>
             </nav>
             <Search active={searchActive} setActive={setSearchActive}/>
-            <Menu active={menuActive} setActive={setMenuActive} />
+            <Menu active={menuActive} setActive={setMenuActive}/>
+            <ShoppingBag active={shoppingBagActive} setActive={setShoppingBagActive}/>
         </header>
     );
 };
