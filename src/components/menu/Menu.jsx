@@ -32,6 +32,19 @@ const Menu = ({ active, setActive }) => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        if (active) {
+            document.body.classList.add('bodyLock');
+        } else {
+            document.body.classList.remove('bodyLock');
+        }
+
+        return () => {
+            document.body.classList.remove('bodyLock');
+        };
+    }, [active]);
+
+
     const blocks = useMemo(() => {
         return groups.map(group => ({
             id: group.id,

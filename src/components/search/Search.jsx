@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Search.module.css';
 import Cross from '../../icons/cross.svg';
 import SearchIcon from "../../icons/search.svg";
@@ -7,6 +7,17 @@ const Search = ({ active, setActive }) => {
     const handleSearch = () => {
         console.log("Пошук виконано!");
     };
+    useEffect(() => {
+        if (active) {
+            document.body.classList.add('bodyLock');
+        } else {
+            document.body.classList.remove('bodyLock');
+        }
+
+        return () => {
+            document.body.classList.remove('bodyLock');
+        };
+    }, [active]);
 
     return (
         <>
