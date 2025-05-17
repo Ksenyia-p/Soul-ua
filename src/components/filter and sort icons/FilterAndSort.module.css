@@ -50,3 +50,127 @@
   background: none;
   cursor: pointer;
 }
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.filterContainer,
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterIcon,
+.sortIcon {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(375px, 80vw, 612px);
+  height: 100vh;
+  background: #eff1f0;
+
+  transform: translateX(-100%);
+
+  transition: transform 600ms ease;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebarHeader {
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #a5a8a6;
+  flex-shrink: 0;
+  background: #eff1f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  gap: clamp(263px, 24vw, 381px);
+  height: clamp(63px, 8.75vw, 126px);
+}
+
+.sidebarFooter {
+  border-top: 1px solid #a5a8a6dd;
+  flex-shrink: 0;
+  background: #eff1f0;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(20px, 2.5vw, 36px);
+  height: clamp(66px, 9vw, 130px);
+}
+
+.sidebarContent {
+  padding: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 126px - 130px);
+}
+
+.sidebarContent label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 9px;
+  gap: 18px;
+}
+
+.sidebarContent h3 {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #eff1f083;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 98;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.resetButton {
+  display: flex;
+
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.resetAllWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}

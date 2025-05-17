@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfigs";
-import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
 import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
@@ -10,12 +9,17 @@ import Way from "../../components/way/Way";
 import styles from "./Catalog.module.css";
 
 const Catalog = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState({});
   const [maskUrl, setMaskUrl] = useState(
-      "/masks/corner-mask-2560px-1440px.svg"
+    "/masks/corner-mask-2560px-1440px.svg"
   );
+  const [filters, setFilters] = useState({
+    gender: [],
+    size: [],
+    category: [],
+    color: [],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,29 +29,20 @@ const Catalog = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Fetched products:", fetchedProducts);
         setProducts(fetchedProducts);
-        setFavorites(Array(fetchedProducts.length).fill(false));
+        setFavorites({});
       } catch (error) {
         console.error("Error fetching catalog:", error);
       }
     };
 
-
-
     const updateMaskUrl = () => {
       const width = window.innerWidth;
-      if (width >= 2560) {
-        setMaskUrl("/masks/corner-mask-2560px-1440px.svg");
-      } else if (width >= 1024) {
-        setMaskUrl("/masks/corner-mask-1024px.svg");
-      } else if (width >= 768) {
-        setMaskUrl("/masks/corner-mask-768px.svg");
-      } else if (width >= 425) {
-        setMaskUrl("/masks/corner-mask-425-375px.svg");
-      } else {
-        setMaskUrl("/masks/corner-mask-320px.svg");
-      }
+      if (width >= 2560) setMaskUrl("/masks/corner-mask-2560px-1440px.svg");
+      else if (width >= 1024) setMaskUrl("/masks/corner-mask-1024px.svg");
+      else if (width >= 768) setMaskUrl("/masks/corner-mask-768px.svg");
+      else if (width >= 425) setMaskUrl("/masks/corner-mask-425-375px.svg");
+      else setMaskUrl("/masks/corner-mask-320px.svg");
     };
 
     fetchData();
@@ -56,60 +51,79 @@ const Catalog = () => {
     return () => window.removeEventListener("resize", updateMaskUrl);
   }, []);
 
-  const toggleFavorite = (productSlug, colorKey) => {
-    const key = `${productSlug}-${colorKey}`;
+  const toggleFavorite = (productSlug, colorSlug) => {
+    const key = `${productSlug}-${colorSlug}`;
     setFavorites((prev) => ({
       ...prev,
       [key]: !prev[key],
     }));
   };
 
+  const filteredProducts = products.filter((product) => {
+    // Фільтр по статі (group)
+    if (filters.gender.length && !filters.gender.includes(product.group)) {
+      return false;
+    }
+
+    // Фільтр по категорії (items)
+    if (filters.category.length && !filters.category.includes(product.items)) {
+      return false;
+    }
+
+    const colors = product.colors || {};
+    const colorEntries = Object.entries(colors);
+
+    // Фільтр по кольору
+    if (filters.color.length) {
+      const hasColor = colorEntries.some(
+        ([, color]) =>
+          filters.color.includes(color.colorName) ||
+          filters.color.includes(color.slug)
+      );
+      if (!hasColor) return false;
+    }
+
+    // Фільтр по розміру
+    if (filters.size.length) {
+      const hasSize = colorEntries.some(([, color]) => {
+        if (!color.sizes) return false;
+        return filters.size.some((size) => color.sizes[size] > 0);
+      });
+      if (!hasSize) return false;
+    }
+
+    return true;
+  });
 
   return (
-      <div>
-        <Header/>
-        <Way>Весь каталог</Way>
-        <FilterAndSort/>
-        <div className={styles.cards}>
-          {console.log("Rendering products:", products)}
-          {products.map((product, productIndex) => {
-            const colorEntries = Object.entries(product.colors || {});
-            if (colorEntries.length > 0) {
-              return colorEntries.map(([colorKey, color], colorIndex) => (
-                  <ProductCard
-                      key={`${productIndex}-${colorKey}`}
-                      product={{
-                        ...product,
-                        imgSrc: color.mainImage,
-                        link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
-                        color: colorKey,
-                      }}
-                      isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
-                      onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
-                      maskUrl={maskUrl}
-                  />
-              ));
-            }
-            return (
-                <ProductCard
-                    key={`${productIndex}`}
-                    product={{
-                      ...product,
-                      imgSrc: product.mainImage,
-                      link: `/${product.group}/${product.items || "category"}/${product.slug || product.id}`,
-                      color: product.color || null,
-                    }}
-                    isFavorite={favorites[`${product.slug || product.id}`] || false}
-                    onToggleFavorite={() => toggleFavorite(product.slug || product.id, product.color || "")}
-                    maskUrl={maskUrl}
-                />
-            );
-          })}
-
-        </div>
-
-        <Layout/>
+    <div>
+      <Header />
+      <Way>Весь каталог</Way>
+      <FilterAndSort onFilterChange={setFilters} />
+      <div className={styles.cards}>
+        {filteredProducts.length === 0 && (
+          <p>Немає товарів за обраними фільтрами.</p>
+        )}
+        {filteredProducts.map((product) => {
+          const colors = product.colors || {};
+          return Object.entries(colors).map(([colorKey, color]) => (
+            <ProductCard
+              key={`${product.id}-${colorKey}`}
+              product={{
+                ...product,
+                imgSrc: color.mainImage || product.image,
+                link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
+                color: colorKey,
+              }}
+              isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
+              onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
+              maskUrl={maskUrl}
+            />
+          ));
+        })}
       </div>
+      <Layout />
+    </div>
   );
 };
 
