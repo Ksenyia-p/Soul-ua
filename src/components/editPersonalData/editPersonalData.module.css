@@ -1,0 +1,103 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.contentWrapper {
+
+
+    & .h2 {
+        text-align: center;
+        margin-bottom: clamp(36px, 5vw, 72px);
+    }
+}
+.nameAndSurname {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(10px, 1.39vw, 20px);
+}
+
+.firstInput {
+    margin-bottom: clamp(18px, 2.5vw, 36px);
+}
+.secondInput {
+    margin-bottom: clamp(16px, 2.22vw, 32px);
+}
+
+.forgotPassword {
+    align-self: flex-end;
+
+    & a {
+        text-decoration: none;
+    }
+}
+
+
+.textButtonWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+
+.registerInvite {
+
+    & h3 {
+        margin-bottom: clamp(8px, 0.97vw, 14px);
+    }
+    & a {
+        text-decoration: none;
+    }
+}
+
+
+
+
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+.shake {
+
+    & input {
+        animation: shake 0.16s 0s 3;
+    }
+}
+
+
+
+
+
+
+@media (max-width: 1024px) {
+
+    .contentWrapper {
+        & .h2 {
+            margin-bottom: 62px;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .contentWrapper {
+        .h2 {
+            margin-bottom: 52px;
+        }
+    }
+}
+@media (max-width: 320px) {
+    .contentWrapper {
+        .h2 {
+            margin-bottom: 36px;
+        }
+    }
+}
+.errorMessage {
+    color: red;
+    margin-bottom: 1rem;
+    text-align: center;
+}
