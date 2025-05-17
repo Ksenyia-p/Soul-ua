@@ -23,6 +23,11 @@ body {
   min-height: 100%;
 }
 
+.bodyLock {
+  overflow: hidden;
+  touch-action: none;
+}
+
 @font-face {
   font-family: "Unbounded-Light";
   src: url("./fonts/Unbounded-Light.woff2") format("woff2");
