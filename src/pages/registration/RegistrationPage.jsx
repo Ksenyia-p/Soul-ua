@@ -19,16 +19,19 @@ const RegistrationPage = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [shakeFirstName, setShakeFirstName] = useState(false);
+    const [shakeLastName, setShakeLastName] = useState(false);
+    const [shakePhone, setShakePhone] = useState(false);
     const [shakeEmail, setShakeEmail] = useState(false);
     const [shakePassword, setShakePassword] = useState(false);
     const { login } = useAuth();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        setError(''); // сброс предыдущей ошибки
+        setError('');
 
         try {
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
@@ -43,7 +46,7 @@ const RegistrationPage = () => {
                 createdAt: new Date().toISOString()
             });
 
-            login(user); // передаём объект пользователя
+            login(user);
             navigate("/account");
         } catch (error) {
             console.error(error.code);
@@ -64,8 +67,14 @@ const RegistrationPage = () => {
             }
 
             setError(errorMessage);
+            setShakeFirstName(true);
+            setShakeLastName(true);
+            setShakePhone(true);
             setShakeEmail(true);
             setShakePassword(true);
+            setTimeout(() => setShakeFirstName(false), 300);
+            setTimeout(() => setShakeLastName(false), 300);
+            setTimeout(() => setShakePhone(false), 300);
             setTimeout(() => setShakeEmail(false), 300);
             setTimeout(() => setShakePassword(false), 300);
         }
@@ -90,6 +99,7 @@ const RegistrationPage = () => {
                                 id="firstName"
                                 onChange={(e) => setFirstName(e.target.value)}
                                 wrapperClass={loginStyles.firstInput}
+                                animationClass={shakeFirstName ? loginStyles.shake : ""}
                             />
                             <SmallInputField
                                 label="Прізвище"
@@ -98,6 +108,7 @@ const RegistrationPage = () => {
                                 id="lastName"
                                 onChange={(e) => setLastName(e.target.value)}
                                 wrapperClass={loginStyles.firstInput}
+                                animationClass={shakeLastName ? loginStyles.shake : ""}
                             />
                         </div>
                         <InputField
@@ -107,6 +118,7 @@ const RegistrationPage = () => {
                             id="phone"
                             onChange={(e) => setPhone(e.target.value)}
                             wrapperClass={loginStyles.firstInput}
+                            animationClass={shakePhone ? loginStyles.shake : ""}
                         />
 
                         <InputField
