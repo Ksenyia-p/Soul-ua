@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: clamp(320px, 87.5vw, 1260px);
+    margin: 0 auto;
+}
+
+.sideBarWrapper {
+
+    & > h2 {
+        margin-bottom: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
+    }
+}
+
+.listWrapper {
+
+    & ul {
+        display: flex;
+        flex-direction: column;
+        row-gap: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
+        list-style: none;
+        padding-left: 0;
+    }
+}
+
+.stickyList {
+    position: sticky;
+    top: 100px;
+}
+
+.linkTo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.active {
+    font-weight: 700;
+}
