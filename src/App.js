@@ -13,6 +13,9 @@ import AssortmentPage from "./pages/assortmentPage/AssortmentPage";
 import Product from "./pages/product/Product";
 import LogIn from "./pages/logIn/LogIn";
 import RegistrationPage from "./pages/registration/RegistrationPage";
+import CurrentOrders from "./pages/currentOrders/currentOrders";
+import OrderHistory from "./pages/orderHistory/orderHistory";
+import DeliveryAddress from "./pages/deliveryAddress/deliveryAddress";
 
 const App = () => {
     const [items, setItems] = useState([]);
@@ -49,6 +52,9 @@ const App = () => {
                 <Route path="/main" element={<Main />} />
                 <Route path="/shoppingback" element={<ShoppingBag />} />
                 <Route path="/account" element={<PersonalData />} />
+                <Route path="/orders" element={<CurrentOrders />} />
+                <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/address" element={<DeliveryAddress />} />
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/login/registration" element={<RegistrationPage />} />
                 <Route path="/catalog" element={<Catalog />} />
