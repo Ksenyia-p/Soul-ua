@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './pages/main/Main';
-import Menu from './components/menu/Menu';
 import Wishlist from './pages/wishlist/Wishlist';
-import ShoppingBag from './components/shopping bag/ShoppingBag';
+import Delivery from './pages/delivery/Delivery';
 import PersonalData from "./pages/personal data/PersonalData";
 import Catalog from "./pages/catalog/Catalog";
 import AboutUs from "./pages/about us/AboutUs";
@@ -50,7 +49,6 @@ const App = () => {
                 <Route path="/" element={<Main />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/main" element={<Main />} />
-                <Route path="/shoppingback" element={<ShoppingBag />} />
                 <Route path="/account" element={<PersonalData />} />
                 <Route path="/orders" element={<CurrentOrders />} />
                 <Route path="/order-history" element={<OrderHistory />} />
@@ -62,6 +60,7 @@ const App = () => {
                 <Route path="/:group" element={<AssortmentPage />} />
                 <Route path="/:group/:item" element={<AssortmentPage />} />
                 <Route path="/:group/:item/:slug/:color" element={<Product />} />
+                <Route path="/delivery" element={<Delivery />} />
             </Routes>
         </BrowserRouter>
     );
