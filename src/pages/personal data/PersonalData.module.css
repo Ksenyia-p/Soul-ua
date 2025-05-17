@@ -5,3 +5,40 @@
     align-items: center;
     margin: clamp(18px, 2.5vw, 36px) clamp(28px, 6.39vw, 92px) 0;
 }
+
+
+.dataWrapper {
+
+    & > h2 {
+        margin-bottom: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
+    }
+}
+
+
+.block {
+    width: 400px;
+    height: 600px;
+    background: black;
+    margin-bottom: 30px;
+}
+
+
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
+
+
+    & li:first-child {
+        display: flex;
+        flex-direction: row;
+        column-gap: 20px;
+    }
+}
+
+.h3Download {
+    margin-bottom: 60px
+}
