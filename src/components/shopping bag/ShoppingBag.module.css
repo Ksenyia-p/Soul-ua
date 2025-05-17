@@ -1,0 +1,110 @@
+.shoppingBag {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #EFF1F0;
+    height: 100%;
+    width: clamp(270px, 42.5vw, 612px);
+    transform: translateX(100%);
+    transition: transform 600ms ease;
+    z-index: 1001;
+}
+
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1002;
+}
+
+.closeButton img {
+    width: clamp(11px, 1.5vw, 22px);
+    height: clamp(10px, 1.4vw, 20px);
+}
+
+.active {
+    transform: translateY(0);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(81, 81, 81, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 800ms ease;
+    z-index: 1000;
+}
+
+.activeOverlay {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.upperRectangleContainer {
+    position: fixed;
+    top: 0;
+    background-color: #EFF1F0;
+    width: clamp(375px, 42.5vw, 612px);
+    height: clamp(63px, 8.75vw, 126px);
+    border-bottom: 1px solid #A5A8A6;
+    padding: 0 clamp(18px, 2.5vw, 36px);
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+}
+
+.upperRectangle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.bottomRectangleContainer {
+    position: fixed;
+    bottom: 0;
+    background-color: #EFF1F0;
+    width: clamp(375px, 42.5vw, 612px);
+    height: clamp(112px, 15.56vw, 224px);
+    border-top: 1px solid #A5A8A6;
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(18px, 2.5vw, 36px);
+    box-sizing: border-box;
+}
+
+
+.bottomRectangle {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.textContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(18px, 2.5vw, 36px);
+}
+
+.buttonShoppingBag {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+
+}
