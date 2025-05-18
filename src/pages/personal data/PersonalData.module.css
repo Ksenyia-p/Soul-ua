@@ -12,6 +12,23 @@
     & > h2 {
         margin-bottom: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
     }
+
+    & .noAddress {
+        margin-bottom: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
+        position: relative;
+
+        &::after {
+            content: "";
+            display: inline-block;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            margin-left: clamp(1.25rem, 1.161rem + 0.45vw, 1.563rem);
+            background-image: url("../../icons/bag.svg");
+            width: clamp(1.875rem, 1.643rem + 1.16vw, 2.688rem);
+            height: clamp(1.875rem, 1.643rem + 1.16vw, 2.688rem);
+        }
+    }
 }
 
 
@@ -23,16 +40,34 @@
 }
 
 
+
+.listWrapper {
+    margin-bottom: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
+
+    & .list {
+        display: flex;
+        flex-direction: column;
+        row-gap: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
+        list-style: none;
+        padding-left: 0;
+
+        & li:first-child, & li:nth-child(2) {
+            display: flex;
+            flex-direction: row;
+            column-gap: 20px;
+        }
+    }
+}
+
+
 .list {
     display: flex;
     flex-direction: column;
     row-gap: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
     list-style: none;
     padding-left: 0;
-    margin-bottom: clamp(1.25rem, 0.964rem + 1.43vw, 2.25rem);
 
-
-    & li:first-child {
+    & li:first-child, & li:nth-child(2) {
         display: flex;
         flex-direction: row;
         column-gap: 20px;
@@ -41,4 +76,42 @@
 
 .h3Download {
     margin-bottom: 60px
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+    .dataWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & h2 {
+            text-align: left;
+        }
+    }
+}
+
+
+@media (max-width: 420px) {
+    .dataWrapper {
+
+        & > h2 {
+            margin-bottom: 50px;
+        }
+    }
+
+
+
+    .listWrapper {
+        margin-bottom: 50px;
+
+        & .list {
+            row-gap: 30px;
+        }
+    }
 }

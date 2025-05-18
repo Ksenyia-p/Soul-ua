@@ -60,7 +60,7 @@ const PersonalData = () => {
 
                         {!loading && !error && userData && (
                             isEditing ? (
-                                <EditPersonalData onCancel={() => setIsEditing(false)} />
+                                <EditPersonalData userData={userData} onCancel={() => setIsEditing(false)} />
                             ) : (
                                 <>
                                     <div className={clsx(stylesPersonal.listWrapper)}>
