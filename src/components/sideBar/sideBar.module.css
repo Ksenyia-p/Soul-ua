@@ -7,11 +7,9 @@
     margin: 0 auto;
 }
 
-.sideBarWrapper {
 
-    & > h2 {
-        margin-bottom: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
-    }
+.iconTitleWrapper {
+    margin-bottom: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
 }
 
 .listWrapper {
@@ -38,4 +36,117 @@
 
 .active {
     font-weight: 700;
+}
+
+
+.iconTitleWrapper {
+    display: flex;
+    flex-direction: row;
+
+}
+
+
+.burgerButton {
+    margin-right: 10px;
+    padding: 5px 10px 5px 0;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(81, 81, 81, 0);
+    opacity: 0;
+    transition: opacity 800ms ease;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.overlayActive {
+    opacity: 1;
+    background-color: rgba(81, 81, 81, 0.5);
+    pointer-events: all;
+}
+
+.menuWindowWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: clamp(270px, 42.5vw, 612px);
+    background-color: #EFF1F0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%);
+    transition: transform 600ms ease;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12.5rem, 11.607rem + 4.46vw, 15.625rem);
+}
+
+.menuWindowWrapperActive {
+    transform: translateX(0);
+}
+
+.mobileMenuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.mobileList {
+    align-self: center;
+
+    & ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.5rem, 2.411rem + 0.45vw, 2.813rem);
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+    .iconTitleWrapper {
+        margin-bottom: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
+    }
+
+    .container {
+        flex-direction: column;
+        gap: clamp(2.5rem, 1.929rem + 2.86vw, 4.5rem);
+    }
+
+
 }
