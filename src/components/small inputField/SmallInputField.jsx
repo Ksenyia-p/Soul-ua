@@ -2,11 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 import inputStyles from './SmallInputField.module.css';
 
-const SmallInputField = ( { onChange, label, type, name, id, children, wrapperClass, animationClass } ) => {
+const SmallInputField = ( { onChange, label, type, name, id, children, wrapperClass, animationClass, defaultValue } ) => {
     return (
         <div className={clsx(inputStyles.wrapper, wrapperClass, animationClass)}>
             <label htmlFor={id}><h3>{label}</h3></label>
-            <input type={type} name={name} id={id} onChange={onChange} />
+            <input type={type} name={name} id={id} onChange={onChange} defaultValue={defaultValue} />
             {children}
         </div>
     );
