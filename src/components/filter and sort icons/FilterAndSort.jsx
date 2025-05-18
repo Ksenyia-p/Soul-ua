@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import sortIcon from "../../icons/arrow.svg";
 import filterIcon from "../../icons/filter.svg";
 import Cross from "../../icons/cross.svg";
 import styles from "./FilterAndSort.module.css";
 import Button from "../button/Button";
+import CheckBoxIcon from "../CheckBoxIcon/CheckBoxIcon";
 
-const FilterAndSort = ({ onFilterChange }) => {
+const FilterAndSort = ({ onFilterChange, onSortChange }) => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showSortOptions, setShowSortOptions] = useState(false);
+  const [sortOption, setSortOption] = useState("");
+
+  const sortRef = useRef(null);
+
   const [localFilters, setLocalFilters] = useState({
     gender: [],
     size: [],
@@ -43,6 +49,12 @@ const FilterAndSort = ({ onFilterChange }) => {
     "Шоколад",
   ];
 
+  const sortOptions = [
+    { label: "За новизною", value: "newest" },
+    { label: "Від найнижчої", value: "price-asc" },
+    { label: "Від найбільшої", value: "price-desc" },
+  ];
+
   useEffect(() => {
     if (showSidebar) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -51,6 +63,16 @@ const FilterAndSort = ({ onFilterChange }) => {
       document.body.style.overflow = "";
     };
   }, [showSidebar]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setShowSortOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
@@ -80,6 +102,12 @@ const FilterAndSort = ({ onFilterChange }) => {
     onFilterChange(emptyFilters);
   };
 
+  const handleSortChange = (value) => {
+    setSortOption(value);
+    onSortChange?.(value);
+    setShowSortOptions(false);
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -89,11 +117,36 @@ const FilterAndSort = ({ onFilterChange }) => {
           </button>
           <div className="h2-light">Фільтр</div>
         </div>
-        <div className={styles.sortContainer}>
+
+        <div className={styles.sortContainer} ref={sortRef}>
           <div className="h2-light">Сортувати</div>
-          <button className={styles.sortIcon}>
+          <button
+            className={`${styles.sortIcon} ${
+              showSortOptions ? styles.sortIconRotated : ""
+            }`}
+            onClick={() => setShowSortOptions((prev) => !prev)}
+          >
             <img src={sortIcon} alt="sort" />
           </button>
+
+          <div
+            className={`${styles.sortOptions} ${
+              showSortOptions ? styles.open : ""
+            }`}
+          >
+            {sortOptions.map(({ label, value }) => (
+              <button
+                key={value}
+                className={`${styles.sortButton} ${
+                  sortOption === value ? styles.active : ""
+                }`}
+                onClick={() => handleSortChange(value)}
+                type="button"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -119,54 +172,50 @@ const FilterAndSort = ({ onFilterChange }) => {
 
           <h3>Стать</h3>
           {genders.map(({ label, value }) => (
-            <label className="h3-light" key={value}>
-              <input
-                type="checkbox"
-                value={value}
-                checked={localFilters.gender.includes(value)}
-                onChange={(e) => handleMultiCheckboxChange(e, "gender")}
-              />
-              {label}
-            </label>
+            <CheckBoxIcon
+              key={value}
+              id={`gender-${value}`}
+              label={label}
+              value={value}
+              checked={localFilters.gender.includes(value)}
+              onChange={(e) => handleMultiCheckboxChange(e, "gender")}
+            />
           ))}
 
           <h3>Розмір</h3>
           {sizes.map((size) => (
-            <label className="h3-light" key={size}>
-              <input
-                type="checkbox"
-                value={size}
-                checked={localFilters.size.includes(size)}
-                onChange={(e) => handleMultiCheckboxChange(e, "size")}
-              />
-              {size}
-            </label>
+            <CheckBoxIcon
+              key={size}
+              id={`size-${size}`}
+              label={size}
+              value={size}
+              checked={localFilters.size.includes(size)}
+              onChange={(e) => handleMultiCheckboxChange(e, "size")}
+            />
           ))}
 
           <h3>Категорія</h3>
           {categories.map(({ label, value }) => (
-            <label className="h3-light" key={value}>
-              <input
-                type="checkbox"
-                value={value}
-                checked={localFilters.category.includes(value)}
-                onChange={(e) => handleMultiCheckboxChange(e, "category")}
-              />
-              {label}
-            </label>
+            <CheckBoxIcon
+              key={value}
+              id={`category-${value}`}
+              label={label}
+              value={value}
+              checked={localFilters.category.includes(value)}
+              onChange={(e) => handleMultiCheckboxChange(e, "category")}
+            />
           ))}
 
           <h3>Колір</h3>
           {colors.map((color) => (
-            <label className="h3-light" key={color}>
-              <input
-                type="checkbox"
-                value={color}
-                checked={localFilters.color.includes(color)}
-                onChange={(e) => handleMultiCheckboxChange(e, "color")}
-              />
-              {color}
-            </label>
+            <CheckBoxIcon
+              key={color}
+              id={`color-${color}`}
+              label={color}
+              value={color}
+              checked={localFilters.color.includes(color)}
+              onChange={(e) => handleMultiCheckboxChange(e, "color")}
+            />
           ))}
         </div>
 

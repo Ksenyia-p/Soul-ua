@@ -20,6 +20,7 @@ const Catalog = () => {
     category: [],
     color: [],
   });
+  const [sortOption, setSortOption] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,13 +60,11 @@ const Catalog = () => {
     }));
   };
 
+  // Фільтрація продуктів
   const filteredProducts = products.filter((product) => {
-    // Фільтр по статі (group)
     if (filters.gender.length && !filters.gender.includes(product.group)) {
       return false;
     }
-
-    // Фільтр по категорії (items)
     if (filters.category.length && !filters.category.includes(product.items)) {
       return false;
     }
@@ -73,7 +72,6 @@ const Catalog = () => {
     const colors = product.colors || {};
     const colorEntries = Object.entries(colors);
 
-    // Фільтр по кольору
     if (filters.color.length) {
       const hasColor = colorEntries.some(
         ([, color]) =>
@@ -83,7 +81,6 @@ const Catalog = () => {
       if (!hasColor) return false;
     }
 
-    // Фільтр по розміру
     if (filters.size.length) {
       const hasSize = colorEntries.some(([, color]) => {
         if (!color.sizes) return false;
@@ -95,18 +92,35 @@ const Catalog = () => {
     return true;
   });
 
+  // Сортування продуктів
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortOption) {
+      case "newest":
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+
+      case "price-asc":
+        return (a.price || Infinity) - (b.price || Infinity);
+
+      case "price-desc":
+        return (b.price || 0) - (a.price || 0);
+
+      default:
+        return 0;
+    }
+  });
+
   return (
     <div>
       <Header />
       <Way>Весь каталог</Way>
-      <FilterAndSort onFilterChange={setFilters} />
+      <FilterAndSort onFilterChange={setFilters} onSortChange={setSortOption} />
       <div className={styles.cards}>
-        {filteredProducts.length === 0 && (
+        {sortedProducts.length === 0 && (
           <h2 className={styles.emptyFiltr}>
             Немає товарів за обраними фільтрами
           </h2>
         )}
-        {filteredProducts.map((product) => {
+        {sortedProducts.map((product) => {
           const colors = product.colors || {};
           return Object.entries(colors).map(([colorKey, color]) => (
             <ProductCard
