@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../../components/header/Header";
 import Way from "../../components/way/Way";
 import Layout from "../../components/layout/Layout";
@@ -22,15 +22,20 @@ const LogIn = () => {
     const [password, setPassword] = useState('');
     const [shakeEmail, setShakeEmail] = useState(false);
     const [shakePassword, setShakePassword] = useState(false);
-    const { login } = useAuth();
+
+    const { user, loading } = useAuth();
+
+    useEffect(() => {
+        if (!loading && user?.uid) {
+            navigate("/account");
+        }
+    }, [loading, user?.uid]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
-            const credentials = await signInWithEmailAndPassword(auth, email, password);
-            login(credentials.user);
-            navigate("/account");
+            await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
             console.error(error.message);
             setShakeEmail(true);
@@ -39,8 +44,6 @@ const LogIn = () => {
             setTimeout(() => setShakePassword(false), 300);
         }
     };
-
-
 
     function RegisterClick(event) {
         event.preventDefault();

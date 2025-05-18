@@ -10,12 +10,14 @@ import {auth, db} from "../../FirebaseConfigs/FirebaseConfigs";
 import {doc, getDoc} from "firebase/firestore";
 import {onAuthStateChanged} from "firebase/auth";
 import EditPersonalData from "../../components/editPersonalData/editPersonalData";
+import {useNavigate} from "react-router-dom";
 
 const PersonalData = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -35,14 +37,13 @@ const PersonalData = () => {
                 }
             } else {
                 setError("Користувач не авторизований");
+                navigate('/login');
             }
             setLoading(false);
         });
 
         return () => unsubscribe();
-    }, []);
-
-    console.log(userData);
+    }, [navigate]);
 
     return (
         <div>

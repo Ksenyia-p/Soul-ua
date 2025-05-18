@@ -16,7 +16,6 @@ const navItems = [
     {text: 'Поточні замовлення', path: '/orders'},
     {text: 'Історія замовлень', path: '/order-history'},
     {text: 'Адреса доставки', path: '/address'},
-    {text: 'Вихід з системи', path: '/login'},
 ];
 
 const SideBar = ({children}) => {
@@ -24,28 +23,35 @@ const SideBar = ({children}) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    useEffect(() => {
+    const navigate = useNavigate();
 
+    useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
         };
         window.addEventListener('resize', handleResize);
-        if (auth.currentUser) {
-            navigate("/login");
-        }
-        return () => window.removeEventListener('resize', handleResize);
 
-    }, []);
+        // Підписка на зміну стану користувача Firebase
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (!user) {
+                // Якщо користувач вийшов — перенаправляємо на логін
+                navigate('/login');
+            }
+        });
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            unsubscribe();
+        };
+    }, [navigate, location.pathname]);
 
     const toggleMenu = () => setIsMenuOpen(prev => !prev);
 
-    const navigate = useNavigate();
 
     const handleLogout = async () => {
-        const auth = getAuth();
         try {
-            await signOut(auth);
-            navigate("/login");
+            await signOut(auth);  // Використовуємо імпортований auth
+            navigate('/login'); // Навігація виконується в onAuthStateChanged, можна тут не викликати
         } catch (error) {
             console.error("Помилка при виході з системи:", error);
         }
@@ -89,6 +95,11 @@ const SideBar = ({children}) => {
                                         </Link>
                                     </li>
                                 ))}
+                                <li>
+                                    <div className={clsx(sideBarStyles.linkTo)} onClick={handleLogout}>
+                                        <h3>Вихід з системи</h3>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     )}
@@ -161,7 +172,13 @@ const SideBar = ({children}) => {
                                         </Link>
                                     )}
                                 </li>
+
                             ))}
+                            <li>
+                                <div className={clsx(sideBarStyles.linkTo)} onClick={handleLogout}>
+                                    <h3>Вихід з системи</h3>
+                                </div>
+                            </li>
                         </ul>
 
                         </div>

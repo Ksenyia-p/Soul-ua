@@ -7,33 +7,31 @@ import { db } from "../FirebaseConfigs/FirebaseConfigs";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(auth.currentUser);
+    const [user, setUser] = useState(undefined); // undefined = ще не завантажено
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsub = auth.onAuthStateChanged(async (user) => {
-            if (user != null) {
+        const unsub = auth.onAuthStateChanged(async (firebaseUser) => {
+            if (firebaseUser) {
                 try {
-                    const userDocRef = doc(db, "users", user.uid);
+                    const userDocRef = doc(db, "users", firebaseUser.uid);
                     const userDocSnap = await getDoc(userDocRef);
-                    if (userDocSnap.exists()) {
-                        const userData = {
-                            ...user,
-                            ...userDocSnap.data()
-                        };
-                        setUser(userData);
-                    } else {
-                        setUser(user);
-                    }
+
+                    const userData = userDocSnap.exists()
+                        ? { uid: firebaseUser.uid, email: firebaseUser.email, ...userDocSnap.data() }
+                        : { uid: firebaseUser.uid, email: firebaseUser.email };
+
+                    setUser(userData);
                 } catch (error) {
-                    console.error("Failed to fetch user data from Firestore:", error);
-                    setUser(user);
+                    console.error("Помилка при отриманні користувача з Firestore:", error);
+                    setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
                 }
             } else {
                 setUser(null);
-                // При желании можно раскомментировать, чтобы сразу залогинить через Google
-                // signInWithPopup(auth,googleAuthProvider).then(credentials => setUser(credentials.user)).catch(err => console.error(err));
             }
+            setLoading(false);
         });
+
         return unsub;
     }, []);
 
@@ -45,10 +43,14 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
-    const isAuthenticated = !!user;
-
     return (
-        <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+        <AuthContext.Provider value={{
+            user,
+            login,
+            logout,
+            isAuthenticated: !!user,
+            loading
+        }}>
             {children}
         </AuthContext.Provider>
     );
