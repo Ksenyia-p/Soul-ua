@@ -6,13 +6,13 @@
 
 
 .contentWrapper {
-
-
     & .h2 {
         text-align: center;
         margin-bottom: clamp(36px, 5vw, 72px);
     }
 }
+
+
 .nameAndSurname {
     display: flex;
     flex-direction: row;
@@ -22,9 +22,12 @@
 .firstInput {
     margin-bottom: clamp(18px, 2.5vw, 36px);
 }
+
+
 .secondInput {
     margin-bottom: clamp(16px, 2.22vw, 32px);
 }
+
 
 .forgotPassword {
     align-self: flex-end;
@@ -47,31 +50,39 @@
     & h3 {
         margin-bottom: clamp(8px, 0.97vw, 14px);
     }
+
     & a {
         text-decoration: none;
     }
 }
 
 
-
+.form {
+    padding-top: 55px;
+}
 
 
 @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
+
 .shake {
 
     & input {
         animation: shake 0.16s 0s 3;
     }
 }
-
-
-
-
 
 
 @media (max-width: 1024px) {
@@ -82,6 +93,7 @@
         }
     }
 }
+
 @media (max-width: 768px) {
     .contentWrapper {
         .h2 {
@@ -89,6 +101,7 @@
         }
     }
 }
+
 @media (max-width: 320px) {
     .contentWrapper {
         .h2 {
@@ -96,6 +109,7 @@
         }
     }
 }
+
 .errorMessage {
     color: red;
     margin-bottom: 1rem;
