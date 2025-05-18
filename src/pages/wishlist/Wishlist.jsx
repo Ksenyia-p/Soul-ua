@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
-// ❌ Видалено: import FilterAndSort
 import styles from "./Wishlist.module.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db, auth } from "../../FirebaseConfigs/FirebaseConfigs";
