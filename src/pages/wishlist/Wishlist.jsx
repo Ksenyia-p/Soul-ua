@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
-import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
+// ❌ Видалено: import FilterAndSort
 import styles from "./Wishlist.module.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db, auth } from "../../FirebaseConfigs/FirebaseConfigs";
@@ -16,12 +16,6 @@ const Wishlist = () => {
   const [maskUrl, setMaskUrl] = useState(
     "/masks/corner-mask-2560px-1440px.svg"
   );
-  const [filters, setFilters] = useState({
-    gender: [],
-    size: [],
-    category: [],
-    color: [],
-  });
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -85,43 +79,6 @@ const Wishlist = () => {
     };
   });
 
-  const normalizedFilterColors = filters.color.map((c) => c.toLowerCase());
-  const normalizedFilterSizes = filters.size.map((s) => s.toUpperCase());
-
-  const filteredProducts = normalizedProducts.filter((product) => {
-    if (filters.gender.length && !filters.gender.includes(product.group))
-      return false;
-    if (filters.category.length && !filters.category.includes(product.items))
-      return false;
-
-    const colorEntries = Object.entries(product.colors || {});
-
-    // Фільтр по кольору
-    if (normalizedFilterColors.length) {
-      const hasColor = colorEntries.some(
-        ([, color]) =>
-          normalizedFilterColors.includes(color.colorName?.toLowerCase()) ||
-          normalizedFilterColors.includes(color.slug?.toLowerCase())
-      );
-      if (!hasColor) return false;
-    }
-
-    // Фільтр по розміру
-    if (normalizedFilterSizes.length) {
-      const hasSize = colorEntries.some(([, color]) => {
-        const sizeKeys = Object.keys(color.sizes || {}).map((k) =>
-          k.toUpperCase()
-        );
-        return normalizedFilterSizes.some(
-          (size) => sizeKeys.includes(size) && color.sizes[size] > 0
-        );
-      });
-      if (!hasSize) return false;
-    }
-
-    return true;
-  });
-
   if (!user) {
     return (
       <div>
@@ -140,13 +97,9 @@ const Wishlist = () => {
       <Header />
       <Way>Вішліст</Way>
 
-      {wishlistProducts.length > 0 && (
-        <FilterAndSort onFilterChange={setFilters} />
-      )}
-
       <div className={styles.cards}>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => {
+        {normalizedProducts.length > 0 ? (
+          normalizedProducts.map((product) => {
             const colorEntries = Object.entries(product.colors || {});
             return colorEntries.map(([colorKey, color]) => (
               <ProductCard
@@ -157,7 +110,7 @@ const Wishlist = () => {
                   link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
                   color: colorKey,
                 }}
-                wishlistMode={true}
+                wishlistMode
                 maskUrl={maskUrl}
                 onFavoriteToggle={() =>
                   handleFavoriteToggle(product.id, colorKey, false)
