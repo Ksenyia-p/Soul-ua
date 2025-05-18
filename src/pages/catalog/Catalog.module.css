@@ -1,32 +1,40 @@
 .cards {
-    display: grid;
-    gap: clamp(36px, 5vw, 72px);
-    margin: clamp(18px, 2.5vw, 36px) clamp(18px, 5vw, 72px) 0;
-    justify-items: center;
-    grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  gap: clamp(36px, 5vw, 72px);
+  margin: clamp(18px, 2.5vw, 36px) clamp(18px, 5vw, 72px) 0;
+  justify-items: center;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 @media (min-width: 768px) {
-    .cards {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 1024px) {
-    .cards {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 1440px) {
-    .cards {
-        grid-template-columns: repeat(4, 1fr);
-    }
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media (min-width: 2560px) {
-    .cards {
-        grid-template-columns: repeat(6, 1fr);
-    }
+  .cards {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
+.emptyFiltr {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 4vw, 20px);
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: clamp(20px, 5vw, 40px);
+}

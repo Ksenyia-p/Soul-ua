@@ -102,7 +102,9 @@ const Catalog = () => {
       <FilterAndSort onFilterChange={setFilters} />
       <div className={styles.cards}>
         {filteredProducts.length === 0 && (
-          <p>Немає товарів за обраними фільтрами.</p>
+          <h2 className={styles.emptyFiltr}>
+            Немає товарів за обраними фільтрами
+          </h2>
         )}
         {filteredProducts.map((product) => {
           const colors = product.colors || {};
