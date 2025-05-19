@@ -15,6 +15,11 @@ import RegistrationPage from "./pages/registration/RegistrationPage";
 import CurrentOrders from "./pages/currentOrders/currentOrders";
 import OrderHistory from "./pages/orderHistory/orderHistory";
 import DeliveryAddress from "./pages/deliveryAddress/deliveryAddress";
+import SizeTable from "./pages/sizeTable/sizeTable";
+import ClotheCare from "./pages/clotheCare/clotheCare";
+import News from "./pages/news/news";
+import ReturnExchange from "./pages/returnExchange/returnExchange";
+import OfferAgreement from "./pages/offerAgreement/offerAgreement";
 
 const App = () => {
     const [items, setItems] = useState([]);
@@ -57,6 +62,11 @@ const App = () => {
                 <Route path="/login/registration" element={<RegistrationPage />} />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/about_us" element={<AboutUs />} />
+                <Route path="/size_table" element={<SizeTable />} />
+                <Route path="/clothe_care" element={<ClotheCare />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/return_exchange" element={<ReturnExchange />} />
+                <Route path="/offer_agreement" element={<OfferAgreement />} />
                 <Route path="/:group" element={<AssortmentPage />} />
                 <Route path="/:group/:item" element={<AssortmentPage />} />
                 <Route path="/:group/:item/:slug/:color" element={<Product />} />
