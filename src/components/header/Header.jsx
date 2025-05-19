@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import styles from './Header.module.css';
 import {Link} from 'react-router-dom';
@@ -29,7 +29,16 @@ const Header = () => {
             navigate("/login");
         }
     };
+    useEffect(() => {
+        const handleOpenShoppingBag = () => {
+            setShoppingBagActive(true);
+        };
 
+        window.addEventListener('openShoppingBag', handleOpenShoppingBag);
+        return () => {
+            window.removeEventListener('openShoppingBag', handleOpenShoppingBag);
+        };
+    }, []);
 
     return (
         <header className={styles.header}>
