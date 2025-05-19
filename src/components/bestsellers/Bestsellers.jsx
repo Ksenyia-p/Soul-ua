@@ -33,6 +33,13 @@ const Bestsellers = () => {
                         const colorKey = bestseller.color;
                         const colorData = productData.colors?.[colorKey];
 
+                        const sizes = colorData?.sizes || {};
+                        const isAvailable = Object.values(sizes).some(qty => qty > 0);
+
+                        if (!isAvailable) {
+                            continue;
+                        }
+
                         if (colorData) {
                             productsWithDetails.push({
                                 ...productData,

@@ -70,20 +70,23 @@ const Catalog = () => {
     const colorEntries = Object.entries(colors);
 
     if (filters.color.length) {
-      const hasColor = colorEntries.some(
-          ([, color]) =>
-              filters.color.includes(color.colorName) ||
-              filters.color.includes(color.slug)
-      );
+      const hasColor = colorEntries.some(([, color]) => {
+        const hasSizeAvailable = Object.values(color.sizes || {}).some((qty) => qty > 0);
+        return (
+            hasSizeAvailable &&
+            (filters.color.includes(color.colorName) ||
+                filters.color.includes(color.slug))
+        );
+      });
       if (!hasColor) return false;
     }
 
     if (filters.size.length) {
-      const hasSize = colorEntries.some(([, color]) => {
+      const hasAllSizes = colorEntries.some(([, color]) => {
         if (!color.sizes) return false;
-        return filters.size.some((size) => color.sizes[size] > 0);
+        return filters.size.every((size) => color.sizes[size] > 0);
       });
-      if (!hasSize) return false;
+      if (!hasAllSizes) return false;
     }
 
     return true;
@@ -93,16 +96,38 @@ const Catalog = () => {
     switch (sortOption) {
       case "newest":
         return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-
       case "price-asc":
         return (a.price || Infinity) - (b.price || Infinity);
-
       case "price-desc":
         return (b.price || 0) - (a.price || 0);
-
       default:
         return 0;
     }
+  });
+
+  const visibleProductCards = sortedProducts.flatMap((product) => {
+    const colors = product.colors || {};
+    const colorEntries = Object.entries(colors);
+
+    return colorEntries.filter(([_, color]) => {
+      const sizes = color.sizes || {};
+      const hasAvailableSize = Object.values(sizes).some((qty) => qty > 0);
+      if (!hasAvailableSize) return false;
+
+      if (filters.size.length > 0) {
+        const matchesSize = filters.size.every((size) => sizes[size] > 0);
+        if (!matchesSize) return false;
+      }
+
+      if (filters.color.length > 0) {
+        const matchesColor =
+            filters.color.includes(color.colorName) ||
+            filters.color.includes(color.slug);
+        if (!matchesColor) return false;
+      }
+
+      return true;
+    });
   });
 
   return (
@@ -111,22 +136,33 @@ const Catalog = () => {
         <Way>Весь каталог</Way>
         <FilterAndSort onFilterChange={setFilters} onSortChange={setSortOption} />
         <div className={styles.cards}>
-          {sortedProducts.length === 0 && (
-              <h2 className={styles.emptyFiltr}>
-                Немає товарів за обраними фільтрами
-              </h2>
+          {visibleProductCards.length === 0 && (
+              <h2 className={styles.emptyFiltr}>Немає товарів за обраними фільтрами</h2>
           )}
           {sortedProducts.map((product) => {
             const colors = product.colors || {};
             const colorEntries = Object.entries(colors);
-            const colorsToShow =
-                filters.color.length > 0
-                    ? colorEntries.filter(
-                        ([, color]) =>
-                            filters.color.includes(color.colorName) ||
-                            filters.color.includes(color.slug)
-                    )
-                    : colorEntries;
+
+            const colorsToShow = colorEntries.filter(([_, color]) => {
+              const sizes = color.sizes || {};
+
+              const hasAvailableSize = Object.values(sizes).some((qty) => qty > 0);
+              if (!hasAvailableSize) return false;
+
+              if (filters.size.length > 0) {
+                const matchesSize = filters.size.every((size) => sizes[size] > 0);
+                if (!matchesSize) return false;
+              }
+
+              if (filters.color.length > 0) {
+                const matchesColor =
+                    filters.color.includes(color.colorName) ||
+                    filters.color.includes(color.slug);
+                if (!matchesColor) return false;
+              }
+
+              return true;
+            });
 
             return colorsToShow.map(([colorKey, color]) => (
                 <ProductCard

@@ -1,8 +1,7 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../FirebaseConfigs/FirebaseConfigs";
-import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
 import FilterAndSort from "../../components/filter and sort icons/FilterAndSort";
@@ -11,13 +10,11 @@ import Way from "../../components/way/Way";
 import styles from "./AssortmentPage.module.css";
 
 const AssortmentPage = () => {
-    const navigate = useNavigate();
     const { group, item } = useParams();
 
     const [products, setProducts] = useState([]);
     const [favorites, setFavorites] = useState({});
     const [maskUrl, setMaskUrl] = useState("/masks/corner-mask-2560px-1440px.svg");
-
     const [filters, setFilters] = useState({
         gender: [],
         size: [],
@@ -39,14 +36,11 @@ const AssortmentPage = () => {
                     if (group === "seasons") {
                         return item ? product.season === item : !!product.season;
                     }
-
                     if (group === "collaboration") {
                         return item ? product.collab === item : !!product.collab;
                     }
-
                     const matchesGroup = product.group === group;
                     const matchesItem = !item || product.items === item;
-
                     return matchesGroup && matchesItem;
                 });
 
@@ -92,20 +86,22 @@ const AssortmentPage = () => {
         const colorEntries = Object.entries(colors);
 
         if (filters.color.length) {
-            const hasColor = colorEntries.some(
-                ([, color]) =>
-                    filters.color.includes(color.colorName) ||
-                    filters.color.includes(color.slug)
-            );
+            const hasColor = colorEntries.some(([, color]) => {
+                const hasSizeAvailable = Object.values(color.sizes || {}).some((qty) => qty > 0);
+                return (
+                    hasSizeAvailable &&
+                    (filters.color.includes(color.colorName) || filters.color.includes(color.slug))
+                );
+            });
             if (!hasColor) return false;
         }
 
         if (filters.size.length) {
-            const hasSize = colorEntries.some(([, color]) => {
+            const hasAllSizes = colorEntries.some(([, color]) => {
                 if (!color.sizes) return false;
-                return filters.size.some((size) => color.sizes[size] > 0);
+                return filters.size.every((size) => color.sizes[size] > 0);
             });
-            if (!hasSize) return false;
+            if (!hasAllSizes) return false;
         }
 
         return true;
@@ -124,6 +120,30 @@ const AssortmentPage = () => {
         }
     });
 
+    const visibleProductCards = sortedProducts.flatMap((product) => {
+        const colors = product.colors || {};
+        const colorEntries = Object.entries(colors);
+
+        return colorEntries.filter(([_, color]) => {
+            const sizes = color.sizes || {};
+            const hasAvailableSize = Object.values(sizes).some((qty) => qty > 0);
+            if (!hasAvailableSize) return false;
+
+            if (filters.size.length > 0) {
+                const matchesSize = filters.size.every((size) => sizes[size] > 0);
+                if (!matchesSize) return false;
+            }
+
+            if (filters.color.length > 0) {
+                const matchesColor =
+                    filters.color.includes(color.colorName) || filters.color.includes(color.slug);
+                if (!matchesColor) return false;
+            }
+
+            return true;
+        });
+    });
+
     return (
         <div>
             <Header />
@@ -131,58 +151,50 @@ const AssortmentPage = () => {
             <FilterAndSort onFilterChange={setFilters} onSortChange={setSortOption} />
 
             <div className={styles.cards}>
-                {sortedProducts.length === 0 && (
-                    <h2 className={styles.emptyFiltr}>
-                        Немає товарів за обраними фільтрами
-                    </h2>
+                {visibleProductCards.length === 0 && (
+                    <h2 className={styles.emptyFiltr}>Немає товарів за обраними фільтрами</h2>
                 )}
 
-                {sortedProducts.map((product, productIndex) => {
-                    const colorEntries = Object.entries(product.colors || {});
+                {sortedProducts.map((product) => {
+                    const colors = product.colors || {};
+                    const colorEntries = Object.entries(colors);
 
-                    const colorsToShow =
-                        filters.color.length > 0
-                            ? colorEntries.filter(
-                                ([, color]) =>
-                                    filters.color.includes(color.colorName) ||
-                                    filters.color.includes(color.slug)
-                            )
-                            : colorEntries;
+                    const colorsToShow = colorEntries.filter(([_, color]) => {
+                        const sizes = color.sizes || {};
 
-                    if (colorsToShow.length > 0) {
-                        return colorsToShow.map(([colorKey, color], colorIndex) => (
-                            <ProductCard
-                                key={`${productIndex}-${colorKey}`}
-                                product={{
-                                    ...product,
-                                    imgSrc: color.mainImage || product.mainImage,
-                                    link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
-                                    color: colorKey,
-                                }}
-                                isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
-                                onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
-                                maskUrl={maskUrl}
-                            />
-                        ));
-                    }
+                        const hasAvailableSize = Object.values(sizes).some((qty) => qty > 0);
+                        if (!hasAvailableSize) return false;
 
-                    return (
+                        if (filters.size.length > 0) {
+                            const matchesSize = filters.size.every((size) => sizes[size] > 0);
+                            if (!matchesSize) return false;
+                        }
+
+                        if (filters.color.length > 0) {
+                            const matchesColor =
+                                filters.color.includes(color.colorName) || filters.color.includes(color.slug);
+                            if (!matchesColor) return false;
+                        }
+
+                        return true;
+                    });
+
+                    return colorsToShow.map(([colorKey, color]) => (
                         <ProductCard
-                            key={`${productIndex}`}
+                            key={`${product.id}-${colorKey}`}
                             product={{
                                 ...product,
-                                imgSrc: product.mainImage,
-                                link: `/${product.group}/${product.items || "category"}/${product.slug || product.id}`,
-                                color: product.color || null,
+                                imgSrc: color.mainImage || product.image || product.mainImage,
+                                link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
+                                color: colorKey,
                             }}
-                            isFavorite={favorites[`${product.slug || product.id}`] || false}
-                            onToggleFavorite={() => toggleFavorite(product.slug || product.id, product.color || "")}
+                            isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
+                            onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
                             maskUrl={maskUrl}
                         />
-                    );
+                    ));
                 })}
             </div>
-
             <Layout />
         </div>
     );
