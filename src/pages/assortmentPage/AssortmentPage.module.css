@@ -63,3 +63,11 @@
     }
 }
 
+.emptyFiltr {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 4vw, 20px);
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: clamp(20px, 5vw, 40px);
+}

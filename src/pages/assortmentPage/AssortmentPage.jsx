@@ -9,20 +9,33 @@ import FilterAndSort from "../../components/filter and sort icons/FilterAndSort"
 import ProductCard from "../../components/productCard/ProductCard";
 import Way from "../../components/way/Way";
 import styles from "./AssortmentPage.module.css";
+
 const AssortmentPage = () => {
     const navigate = useNavigate();
-    const { group, item } = useParams(); // ← сюда попадут "women" и "pants", если путь /women/pants
+    const { group, item } = useParams();
+
     const [products, setProducts] = useState([]);
     const [favorites, setFavorites] = useState({});
     const [maskUrl, setMaskUrl] = useState("/masks/corner-mask-2560px-1440px.svg");
+
+    const [filters, setFilters] = useState({
+        gender: [],
+        size: [],
+        category: [],
+        color: [],
+    });
+    const [sortOption, setSortOption] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "catalog"));
-                const fetchedProducts = querySnapshot.docs.map((doc) => doc.data());
+                const fetchedProducts = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
 
-                const filteredProducts = fetchedProducts.filter((product) => {
+                const filteredByUrl = fetchedProducts.filter((product) => {
                     if (group === "seasons") {
                         return item ? product.season === item : !!product.season;
                     }
@@ -37,15 +50,8 @@ const AssortmentPage = () => {
                     return matchesGroup && matchesItem;
                 });
 
-
-
-
-
-
-
-
-                setProducts(filteredProducts);
-                setFavorites(Array(filteredProducts.length).fill(false));
+                setProducts(filteredByUrl);
+                setFavorites({});
             } catch (error) {
                 console.error("Error fetching catalog:", error);
             }
@@ -53,17 +59,11 @@ const AssortmentPage = () => {
 
         const updateMaskUrl = () => {
             const width = window.innerWidth;
-            if (width >= 2560) {
-                setMaskUrl("/masks/corner-mask-2560px-1440px.svg");
-            } else if (width >= 1024) {
-                setMaskUrl("/masks/corner-mask-1024px.svg");
-            } else if (width >= 768) {
-                setMaskUrl("/masks/corner-mask-768px.svg");
-            } else if (width >= 425) {
-                setMaskUrl("/masks/corner-mask-425-375px.svg");
-            } else {
-                setMaskUrl("/masks/corner-mask-320px.svg");
-            }
+            if (width >= 2560) setMaskUrl("/masks/corner-mask-2560px-1440px.svg");
+            else if (width >= 1024) setMaskUrl("/masks/corner-mask-1024px.svg");
+            else if (width >= 768) setMaskUrl("/masks/corner-mask-768px.svg");
+            else if (width >= 425) setMaskUrl("/masks/corner-mask-425-375px.svg");
+            else setMaskUrl("/masks/corner-mask-320px.svg");
         };
 
         fetchData();
@@ -71,6 +71,7 @@ const AssortmentPage = () => {
         window.addEventListener("resize", updateMaskUrl);
         return () => window.removeEventListener("resize", updateMaskUrl);
     }, [group, item]);
+
     const toggleFavorite = (productSlug, colorKey) => {
         const key = `${productSlug}-${colorKey}`;
         setFavorites((prev) => ({
@@ -79,23 +80,82 @@ const AssortmentPage = () => {
         }));
     };
 
+    const filteredProducts = products.filter((product) => {
+        if (filters.gender.length && !filters.gender.includes(product.group)) {
+            return false;
+        }
+        if (filters.category.length && !filters.category.includes(product.items)) {
+            return false;
+        }
+
+        const colors = product.colors || {};
+        const colorEntries = Object.entries(colors);
+
+        if (filters.color.length) {
+            const hasColor = colorEntries.some(
+                ([, color]) =>
+                    filters.color.includes(color.colorName) ||
+                    filters.color.includes(color.slug)
+            );
+            if (!hasColor) return false;
+        }
+
+        if (filters.size.length) {
+            const hasSize = colorEntries.some(([, color]) => {
+                if (!color.sizes) return false;
+                return filters.size.some((size) => color.sizes[size] > 0);
+            });
+            if (!hasSize) return false;
+        }
+
+        return true;
+    });
+
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+        switch (sortOption) {
+            case "newest":
+                return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+            case "price-asc":
+                return (a.price || Infinity) - (b.price || Infinity);
+            case "price-desc":
+                return (b.price || 0) - (a.price || 0);
+            default:
+                return 0;
+        }
+    });
+
     return (
         <div>
-            <Header/>
+            <Header />
             <Way>Весь каталог</Way>
-            <FilterAndSort/>
+            <FilterAndSort onFilterChange={setFilters} onSortChange={setSortOption} />
+
             <div className={styles.cards}>
-                {console.log("Rendering products:", products)}
-                {products.map((product, productIndex) => {
+                {sortedProducts.length === 0 && (
+                    <h2 className={styles.emptyFiltr}>
+                        Немає товарів за обраними фільтрами
+                    </h2>
+                )}
+
+                {sortedProducts.map((product, productIndex) => {
                     const colorEntries = Object.entries(product.colors || {});
 
-                    if (colorEntries.length > 0) {
-                        return colorEntries.map(([colorKey, color], colorIndex) => (
+                    const colorsToShow =
+                        filters.color.length > 0
+                            ? colorEntries.filter(
+                                ([, color]) =>
+                                    filters.color.includes(color.colorName) ||
+                                    filters.color.includes(color.slug)
+                            )
+                            : colorEntries;
+
+                    if (colorsToShow.length > 0) {
+                        return colorsToShow.map(([colorKey, color], colorIndex) => (
                             <ProductCard
                                 key={`${productIndex}-${colorKey}`}
                                 product={{
                                     ...product,
-                                    imgSrc: color.mainImage,
+                                    imgSrc: color.mainImage || product.mainImage,
                                     link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
                                     color: colorKey,
                                 }}
@@ -121,10 +181,9 @@ const AssortmentPage = () => {
                         />
                     );
                 })}
-
             </div>
 
-            <Layout/>
+            <Layout />
         </div>
     );
 };
