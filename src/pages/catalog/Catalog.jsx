@@ -11,9 +11,7 @@ import styles from "./Catalog.module.css";
 const Catalog = () => {
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState({});
-  const [maskUrl, setMaskUrl] = useState(
-    "/masks/corner-mask-2560px-1440px.svg"
-  );
+  const [maskUrl, setMaskUrl] = useState("/masks/corner-mask-2560px-1440px.svg");
   const [filters, setFilters] = useState({
     gender: [],
     size: [],
@@ -60,7 +58,6 @@ const Catalog = () => {
     }));
   };
 
-  // Фільтрація продуктів
   const filteredProducts = products.filter((product) => {
     if (filters.gender.length && !filters.gender.includes(product.group)) {
       return false;
@@ -74,9 +71,9 @@ const Catalog = () => {
 
     if (filters.color.length) {
       const hasColor = colorEntries.some(
-        ([, color]) =>
-          filters.color.includes(color.colorName) ||
-          filters.color.includes(color.slug)
+          ([, color]) =>
+              filters.color.includes(color.colorName) ||
+              filters.color.includes(color.slug)
       );
       if (!hasColor) return false;
     }
@@ -92,7 +89,6 @@ const Catalog = () => {
     return true;
   });
 
-  // Сортування продуктів
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortOption) {
       case "newest":
@@ -110,36 +106,46 @@ const Catalog = () => {
   });
 
   return (
-    <div>
-      <Header />
-      <Way>Весь каталог</Way>
-      <FilterAndSort onFilterChange={setFilters} onSortChange={setSortOption} />
-      <div className={styles.cards}>
-        {sortedProducts.length === 0 && (
-          <h2 className={styles.emptyFiltr}>
-            Немає товарів за обраними фільтрами
-          </h2>
-        )}
-        {sortedProducts.map((product) => {
-          const colors = product.colors || {};
-          return Object.entries(colors).map(([colorKey, color]) => (
-            <ProductCard
-              key={`${product.id}-${colorKey}`}
-              product={{
-                ...product,
-                imgSrc: color.mainImage || product.image,
-                link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
-                color: colorKey,
-              }}
-              isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
-              onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
-              maskUrl={maskUrl}
-            />
-          ));
-        })}
+      <div>
+        <Header />
+        <Way>Весь каталог</Way>
+        <FilterAndSort onFilterChange={setFilters} onSortChange={setSortOption} />
+        <div className={styles.cards}>
+          {sortedProducts.length === 0 && (
+              <h2 className={styles.emptyFiltr}>
+                Немає товарів за обраними фільтрами
+              </h2>
+          )}
+          {sortedProducts.map((product) => {
+            const colors = product.colors || {};
+            const colorEntries = Object.entries(colors);
+            const colorsToShow =
+                filters.color.length > 0
+                    ? colorEntries.filter(
+                        ([, color]) =>
+                            filters.color.includes(color.colorName) ||
+                            filters.color.includes(color.slug)
+                    )
+                    : colorEntries;
+
+            return colorsToShow.map(([colorKey, color]) => (
+                <ProductCard
+                    key={`${product.id}-${colorKey}`}
+                    product={{
+                      ...product,
+                      imgSrc: color.mainImage || product.image,
+                      link: `/${product.group}/${product.items}/${product.slug}/${color.slug}`,
+                      color: colorKey,
+                    }}
+                    isFavorite={favorites[`${product.slug}-${colorKey}`] || false}
+                    onToggleFavorite={() => toggleFavorite(product.slug, colorKey)}
+                    maskUrl={maskUrl}
+                />
+            ));
+          })}
+        </div>
+        <Layout />
       </div>
-      <Layout />
-    </div>
   );
 };
 

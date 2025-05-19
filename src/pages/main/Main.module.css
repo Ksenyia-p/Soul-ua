@@ -8,7 +8,6 @@
     overflow: hidden;
 }
 
-
 .buttonBestsellers {
     display: flex;
     margin-top: clamp(15px, 2.08vw, 30px);
@@ -17,3 +16,28 @@
     text-decoration: none;
 }
 
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
+.videosContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: clamp(100px, 13.89vw, 200px);
+}
+
+.video {
+    width: 33.3%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.bestsellers {
+    margin-bottom: clamp(100px, 13.89vw, 200px);
+
+}

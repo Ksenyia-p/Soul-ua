@@ -1,9 +1,8 @@
 .info {
   align-self: center;
-  margin: clamp(100px, 13.89vw, 200px) clamp(18px, 7.5vw, 192px) 0;
+  margin: 0 clamp(18px, 7.5vw, 192px) clamp(100px, 13.89vw, 200px);
   word-wrap: break-word;
   white-space: normal;
-  margin-top: clamp(692px, 65.9vw, 949px);
 }
 
 .paragraph {
