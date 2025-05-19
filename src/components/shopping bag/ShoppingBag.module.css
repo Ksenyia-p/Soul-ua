@@ -3,29 +3,20 @@
     top: 0;
     right: 0;
     background-color: #EFF1F0;
-    height: 100%;
+    height: 100vh;
     width: clamp(270px, 42.5vw, 612px);
     transform: translateX(100%);
     transition: transform 600ms ease;
     z-index: 1001;
-}
-
-
-.closeButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1002;
-}
-
-.closeButton img {
-    width: clamp(11px, 1.5vw, 22px);
-    height: clamp(10px, 1.4vw, 20px);
+    display: flex;
+    flex-direction: column;
+    padding-top: clamp(63px, 8.75vw, 126px);
+    padding-bottom: clamp(112px, 15.56vw, 224px);
+    overflow-y: auto;
 }
 
 .active {
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 .overlay {
@@ -50,7 +41,8 @@
     position: fixed;
     top: 0;
     background-color: #EFF1F0;
-    width: clamp(375px, 42.5vw, 612px);
+    width: 100%;
+    max-width: 612px;
     height: clamp(63px, 8.75vw, 126px);
     border-bottom: 1px solid #A5A8A6;
     padding: 0 clamp(18px, 2.5vw, 36px);
@@ -70,7 +62,8 @@
     position: fixed;
     bottom: 0;
     background-color: #EFF1F0;
-    width: clamp(375px, 42.5vw, 612px);
+    width: 100%;
+    max-width: 612px;
     height: clamp(112px, 15.56vw, 224px);
     border-top: 1px solid #A5A8A6;
     z-index: 1002;
@@ -80,7 +73,6 @@
     padding: clamp(18px, 2.5vw, 36px);
     box-sizing: border-box;
 }
-
 
 .bottomRectangle {
     display: flex;
@@ -106,5 +98,89 @@
     display: flex;
     justify-content: center;
     text-decoration: none;
+}
+
+.cartItemsContainer {
+    padding: 12px clamp(18px, 2.5vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2.78vw, 40px);
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    margin: clamp(18px, 2.5vw, 36px);
+    gap: clamp(20px, 2.78vw, 40px);
+}
+
+.cartItem {
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: row;
+    gap: clamp(18px, 4.17vw, 60px);
+    flex-wrap: wrap;
+}
+
+.photo img {
+    width: clamp(65.33px, 8.33vw, 120px);
+    height: clamp(98px, 12.57vw, 181px);
+    border-radius: clamp(12px, 1.74vw, 25px);
+    object-fit: cover;
+}
+
+.itemInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 140px;
+}
+
+.colorSize {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(4px, 0.49vw, 7px);
+    margin: 5px 0;
+    flex-wrap: wrap;
+}
+
+.quantity {
+    margin-bottom: clamp(9px, 1.11vw, 16px);
+}
+
+.priceWishlist {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(9px, 1.25vw, 18px);
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+}
+
+
+@media screen and (max-width: 425px) {
+    .shoppingBag {
+        width: 100vw;
+        left: 0;
+    }
+
+    .upperRectangleContainer,
+    .bottomRectangleContainer {
+        width: 100vw;
+    }
+
+    .cartItem {
+        gap: 18px;
+    }
 
 }
