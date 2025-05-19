@@ -1,167 +1,259 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
 import styles from "./AboutUs.module.css";
+import CheckBoxIcon from "../../components/CheckBoxIcon/CheckBoxIcon";
+import Button from "../../components/button/Button";
+import summer1 from "../../images/summer1.jpeg";
+import summer2 from "../../images/summer2.JPG";
+import summer3 from "../../images/summer3.JPG";
+import autumn1 from "../../images/4U5A9896.jpeg";
+import autumn2 from "../../images/autumn2.jpeg";
+import autumn3 from "../../images/autumn3.jpeg";
+import spring1 from "../../images/spring1.jpeg";
+import spring2 from "../../images/spring2.jpeg";
+import spring3 from "../../images/spring3.jpeg";
+import winter1 from "../../images/winter1.jpeg";
+import witer2 from "../../images/winter2.jpeg";
+import winter3 from "../../images/winter3.jpeg";
+
+const questions = [
+  {
+    question: "Який у тебе природний колір волосся?",
+    options: [
+      { label: "Світло-русявий, золотистий", type: "spring" },
+      { label: "Світло-русявий, попелястий", type: "summer" },
+      { label: "Темно-каштановий, рудуватий", type: "autumn" },
+      { label: "Темно-каштановий, майже чорний", type: "winter" },
+    ],
+  },
+  {
+    question: "Який у тебе колір очей?",
+    options: [
+      {
+        label: "Світло-зелені, світло-карі з золотистим відблиском",
+        type: "spring",
+      },
+      { label: "Сірі, блакитні, світло-зелені", type: "summer" },
+      {
+        label: "Зелені, карі з золотистими чи оливковими відтінками",
+        type: "autumn",
+      },
+      { label: "Темно-карі, чорні, дуже насичені", type: "winter" },
+    ],
+  },
+  {
+    question: "Який у тебе відтінок шкіри?",
+    options: [
+      {
+        label: "Світлий з теплим персиковим або золотистим відтінком",
+        type: "spring",
+      },
+      {
+        label: "Світлий з холодним рожевим або сіруватим відтінком",
+        type: "summer",
+      },
+      { label: "Теплий з оливковим або смаглявим відтінком", type: "autumn" },
+      { label: "Холодний, дуже світлий або темний", type: "winter" },
+    ],
+  },
+  {
+    question: "Як виглядаєш без макіяжу: тон шкіри теплий чи холодний?",
+    options: [
+      { label: "Теплий, шкіра світиться теплом", type: "spring" },
+      {
+        label: "Холодний, шкіра має синюватий чи рожевий відтінок",
+        type: "summer",
+      },
+      {
+        label: "Теплий, шкіра має золотисті чи бронзові відблиски",
+        type: "autumn",
+      },
+      { label: "Холодний, шкіра чітко контрастує з волоссям", type: "winter" },
+    ],
+  },
+  {
+    question: "Який метал тобі більше личить?",
+    options: [
+      { label: "Рожеве золото", type: "spring" },
+      { label: "Срібло", type: "summer" },
+      { label: "Жовте золото", type: "autumn" },
+      { label: "Біле золото", type: "winter" },
+    ],
+  },
+  {
+    question: "Які кольори одягу найкраще виглядають на тобі?",
+    options: [
+      { label: "Теплі, яскраві та світлі", type: "spring" },
+      { label: "Пастельні, м'які холодні", type: "summer" },
+      { label: "Насичені, теплі земляні", type: "autumn" },
+      { label: "Контрастні, холодні, яскраві", type: "winter" },
+    ],
+  },
+  {
+    question: "Як реагуєш на сонце?",
+    options: [
+      { label: "Швидко засмагаю, шкіра світиться", type: "spring" },
+      { label: "Шкіра часто червоніє, засмага погана", type: "summer" },
+      { label: "Легко засмагаю, колір шкіри стає глибшим", type: "autumn" },
+      { label: "Шкіра світла або дуже темна, контрастна", type: "winter" },
+    ],
+  },
+];
+
+const descriptions = {
+  spring: {
+    title: <>Весна — твій світлий настрій</>,
+    description:
+      "Ти — втілення тепла, свіжості та життєрадісності. Весняний тип має світлу шкіру з золотистим відтінком, ніжне волосся та очі, що сяють. Тобі пасують теплі, легкі, радісні кольори — вони лише підсилюють твоє природне сяйво!",
+    clothes:
+      "Обирай персиковий, кремовий, світло-зелений, кораловий та ніжно-блакитний. Метали: рожеве золото — і ти сяєш ще яскравіше!",
+    photos: [spring1, spring2, spring3],
+  },
+  summer: {
+    title: <>Літо — ніжна гармонія прохолоди</>,
+    description:
+      "Твоя краса — у витонченості, легкості та м’яких тонах. Ти — представниця холодного кольоротипу з попелястим волоссям та лагідними очима. Тобі пасують пастельні, м’які кольори, які підкреслюють твою природну елегантність.",
+    clothes: [
+      "Обирай лавандовий, м’ятний, ніжно-рожевий та блідо-фіолетовий.",
+      "Метали: срібло — підкреслює твій спокійний шик.",
+    ],
+
+    photos: [summer1, summer2, summer3],
+  },
+  autumn: {
+    title: <>Осінь — твоя глибина і сила</>,
+    description:
+      "Ти — насичена, тепла і глибока. Осінній кольоротип — це кольори землі, спецій та осіннього листя. Твоя шкіра має приємний оливковий чи смаглявий відтінок, а очі — чарують теплом. Теплі глибокі кольори — твої найкращі союзники.",
+    clothes:
+      "Обирай теракоту, гірчицю, бордо, оливку і шоколадні відтінки. Метали: жовте золото — як осіннє сонце на тобі.",
+    photos: [autumn1, autumn2, autumn3],
+  },
+  winter: {
+    title: <>Зима — твій стильний контраст</>,
+    description:
+      "Ти — яскрава, смілива та контрастна. Шкіра світла або темна, але завжди ефектна, а погляд — пронизливий. Твоя краса розкривається в насичених холодних кольорах, які створюють wow-ефект.",
+    clothes: [
+      "Носи чорне, біле, смарагдове, червоне, електрик. ",
+      "Метали: біле золото — як морозний кристал на тобі.",
+    ],
+    photos: [winter1, witer2, winter3],
+  },
+};
 
 const AboutUs = () => {
+  const [started, setStarted] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [result, setResult] = useState(null);
+
+  const handleAnswer = (index, type) => {
+    const newAnswers = [...answers];
+    newAnswers[index] = type;
+    setAnswers(newAnswers);
+  };
+
+  const calculateResult = () => {
+    const counts = { spring: 0, summer: 0, autumn: 0, winter: 0 };
+    answers.forEach((a) => {
+      if (a) counts[a]++;
+    });
+    const maxType = Object.keys(counts).reduce((a, b) =>
+      counts[a] >= counts[b] ? a : b
+    );
+    setResult(maxType);
+  };
+
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{ minHeight: "100vh", padding: 20 }}
+    >
       <Header />
       <main className={styles.content}>
-        <h1 className={styles.title}>Про бренд</h1>
-        <h4 className={styles.text}>
-          Lorem ipsum dolor sit amet consectetur. Erat et gravida aliquam odio
-          ornare elit ut.. Proin pharetra nunc in malesuada eleifend iaculis..
-          In congue et bibendum mauris facilisi vestibulum phasellus.. Ipsum
-          aliquet arcu porttitor imperdiet a aliquet.. Viverra sem varius eu
-          congue donec ac adipiscing et ac.. Sit et tellus id pharetra. Bibendum
-          vel elementum pellentesque egestas pharetra.. Amet porttitor ut enim
-          sit neque scelerisque facilisis.. Sapien vitae cursus aliquet egestas
-          amet sed.. Leo pellentesque sed ornare sapien magna volutpat.. Aliquam
-          cursus eget gravida ac id commodo.. Ut quam eu non eget donec..
-          Facilisis viverra bibendum in elementum morbi non urna justo.. Viverra
-          sit sit elit aenean facilisis consequat sit malesuada.. Consectetur
-          vel sit blandit risus pellentesque.. Scelerisque pretium imperdiet
-          augue arcu rhoncus tortor sed ultrices integer.. In id purus urna ac
-          in vitae.. Euismod varius praesent nulla nullam dui.. Lobortis felis
-          sem pharetra porttitor. Non purus eget arcu nisi turpis et curabitur
-          tristique non.. Non sed eget sit imperdiet purus risus vitae.. Porta
-          orci elit elementum eget urna dictum.. Malesuada magna odio
-          sollicitudin augue nunc in arcu semper aliquam.. Pulvinar lectus eu
-          faucibus volutpat malesuada lobortis.. Diam sed sed imperdiet risus.
-          Sit tortor nunc a tristique. Posuere velit enim ut risus ultricies
-          sit.. Volutpat egestas sociis enim dui eu consectetur turpis semper..
-          Volutpat elit amet metus leo id risus condimentum ultricies.. Massa in
-          non nunc sit arcu viverra bibendum convallis.. Arcu nisl parturient
-          rhoncus ac aliquam nisl morbi.. Sollicitudin varius interdum quam
-          phasellus dui sit eget mollis diam.. Ac diam urna neque amet
-          consequat.. Nibh non at vel convallis semper lacus faucibus eget..
-          Volutpat auctor in varius convallis ut pulvinar.. Feugiat nibh nec
-          pharetra vitae convallis.. In aliquam quis habitasse scelerisque
-          auctor sapien tristique rhoncus.. Commodo arcu cursus facilisi id
-          aliquam commodo.. Felis ipsum odio a amet orci.. Etiam neque proin
-          interdum ultricies urna gravida mi tellus ultricies.. Arcu viverra
-          consequat tortor proin egestas leo porta.. Leo amet euismod phasellus
-          magna malesuada tristique amet mauris consectetur.. Nunc sed sagittis
-          magna posuere tincidunt venenatis.. Mauris nunc etiam at libero
-          pellentesque.. Ut orci diam volutpat et magnis orci tincidunt.. Donec
-          eget nec scelerisque egestas lobortis.. Pharetra pharetra lectus odio
-          lacus nisl accumsan phasellus lorem et.. Odio ut tortor leo a morbi
-          massa ipsum vestibulum.. Tristique elementum aliquet quam pharetra.
-          Nulla consequat bibendum at ultrices odio sollicitudin aliquam a..
-          Tincidunt diam quis quam ultrices purus.. Donec duis fermentum
-          adipiscing adipiscing nunc augue massa molestie.. Arcu suscipit
-          egestas risus pellentesque vitae.. Eu egestas tempus pulvinar
-          tincidunt. Etiam non neque odio tortor sed.. Fusce tempor ullamcorper
-          varius massa consectetur at a rhoncus placerat.. Etiam elementum
-          rhoncus odio est urna dui.. Donec eu quis sit auctor cursus varius
-          fusce.. Nisl hendrerit duis urna et vel.. Arcu neque sit sed quis.
-          Facilisi enim sed bibendum ut id.. Tellus morbi id aliquet congue
-          lectus augue dignissim.. Imperdiet egestas sem sit aliquam enim
-          ullamcorper dictum.. Massa in id et malesuada ut tristique donec a
-          in.. Adipiscing diam mi quis tortor vitae.. Faucibus id tincidunt non
-          elementum. Fermentum curabitur integer ultrices congue. Et viverra
-          lobortis massa egestas tristique turpis volutpat.. Montes faucibus sed
-          scelerisque tempus gravida morbi rhoncus at.. Pretium cras quis
-          ridiculus faucibus at vel pulvinar.. Enim dui porttitor penatibus
-          consectetur sit lacus ipsum.. Vulputate faucibus ut integer commodo
-          leo vitae.. Tempus pellentesque viverra faucibus tellus. Diam ultrices
-          volutpat nulla pellentesque magna.. Proin egestas rhoncus purus sit
-          porta.. Est duis a neque quam congue in morbi justo tristique..
-          Adipiscing mattis a gravida montes pretium in et.. Diam consectetur
-          cursus curabitur viverra sem nunc ligula luctus et.. Cras justo
-          fermentum velit etiam. Mattis nibh pretium posuere blandit amet.. Amet
-          sed enim ullamcorper et mattis sed tortor pellentesque.. Nunc sit
-          feugiat turpis vehicula. Adipiscing vitae euismod lobortis in donec..
-          Neque sed duis malesuada mattis venenatis.. Vitae morbi vulputate
-          purus turpis tincidunt sit enim cras.. Aliquet aliquam aliquam iaculis
-          ultrices sed nunc magna.. Purus feugiat justo magnis risus magna
-          quisque fames dictum commodo.. Donec dictum venenatis eros neque.
-          Pharetra at vitae facilisis imperdiet. Fames vitae a diam cras lacus..
-          Elementum quis enim egestas luctus velit vitae at.. Eu semper velit at
-          vitae felis vel in cursus.. Amet sit consectetur duis nam suspendisse
-          scelerisque.. Ultrices erat enim scelerisque sed risus consequat
-          tellus.. Pretium aliquam id id aenean nunc nisi nec faucibus vivamus..
-          Ornare erat phasellus varius tellus etiam mauris.. Nisl vel ipsum
-          tincidunt egestas tempus arcu lacus in.. Ut volutpat amet scelerisque
-          rhoncus vulputate in nunc.. Sem in purus consectetur placerat neque
-          in.. Velit feugiat nibh phasellus magna montes vitae nullam
-          tristique.. Sed varius pretium placerat elementum sed viverra
-          malesuada.. Aliquet tincidunt eget quam tellus arcu egestas.. Morbi
-          mauris eget vitae vel sit.. Nascetur vel orci enim sapien elementum..
-          Massa lacus quis malesuada cursus suspendisse vulputate eu.. Turpis id
-          feugiat a sit eu lobortis vulputate cursus habitasse.. Sollicitudin
-          adipiscing nibh nisl id fermentum pellentesque nunc.. Amet gravida
-          eget nibh purus habitant ultrices aliquam.. Aliquet sem vel non ut
-          condimentum.. Risus nunc morbi sapien non felis.. Integer ultrices
-          molestie erat erat non dictum.. Velit risus praesent morbi et iaculis
-          pellentesque.. Aliquet id arcu at pretium. Elementum in risus pulvinar
-          sed scelerisque faucibus sed.. Lobortis nisl tempor donec ullamcorper
-          orci turpis placerat quam rhoncus.. Neque sit pretium scelerisque
-          gravida eu et tincidunt massa facilisis.. Enim elit pellentesque massa
-          enim. Praesent pulvinar risus leo consequat. Libero donec tincidunt mi
-          amet habitant.. Ut orci blandit luctus nulla nulla.. Tortor amet
-          ultrices diam nibh ac at.. Mi tellus orci eros orci mauris viverra
-          enim.. Pretium non amet scelerisque vel id velit pellentesque..
-          Tincidunt in etiam egestas purus aliquet sed imperdiet volutpat
-          lectus.. Amet semper ipsum sit sit nunc fermentum ipsum nisi
-          placerat.. Quis pharetra mi in sed congue vel.. Donec dapibus aliquam
-          dui viverra nullam.. Orci urna maecenas ornare massa eget viverra id
-          id scelerisque.. Aliquam amet egestas lorem ipsum potenti lacus
-          senectus.. Odio lectus enim vitae hac ultrices id est.. Varius donec
-          ullamcorper sollicitudin consequat elementum quisque aliquam mattis
-          fringilla.. Felis vestibulum massa mi purus urna urna pretium purus
-          in.. Elementum a euismod rutrum id metus sagittis integer.. Mattis
-          sagittis amet vulputate sed risus erat duis ultrices.. Egestas at urna
-          feugiat tortor mi.. Nunc tempus magna neque leo nisi tellus amet
-          auctor eget.. Pellentesque erat aliquam tempus nec id velit id.. Proin
-          in pellentesque placerat interdum. Convallis faucibus faucibus id
-          bibendum dignissim ut congue sollicitudin.. Eu quis porttitor
-          consequat amet a ultrices.. Nullam nulla dolor tristique arcu et..
-          Pretium proin eget suspendisse viverra. Magna netus orci sit arcu leo
-          amet.. Pellentesque suspendisse iaculis nullam nec eu at suspendisse
-          vitae gravida.. Elementum sed orci aliquet lorem aenean euismod sem
-          pellentesque nunc.. Malesuada sed aliquet leo diam interdum
-          consectetur dui.. Aliquam egestas maecenas eu nisi. Sapien morbi sit
-          nisi consectetur. Bibendum in a ullamcorper nullam praesent tellus
-          habitant aliquet nibh.. Fames nibh congue sit adipiscing tincidunt..
-          Vehicula tortor donec netus scelerisque aliquam enim egestas
-          ullamcorper neque.. Id euismod ac posuere posuere tortor.. Aliquet
-          velit proin eleifend sit vulputate adipiscing nec tincidunt non..
-          Consequat at id vitae a magna mattis rhoncus suspendisse.. In erat
-          orci quam ut faucibus ac.. Commodo amet ut vestibulum curabitur. Dui
-          ultricies ut magnis cursus id mauris sed ante feugiat.. Pharetra in
-          ligula quam odio etiam velit.. Eget eu tortor elit at molestie
-          adipiscing massa.. Sollicitudin morbi ut at vitae. Euismod imperdiet
-          et non aliquam tempus diam.. Tortor nisi nulla amet lacus etiam vitae
-          turpis tincidunt vestibulum.. Sem nisl enim sit amet elementum quam
-          viverra.. Pellentesque massa in leo cursus auctor.. Mauris dolor sed
-          donec faucibus. Leo lacus amet sed ultricies enim sit.. Est est risus
-          sed tellus. Integer adipiscing gravida purus sit augue et sed lectus
-          scelerisque.. Cursus quis sed hac dapibus in penatibus amet a odio..
-          Ut enim morbi aliquet proin id tellus sapien facilisis dolor.. Amet
-          rhoncus mi fringilla posuere et dictum amet purus.. Suspendisse tortor
-          ante suscipit mi eget viverra hendrerit purus.. Viverra sit mauris
-          eros lorem in pretium id cras at.. Sit ipsum consequat a orci donec ac
-          quam in.. At vitae eget amet quisque in.. Iaculis ac adipiscing urna
-          lorem id a posuere vitae.. Duis orci mollis nec ut sed sit viverra..
-          At at amet proin ornare nibh in nisi.. Sed quam aliquet cursus orci.
-          Tristique nisl elementum quis sagittis. Sit neque amet nibh vel non
-          eget quam egestas.. Sociis in tellus augue risus imperdiet.. Aliquam
-          vestibulum pellentesque porta in feugiat pretium blandit.. Lorem odio
-          et urna eget congue ornare a.. Tristique facilisi vulputate dictum
-          vitae ultrices nullam elementum.. Erat aliquet eu blandit nam sed in
-          porttitor elit.. Pretium tortor tortor semper vitae donec.. Lorem
-          vulputate libero convallis semper. Netus nisi ac enim nulla enim
-          malesuada leo.. Et dolor nunc nunc placerat at nisl mattis orci..
-          Rutrum tellus id et mus et viverra et a.. Donec ut nibh rhoncus
-          condimentum amet.. Commodo faucibus ut ornare justo aliquet.. Faucibus
-          tellus et aliquet tristique amet.. Nisl habitant quis est ultrices.
-          Facilisi sed neque tristique arcu sed.. Enim habitant nisl phasellus
-          tortor tincidunt ipsum aliquam sapien consequat.. Potenti sollicitudin
-          in arcu tincidunt. Tincidunt iaculis a fames ipsum vestibulum.. Eget
-          malesuada nulla elementum lacus dapibus proin eleifend mollis..
-        </h4>
+        {!started ? (
+          <>
+            <h1 className={styles.title}>Привіт!</h1>
+            <p className={`h2-light ${styles.subtitle}`}>
+              Готова дізнатися, які кольори підкреслюють твою унікальність?
+              <br />
+              Пройди короткий тест і відкрий свій кольоровий світ!
+            </p>
+            <div className={styles.Button}>
+              <Button onClick={() => setStarted(true)}>Поїхали!</Button>
+            </div>
+          </>
+        ) : !result ? (
+          <>
+            <h1 className={styles.title}>Визнач свій кольоротип</h1>
+            {questions.map((q, i) => (
+              <div key={i} className={`${styles.questionBlock} h2-light`}>
+                <p className={styles.questionText}>{q.question}</p>
+                <div className={styles.answers}>
+                  {q.options.map((opt) => {
+                    const checked = answers[i] === opt.type;
+                    return (
+                      <CheckBoxIcon
+                        key={opt.label}
+                        label={opt.label}
+                        labelClassName={styles["h3-light"]}
+                        checked={checked}
+                        value={opt.type}
+                        onChange={() => handleAnswer(i, opt.type)}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+            {answers.length === questions.length && (
+              <div className={styles.Button}>
+                <Button onClick={calculateResult}>Показати результат</Button>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <h1 className={styles.title}>
+              Твій кольоровий настрій:
+              <br />
+              {descriptions[result].title}
+            </h1>
+
+            <p className={`${styles.subtitle} h3-light`}>
+              {descriptions[result].description}
+            </p>
+
+            <h2 className={styles.subtitle}>
+              Що носити, щоб виглядати ще яскравіше:
+            </h2>
+
+            <p className={`${styles.subtitle} h3-light`}>
+              {descriptions[result].clothes}
+            </p>
+
+            <div className={styles.resultImageContainer}>
+              {descriptions[result].photos.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`${descriptions[result].title} одяг ${idx + 1}`}
+                  className={styles.resultImage}
+                />
+              ))}
+            </div>
+            <div className={styles.Button}>
+              <Button
+                onClick={() => {
+                  setStarted(false);
+                  setAnswers([]);
+                  setResult(null);
+                }}
+              >
+                Пройти ще раз і порівняти ;)
+              </Button>
+            </div>
+          </>
+        )}
       </main>
       <Layout />
     </div>

@@ -1,131 +1,127 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: clamp(692px, 65.9vw, 949px);
-    gap: clamp(0px, 0.625vw, 9px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  gap: clamp(0px, 0.625vw, 9px);
 }
 
 .sideTextLeft {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    margin-left: clamp(0px, 0.625vw, 9px);
-    height: clamp(209px, 31.1vw, 448px);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-left: clamp(0px, 0.625vw, 9px);
+  height: clamp(209px, 31.1vw, 448px);
 }
 
 .sideTextRight {
-    writing-mode: vertical-rl;
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    margin-right: clamp(0px, 0.625vw, 9px);
-    height: clamp(209px, 31.1vw, 448px);
+  writing-mode: vertical-rl;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-right: clamp(0px, 0.625vw, 9px);
+  height: clamp(209px, 31.1vw, 448px);
 }
 
-
 .section {
-    background: #eff1f0;
-    box-shadow:
-            -4px -4px 8px rgba(255, 255, 255, 0.7),
-            3px 3px 6px #A5A8A6;
-    width: clamp(321px, 94.4vw, 2416px);
-    border-radius: clamp(12px, 1.74vw, 25px);
-    padding: clamp(15px, 2.64vw, 38px) clamp(7px, 0.97vw, 14px)
+  background: #eff1f0;
+  box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.7), 3px 3px 6px #a5a8a6;
+  width: clamp(321px, 94.4vw, 2416px);
+  border-radius: clamp(12px, 1.74vw, 25px);
+  padding: clamp(15px, 2.64vw, 38px) clamp(7px, 0.97vw, 14px)
     clamp(14px, 1.94vw, 28px) clamp(7px, 0.97vw, 14px);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow: hidden;
-    position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
 }
 
 .content {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    gap: clamp(3px, 0.97vw, 14px);
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: clamp(3px, 0.97vw, 14px);
 }
 
-.leftArrow, .rightArrow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+.leftArrow,
+.rightArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .leftArrow {
-    transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .rightArrow {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
-.leftArrow img, .rightArrow img {
-    width: clamp(5px, 0.69vw, 10px);
-    height: clamp(9px, 1.25vw, 18px);
+.leftArrow img,
+.rightArrow img {
+  width: clamp(5px, 0.69vw, 10px);
+  height: clamp(9px, 1.25vw, 18px);
 }
 
 .cards {
-    display: flex;
-    gap: clamp(21px, 4vw, 107px);
-    max-width: 2462px;
-    margin: 0 auto;
-    touch-action: pan-y;
+  display: flex;
+  gap: clamp(21px, 4vw, 107px);
+  max-width: 2462px;
+  margin: 0 auto;
+  touch-action: pan-y;
 }
 
-
 .text {
-    position: absolute;
-    top: 0;
-    right: clamp(29px, 3.75vw, 54px);
-    margin-top: clamp(3px, 0.69vw, 10px);
+  position: absolute;
+  top: 0;
+  right: clamp(29px, 3.75vw, 54px);
+  margin-top: clamp(3px, 0.69vw, 10px);
 }
 
 .cardWrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
-
 @media (min-width: 1440px) and (max-width: 2560px) {
-    .section {
-        height: 504px;
-    }
+  .section {
+    height: 504px;
+  }
 }
 
 @media (min-width: 1024px) and (max-width: 1439px) {
-    .section {
-        height: 431px;
-    }
+  .section {
+    height: 431px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-    .section {
-        height: 356px;
-    }
+  .section {
+    height: 356px;
+  }
 }
 
 @media (min-width: 425px) and (max-width: 769px) {
-    .section {
-        height: 260px;
-    }
+  .section {
+    height: 260px;
+  }
 }
 
 @media (min-width: 375px) and (max-width: 424px) {
-    .section {
-        height: 258px;
-    }
+  .section {
+    height: 258px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 374px) {
-    .section {
-        height: 220px;
-    }
+  .section {
+    height: 220px;
+  }
 }

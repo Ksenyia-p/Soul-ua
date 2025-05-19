@@ -1,0 +1,19 @@
+.test {
+  align-self: center;
+  margin: clamp(100px, 13.89vw, 200px) clamp(18px, 7.5vw, 192px) 0;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.test h1 {
+  text-transform: uppercase;
+}
+
+.paragraph {
+  margin-bottom: clamp(12px, 2.2vw, 32px);
+}
+
+.buttonReadMore {
+  margin-top: clamp(30px, 10vw, 70px);
+  text-decoration: none;
+}

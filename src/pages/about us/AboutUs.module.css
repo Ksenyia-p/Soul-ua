@@ -1,17 +1,100 @@
-.container {
+.title {
+  padding-top: clamp(60px, 10vw, 100px);
+  margin-bottom: clamp(20px, 4vw, 30px);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .content {
-  align-items: center;
-  text-align: center;
-  margin-top: clamp(36px, 5vw, 72px);
+  padding: clamp(20px, 5vw, 40px) clamp(10px, 5vw, 20px);
+  max-width: 1296px;
 }
 
-.text {
-  margin-top: clamp(30px, 5vw, 72px);
-  margin-left: clamp(32px, 5vw, 72px);
-  margin-right: clamp(32px, 5vw, 72px);
-  text-align: justify;
+.questionBlock {
+  margin-bottom: clamp(20px, 4vw, 30px);
+  width: 100%;
+  text-align: left;
+}
+
+.questionText {
+  margin-bottom: clamp(10px, 3vw, 20px);
+  text-align: left;
+  margin-left: clamp(20px, 6vw, 72px);
+  margin-top: clamp(20px, 5vw, 40px);
+  font-size: clamp(16px, 4vw, 20px);
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 2vw, 10px);
+  align-items: flex-start;
+  max-width: 100%;
+}
+
+.resultImageContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(20px, 4vw, 30px);
+  flex-wrap: wrap;
+  gap: clamp(20px, 5vw, 50px);
+}
+
+.resultImage {
+  width: clamp(120px, 30vw, 250px);
+  height: clamp(170px, 40vw, 300px);
+  object-fit: cover;
+  border-radius: clamp(8px, 3vw, 12px);
+}
+
+.Button {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(30px, 10vw, 70px);
+}
+
+.subtitle {
+  margin-left: clamp(20px, 6vw, 72px);
+  text-align: center;
+  margin-top: clamp(20px, 3vw, 40px);
+  margin-bottom: clamp(10px, 3vw, 20px);
+}
+
+.clothesText {
+  margin-top: clamp(10px, 4vw, 20px);
+  margin-bottom: clamp(20px, 4vw, 30px);
+  text-align: center;
+  font-size: clamp(14px, 3.5vw, 18px);
+}
+
+.photosBlock {
+  display: flex;
+  gap: clamp(10px, 3vw, 15px);
+  margin-top: clamp(15px, 3vw, 20px);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 375px) {
+  .title {
+    flex-direction: column;
+  }
+
+  .questionText,
+  .clothesText {
+    text-align: left;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .answers {
+    margin-left: 10px;
+  }
+
+  .resultImage {
+    width: 100px;
+    height: 140px;
+  }
 }

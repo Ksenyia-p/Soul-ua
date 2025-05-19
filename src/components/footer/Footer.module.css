@@ -1,109 +1,108 @@
 .footer {
-    padding: clamp(9px, 2.5vw, 36px);
-    margin-top: 500px;
-    position: relative;
+  padding: clamp(9px, 2.5vw, 36px);
+  margin-top: 489px;
+  position: relative;
 }
 
 .columns {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  position: relative;
 }
 
 .leftGroup {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-
 .leftColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .centerColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .rightColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-end;
 }
 
 .socialIcons {
-    display: flex;
-    margin-top: clamp(10px, 1.18vw, 17px);
-    gap: clamp(6px, 0.9vw, 13px);
+  display: flex;
+  margin-top: clamp(10px, 1.18vw, 17px);
+  gap: clamp(6px, 0.9vw, 13px);
 }
 
 .socialIcons img {
-    height: clamp(14px, 1.7vw, 25px);
-    width: auto;
+  height: clamp(14px, 1.7vw, 25px);
+  width: auto;
 }
 
 .logo img {
-    height: clamp(15px, 2vw, 30px);
-    width: auto;
+  height: clamp(15px, 2vw, 30px);
+  width: auto;
 }
 
 .bottomRow {
-    margin-top: clamp(18px, 2.5vw, 36px);
-    display: flex;
-    align-items: center;
-    gap: clamp(13px, 2.5vw, 36px);
+  margin-top: clamp(18px, 2.5vw, 36px);
+  display: flex;
+  align-items: center;
+  gap: clamp(13px, 2.5vw, 36px);
 }
 
 .link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 @media (min-width: 2000px) and (max-width: 2560px) {
-    .leftGroup {
-        gap: clamp(800px, 40vw, 1024px);
-    }
+  .leftGroup {
+    gap: clamp(800px, 40vw, 1024px);
+  }
 }
 
 @media (min-width: 1440px) and (max-width: 1999px) {
-    .leftGroup {
-        gap: clamp(501px, 35vw, 799px);
-    }
+  .leftGroup {
+    gap: clamp(501px, 35vw, 799px);
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1440px) {
-    .leftGroup {
-        gap: clamp(100px, 28vw, 500px);
-    }
+  .leftGroup {
+    gap: clamp(100px, 28vw, 500px);
+  }
 }
 
 @media (max-width: 768px) {
-    .columns {
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
+  .columns {
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 
-    .leftGroup {
-        flex-direction: column;
-        gap: clamp(9px, 2.4vw, 18px);
-        flex: 1;
-    }
+  .leftGroup {
+    flex-direction: column;
+    gap: clamp(9px, 2.4vw, 18px);
+    flex: 1;
+  }
 
-    .leftColumn {
-        align-items: flex-start;
-    }
+  .leftColumn {
+    align-items: flex-start;
+  }
 
-    .centerColumn {
-        align-items: flex-start;
-    }
+  .centerColumn {
+    align-items: flex-start;
+  }
 
-    .rightColumn {
-        align-items: flex-end;
-    }
+  .rightColumn {
+    align-items: flex-end;
+  }
 }
