@@ -13,8 +13,6 @@ import { auth } from "../../FirebaseConfigs/FirebaseConfigs";
 
 const navItems = [
     {text: 'Особисті дані', path: '/account'},
-    {text: 'Поточні замовлення', path: '/orders'},
-    {text: 'Історія замовлень', path: '/order-history'},
     {text: 'Адреса доставки', path: '/address'},
 ];
 
