@@ -12,7 +12,7 @@ const Test = () => {
           Дізнайся, які кольори підкреслять твою природну красу та створять
           неповторний стиль.
         </h2>
-        <Link to="/about_us" className={styles.buttonReadMore}>
+        <Link to="/color_type" className={styles.buttonReadMore}>
           <Button type="button">Знайти свій кольоротип</Button>
         </Link>
       </div>

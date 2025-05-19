@@ -5,7 +5,7 @@ import Wishlist from "./pages/wishlist/Wishlist";
 import Delivery from "./pages/delivery/Delivery";
 import PersonalData from "./pages/personal data/PersonalData";
 import Catalog from "./pages/catalog/Catalog";
-import AboutUs from "./pages/about us/AboutUs";
+import ColorType from "./pages/color type/ColorType";
 import { db } from "./FirebaseConfigs/FirebaseConfigs";
 import { collection, getDocs } from "firebase/firestore";
 import AssortmentPage from "./pages/assortmentPage/AssortmentPage";
@@ -72,7 +72,7 @@ const App = () => {
         <Route path="/login" element={<LogIn />} />
         <Route path="/login/registration" element={<RegistrationPage />} />
         <Route path="/catalog" element={<Catalog />} />
-        <Route path="/about_us" element={<AboutUs />} />
+        <Route path="/color_type" element={<ColorType />} />
         <Route path="/size_table" element={<SizeTable />} />
         <Route path="/clothe_care" element={<ClotheCare />} />
         <Route path="/news" element={<News />} />

@@ -1,5 +1,4 @@
 .title {
-  padding-top: clamp(60px, 10vw, 100px);
   margin-bottom: clamp(20px, 4vw, 30px);
   display: flex;
   justify-content: center;
@@ -8,8 +7,13 @@
 }
 
 .content {
-  padding: clamp(20px, 5vw, 40px) clamp(10px, 5vw, 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(25px, 6.95vw, 100px) clamp(10px, 5vw, 20px);
   max-width: 1296px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .questionBlock {
@@ -19,11 +23,11 @@
 }
 
 .questionText {
+  display: flex;
+  justify-content: left;
+  max-width: 288px;
   margin-bottom: clamp(10px, 3vw, 20px);
   text-align: left;
-  margin-left: clamp(20px, 6vw, 72px);
-  margin-top: clamp(20px, 5vw, 40px);
-  font-size: clamp(16px, 4vw, 20px);
 }
 
 .answers {
@@ -56,10 +60,9 @@
 }
 
 .subtitle {
-  margin-left: clamp(20px, 6vw, 72px);
   text-align: center;
-  margin-top: clamp(20px, 3vw, 40px);
-  margin-bottom: clamp(10px, 3vw, 20px);
+  margin: clamp(20px, 3vw, 40px) 0;
+
 }
 
 .clothesText {
@@ -80,17 +83,6 @@
 @media (max-width: 375px) {
   .title {
     flex-direction: column;
-  }
-
-  .questionText,
-  .clothesText {
-    text-align: left;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .answers {
-    margin-left: 10px;
   }
 
   .resultImage {

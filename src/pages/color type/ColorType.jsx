@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
-import styles from "./AboutUs.module.css";
+import styles from "./ColorType.module.css";
 import CheckBoxIcon from "../../components/CheckBoxIcon/CheckBoxIcon";
 import Button from "../../components/button/Button";
 import summer1 from "../../images/summer1.jpeg";
@@ -14,7 +14,7 @@ import spring1 from "../../images/spring1.jpeg";
 import spring2 from "../../images/spring2.jpeg";
 import spring3 from "../../images/spring3.jpeg";
 import winter1 from "../../images/winter1.jpeg";
-import witer2 from "../../images/winter2.jpeg";
+import winter2 from "../../images/winter2.jpeg";
 import winter3 from "../../images/winter3.jpeg";
 
 const questions = [
@@ -137,11 +137,11 @@ const descriptions = {
       "Носи чорне, біле, смарагдове, червоне, електрик. ",
       "Метали: біле золото — як морозний кристал на тобі.",
     ],
-    photos: [winter1, witer2, winter3],
+    photos: [winter1, winter2, winter3],
   },
 };
 
-const AboutUs = () => {
+const ColorType = () => {
   const [started, setStarted] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
@@ -164,10 +164,7 @@ const AboutUs = () => {
   };
 
   return (
-    <div
-      className={styles.container}
-      style={{ minHeight: "100vh", padding: 20 }}
-    >
+    <>
       <Header />
       <main className={styles.content}>
         {!started ? (
@@ -256,8 +253,8 @@ const AboutUs = () => {
         )}
       </main>
       <Layout />
-    </div>
+    </>
   );
 };
 
-export default AboutUs;
+export default ColorType;
