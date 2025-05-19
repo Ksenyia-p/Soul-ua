@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
 import Layout from "../../components/layout/Layout";
-import { useParams, useNavigate } from 'react-router-dom';
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../FirebaseConfigs/FirebaseConfigs';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import styles from './Product.module.css';
@@ -15,23 +15,19 @@ import FullScreenPhoto from "../../components/full screen photo/FullScreenPhoto"
 const Product = ({ wishlistMode = false }) => {
     const { slug, color } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedColorKey, setSelectedColorKey] = useState(null);
     const [selectedSize, setSelectedSize] = useState('');
     const [fullscreenIndex, setFullscreenIndex] = useState(null);
-    const [userId, setUserId] = useState(null);
+    const [sizeError, setSizeError] = useState(false);
 
     useEffect(() => {
         const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUserId(user.uid);
-            } else {
-                setUserId(null);
-            }
+        onAuthStateChanged(auth, (user) => {
+            // Наразі логіка кошика підтримує неавторизованих користувачів
         });
-        return () => unsubscribe();
     }, []);
 
     useEffect(() => {
@@ -49,7 +45,10 @@ const Product = ({ wishlistMode = false }) => {
                         : Object.keys(data.colors).find(key => slug.includes(key)) || firstColorKey;
 
                     setSelectedColorKey(matchedColorKey);
-                    setSelectedSize('');
+
+                    const passedSize = searchParams.get('size');
+                    setSelectedSize(passedSize || '');
+
                 } else {
                     setProduct(null);
                 }
@@ -63,12 +62,6 @@ const Product = ({ wishlistMode = false }) => {
         fetchProduct();
     }, [slug, color]);
 
-    useEffect(() => {
-        if (product && color && product.colors[color]) {
-            setSelectedColorKey(color);
-            setSelectedSize('');
-        }
-    }, [color, product]);
 
     const handleColorChange = (colorKey) => {
         setSelectedColorKey(colorKey);
@@ -76,11 +69,52 @@ const Product = ({ wishlistMode = false }) => {
         navigate(`/${product.group}/${product.items}/${slug}/${colorKey}`);
     };
 
-    const selectedColor = selectedColorKey && product?.colors?.[selectedColorKey];
+    const handleAddToCart = () => {
+        if (!selectedSize) {
+            setSizeError(true);
+            return;
+        }
 
+        setSizeError(false);
+
+        const selectedColor = product?.colors?.[selectedColorKey];
+        const cartItem = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            size: selectedSize,
+            color: selectedColorKey,
+            colorName: selectedColor?.colorName || '',
+            image: selectedColor?.images?.[0] || '',
+            slug: product.slug,
+            group: product.group,
+            items: product.items,
+            quantity: 1
+        };
+
+        const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+
+        const existingItemIndex = cartData.findIndex(item =>
+            item.id === cartItem.id &&
+            item.color === cartItem.color &&
+            item.size === cartItem.size
+        );
+
+        if (existingItemIndex !== -1) {
+            cartData[existingItemIndex].quantity += 1;
+        } else {
+            cartData.push(cartItem);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cartData));
+
+        window.dispatchEvent(new Event('openShoppingBag'));
+    };
+
+
+    const selectedColor = selectedColorKey && product?.colors?.[selectedColorKey];
     const isColorOutOfStock = selectedColor &&
         Object.values(selectedColor.sizes || {}).every(qty => qty === 0);
-
     const isSelectedSizeUnavailable = selectedSize &&
         selectedColor?.sizes?.[selectedSize] === 0;
 
@@ -155,7 +189,10 @@ const Product = ({ wishlistMode = false }) => {
                                         return (
                                             <button
                                                 key={size}
-                                                onClick={() => setSelectedSize(size)}
+                                                onClick={() => {
+                                                    setSelectedSize(size);
+                                                    setSizeError(false);
+                                                }}
                                                 className={`${styles.sizeButton}
                                                     ${available === 0 ? styles.sizeUnavailable : ''}
                                                     ${selectedSize === size ? styles.sizeSelected : ''}`}
@@ -165,12 +202,10 @@ const Product = ({ wishlistMode = false }) => {
                                         );
                                     })}
                             </div>
-                            <div className={styles.textButton}>
-                                <div className="h3-underlined">Розмірна сітка</div>
-                            </div>
+                            {sizeError && <h3 className={styles.validationError}>Оберіть розмір</h3>}
                         </div>
 
-                        <Button type="button">
+                        <Button type="button" onClick={handleAddToCart}>
                             {buttonText}
                         </Button>
 
@@ -181,7 +216,7 @@ const Product = ({ wishlistMode = false }) => {
 
                         <div className={styles.care}>
                             <div className="h3-bold">Склад та догляд</div>
-                            <h4>Lorem ipsum dolor sit amet consectetur. Fringilla sed augue nunc in id a convallis. Sit cras eu adipiscing </h4>
+                            <h4>Lorem ipsum dolor sit amet consectetur. Fringilla sed augue nunc in id a convallis. Sit cras eu adipiscing ut parturient. In dignissim magna massa </h4>
                         </div>
                     </div>
                 </div>

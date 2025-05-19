@@ -120,6 +120,11 @@
     gap: clamp(4px, 1.25vw, 18px);
 }
 
+.validationError {
+    color: #DF2D2D;
+    margin-top: 8px;
+}
+
 
 @media (max-width: 953px) {
     .content {
