@@ -112,7 +112,7 @@ const RegistrationPage = () => {
                             />
                         </div>
                         <InputField
-                            label="Телефон"
+                            label="Номер телефону"
                             type="text"
                             name="phone"
                             id="phone"
