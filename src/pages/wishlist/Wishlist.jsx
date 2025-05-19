@@ -8,6 +8,8 @@ import ProductCard from "../../components/productCard/ProductCard";
 import Way from "../../components/way/Way";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Koshyk from "../../icons/koshyk.svg";
+import Button from "../../components/button/Button";
+import {Link} from "react-router-dom";
 
 const Wishlist = () => {
   const [user] = useAuthState(auth);
@@ -80,14 +82,16 @@ const Wishlist = () => {
 
   if (!user) {
     return (
-      <div>
-        <Header />
-        <Way>Вішліст</Way>
-        <div style={{ padding: "20px", textAlign: "center" }}>
-          <h3>Щоб бачити вішліст, будь ласка, увійдіть у свій акаунт.</h3>
+        <div>
+          <Header />
+          <div className={styles.wishlistWithoutAccount}>
+            <h2>Щоб додати товар у вішліст, увійдіть або зареєструйтеся</h2>
+            <Link to='/login' className={styles.buttonWishlistWithoutAccount}>
+              <Button type="button">Авторизуватись</Button>
+            </Link>
+          </div>
+          <Layout />
         </div>
-        <Layout />
-      </div>
     );
   }
 
