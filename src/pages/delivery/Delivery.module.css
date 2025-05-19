@@ -1,0 +1,200 @@
+.delivery {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 clamp(36px, 7.5vw, 108px);
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(9px, 1.25vw, 18px);
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2.5vw, 36px);
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+}
+
+.closeButton img {
+    width: clamp(11px, 1.5vw, 22px);
+    height: clamp(10px, 1.4vw, 20px);
+}
+
+.itemInfoClose {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(42px, 12.92vw, 186px);
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: clamp(20px, 2.78vw, 40px);
+}
+
+.cartItem {
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: row;
+    gap: clamp(18px, 4.17vw, 60px);
+}
+
+
+.photo img {
+    width: clamp(65.33px, 8.33vw, 120px);
+    height: clamp(98px, 12.57vw, 181px);
+    border-radius: clamp(12px, 1.74vw, 25px);
+    display: flex;
+    align-items: center;
+}
+
+.itemInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.colorSize {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(4px, 0.49vw, 7px);
+    margin: 5px 0;
+}
+
+.quantity {
+    margin-bottom: clamp(9px, 1.11vw, 16px);
+}
+
+.priceWishlist {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(9px, 1.25vw, 18px);
+}
+
+.leftSecond {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(11px, 1.32vw, 19px);
+}
+
+.textLeftSecond {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(103px, 15vw, 216px);
+    margin-top: clamp(9px, 1.25vw, 18px);
+}
+
+.buttonForPayment {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(36px, 5vw, 72px);
+}
+
+.deliveryDetails,
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2.5vw, 36px);
+}
+
+
+.nameAndSurname,
+.regionAndCity {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(10px, 1.39vw, 20px);
+}
+
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+.shake {
+
+    & input {
+        animation: shake 0.16s 0s 3;
+    }
+}
+
+
+.emptyCart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: clamp(18px, 2.5vw, 36px);
+    margin: 220px 16px 0;
+}
+
+.buttonDeliveryWithoutItems {
+    display: flex;
+    justify-content: end;
+    text-decoration: none;
+}
+
+.unavailable {
+    color: #DF2D2D;
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 425px) {
+    .content {
+        flex-direction: column;
+        margin: 0 16px; /* менш щільні відступи */
+        gap: 36px; /* відступ між блоками */
+    }
+
+    .left {
+        order: 1;
+    }
+
+    .right {
+        order: 2;
+    }
+
+    .buttonForPayment {
+        order: 3;
+        justify-content: flex-start;
+    }
+
+    .textLeftSecond {
+        justify-content: flex-start;
+        gap: 16px;
+    }
+
+
+
+}
+
+
