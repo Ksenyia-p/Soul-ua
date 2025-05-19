@@ -7,8 +7,8 @@ import Button from "../../components/button/Button";
 import Info from "../../components/info/Info";
 import Layout from "../../components/layout/Layout";
 import Test from "../../components/test/Test";
+import Video_2 from "../../video/video-2.mp4";
 import Video_1 from "../../video/video_1.MOV";
-import Video_2 from "../../video/video_2.mp4";
 
 const Main = () => {
     return (
